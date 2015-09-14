@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class FolderController extends Controller
 {
@@ -49,12 +48,19 @@ class FolderController extends Controller
      * @param Folder $folder
      * @return array
      * @Template
-     * @ParamConverter("folder", options={"mapping":{"id": "id", "slug": "slug"}})
      */
-    public function showAction(Folder $folder = null)
+    public function showAction(Folder $folder = null, $slug)
     {
+        //Check if folder is owned by user
         if (null !== $folder && $this->getUser() !== $folder->getOwner())
             throw new AccessDeniedException("Ce dossier ne vous appartient pas.");
+
+        //Check slug
+        if ($folder->getSlug() !== $slug)
+            return $this->redirectToRoute('ag_vault_folder_show', array(
+                'id' => $folder->getId(),
+                'slug' => $folder->getSlug(),
+            ));
 
         $search = $this->request->query->get('s', null);
 

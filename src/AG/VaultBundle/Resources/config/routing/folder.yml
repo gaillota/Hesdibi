@@ -7,8 +7,10 @@ ag_vault_folder_show:
     path: /{id}-{slug}
     defaults:
         _controller: AGVaultBundle:Folder:show
+        slug: null
     requirements:
         id: \d+
+        slug: "[a-zA-Z0-9-_/]+"
 
 ag_vault_folder_edit:
     path: /{id}/edit
