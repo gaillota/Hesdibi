@@ -1,0 +1,76 @@
+/* CSS rules for SM screens */
+@media (max-width: 991px) {
+    .dropup {
+        display: block;
+    }
+    .new.dropdown {
+        display: none;
+    }
+}
+
+/* CSS rules for XS screens */
+@media (max-width: 767px) {
+    #vault-mobile .col-xs-6 {
+        position: relative;
+        margin-top: 20px;
+    }
+
+    #vault-mobile .icon {
+        font-size: 40px;
+    }
+
+    #vault-mobile .title {
+        font-size: 12px;
+    }
+
+    #vault-mobile .title a {
+        display: block;
+    }
+
+    #vault-mobile .title a:hover, #vault-mobile .title a:visited, #vault-mobile .title a:active {
+        text-decoration: none;
+        color: #337AB7;
+    }
+
+    #vault-mobile .title .size {
+        font-size: 11px;
+        font-style: italic;
+    }
+
+    #vault-mobile .dropdown.actions {
+        position: absolute;
+        right: 20px;
+        top: 0;
+    }
+
+    #vault-mobile .dropdown.actions button.dropdown-toggle {
+        padding: 0 10px;
+        border: 0;
+        background-color: transparent;
+        visibility: hidden;
+    }
+
+    #vault-mobile .col-xs-6:hover .dropdown.actions button.dropdown-toggle {
+        visibility: visible;
+    }
+
+     #vault-mobile .inverse-dropdown .dropdown-menu {
+         left: -190px;
+     }
+
+    .mobile-search {
+        position: fixed;
+        bottom: 23px;
+        right: 60px;
+        z-index: 999;
+        width: 60%;
+    }
+
+    .mobile-search span#addon2, .mobile-search input.form-control {
+        border-radius: 50px;
+    }
+    .mobile-search span#addon2:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}

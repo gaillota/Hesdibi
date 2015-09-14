@@ -1,0 +1,17 @@
+{% spaceless %}
+	<div class="panel panel-info">
+		<div class="panel-body">
+			<p><strong>Nom</strong> : {{ file.name }}</p>
+			<p><strong>Taille</strong> : {{ file.size|size }}</p>
+			<p><strong>Dernière modification</strong> : {{ file.lastModified|date("j M Y \\à H:i") }}</p>
+			<p>{{ fa('list-ul') }} Liste des envois :</p>
+			<ul>
+				{% for send in file.sendTo %}
+					<li class="small">{{ send.0 ~ ' - ' ~ send.1|date_fr }} à {{ send.1|date('H:i') }}</li>
+				{% else %}
+					<li class="small">Ce fichier n'a jamais été envoyé par mail.</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+{% endspaceless %}

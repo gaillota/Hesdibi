@@ -1,0 +1,46 @@
+ag_vault_folder_index:
+    path: /
+    defaults:
+        _controller: AGVaultBundle:Folder:index
+
+ag_vault_folder_show:
+    path: /{id}-{slug}
+    defaults:
+        _controller: AGVaultBundle:Folder:show
+    requirements:
+        id: \d+
+
+ag_vault_folder_edit:
+    path: /{id}/edit
+    defaults:
+        _controller: AGVaultBundle:Folder:edit
+    requirements:
+        id: \d+
+
+ag_vault_folder_remove:
+    path: /{id}/remove
+    defaults:
+        _controller: AGVaultBundle:Folder:remove
+    requirements:
+        id: \d+
+
+ag_vault_folder_upload:
+    path: /{id}/upload
+    defaults:
+        _controller: AGVaultBundle:File:upload
+    requirements:
+        id: \d+
+
+ag_vault_folder_rename:
+    path: /{id}/rename
+    defaults:
+        _controller: AGVaultBundle:Folder:rename
+    requirements:
+        id: \d+
+
+ag_vault_folder_move:
+    path: /{id}/move
+    defaults:
+        _controller: AGVaultBundle:Folder:move
+    requirements:
+        id: \d+

@@ -1,0 +1,13 @@
+{% extends 'AGVaultBundle::layout.html.twig' %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block ag_vault_content %}
+	<div class="row">
+		<div class="col-md-12">
+			<h2>{{ fa('location-arrow') }} Déplacer un dossier <small>{{ folder.name }}</small></h2>
+			<hr/>
+			{{ form(form) }}
+		</div>
+	</div>
+{% endblock %}

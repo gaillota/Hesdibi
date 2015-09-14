@@ -1,0 +1,88 @@
+{#
+	Modal box for new folder form
+#}
+<div class="modal fade" id="newFolderModal" tabindex="-1" role="dialog" aria-labelledby="newFolderModal">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4>{{ fa('folder') }} Nouveau dossier</h4>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					{{ form(formFolder) }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{# End modal #}
+
+{#
+	Modal box for new file form
+#}
+<div class="modal fade" id="newFileModal" tabindex="-1" role="dialog" aria-labelledby="newFileModal">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4>{{ fa('file') }} Nouveau fichier</h4>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					{{ form(formFile) }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{# End modal #}
+
+{#
+	Modal box for renaming folders
+#}
+<div class="modal fade" id="renameModal" tabindex="-1" role="dialog" aria-labelledby="renameModal">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4>{{ fa('edit') }} Renommer dossier/fichier</h4>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					<form action="" method="post">
+						<div class="form-group">
+							<label class="control-label required" for="newName">Nom</label>
+							<input class="form-control" id="newName" type="text" required="required"/>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-primary" type="submit">
+								Renommer
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{# End modal #}
+
+{#
+	Modal box for file details
+#}
+<div class="modal fade" id="fileDetailsModal" tabindex="-1" role="dialog" aria-labelledby="fileDetailsModal">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4>{{ fa('bar-chart') }} Détails du fichier <span class="filename"></span></h4>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{# End modal #}

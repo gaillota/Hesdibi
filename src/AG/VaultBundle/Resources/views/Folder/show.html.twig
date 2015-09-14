@@ -1,0 +1,311 @@
+{% extends 'AGVaultBundle::layout.html.twig' %}
+
+{% form_theme formFolder 'bootstrap_3_layout.html.twig' %}
+{% form_theme formFile 'bootstrap_3_layout.html.twig' %}
+
+{% block breadcrumbs %}
+	{{ parent() }}
+	{% if folder is not null %}
+		{% for parent in listParents %}
+			<li><a href="{{ path('ag_vault_folder_show', { id:parent.id, slug:parent.slug }) }}">{{ parent.name }}</a></li>
+		{% endfor %}
+		<li class="active">{{ folder.name }}</li>
+	{% endif %}
+{% endblock %}
+
+{% block ag_vault_content %}
+	{% include 'AGVaultBundle:Folder:modals.html.twig' %}
+
+	{# Button displayed in mobile view #}
+	<div class="btn-group dropup">
+		<button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+</button>
+		<ul class="dropdown-menu">
+			<li><a href="#" type="button" data-toggle="modal" data-target="#newFolderModal">{{ fa('folder') }}</a></li>
+			<li><a href="#" type="button" data-toggle="modal" data-target="#newFileModal">{{ fa('file-pdf-o') }}</a></li>
+		</ul>
+	</div>
+	<form action="" method="GET" class="mobile-search visible-xs">
+		<div class="input-group">
+			<span class="input-group-addon" id="addon2">{{ fa('search') }}</span>
+			<input type="text" class="form-control" placeholder="Recherche" name="s" aria-describedby="addon2" {% if search is not null %}value="{{ search }}"{% endif %} autocomplete="off">
+		</div>
+	</form>
+	{# End button #}
+
+	{# Desktop view #}
+	<div class="row hidden-xs" id="vault">
+		<div class="col-md-2 text-center">
+			<div class="btn-group dropdown new">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Nouveau <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="#" type="button" data-toggle="modal" data-target="#newFileModal">
+							{{ fa('file-pdf-o') }} Fichier
+						</a>
+					</li>
+					<li>
+						<a href="#" type="button" data-toggle="modal" data-target="#newFolderModal">
+							{{ fa('folder') }} Dossier
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-10">
+			<div class="pull-right searchForm">
+				<form action="" method="GET">
+					<div class="input-group">
+						<span class="input-group-addon" id="addon1">{{ fa('search') }}</span>
+						<input type="text" class="form-control" placeholder="Recherche" name="s" aria-describedby="addon1" {% if search is not null %}value="{{ search }}"{% endif %}>
+					</div>
+				</form>
+			</div>
+			<h2 style="margin-top: 0;">
+				{% if folder is not null %}
+					<a href="{{ folder.parent is null ? path('ag_vault_homepage') : path('ag_vault_folder_show', {id:folder.parent.id, slug:folder.parent.slug}) }}">
+						{{ fa('arrow-left') }}&nbsp;
+					</a>
+					{{ fa('folder-open') }} {{ folder.name }}
+				{% else %}
+					{{ fa('lock') }} Mon Vault
+				{% endif %}
+				<small>{{ size|size }}</small>
+			</h2>
+			<table class="table table-hover table-striped">
+				<tr>
+					<th>Nom</th>
+					<th>Dernière modification</th>
+					<th>Taille</th>
+					<th></th>
+				</tr>
+				{% set noFolder = 0 %}
+				{% for f in listFolders %}
+					<tr data-row="folder" data-folder-id="{{ f.id }}">
+						<td>
+							{{ fa('folder') }}
+							<a href="{{ path('ag_vault_folder_show', { id:f.id, slug:f.slug }) }}" data-name>{{ f.name }}</a>
+						</td>
+						<td>{{ f.lastModified|date_fr }}</td>
+						<td>{{ f.size|size }}</td>
+						<td>
+							<div class="btn-group dropdown actions pull-right">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="{{ path('ag_vault_folder_move', {id:f.id}) }}">
+											{{ fa('location-arrow') }} Modifier emplacement
+										</a>
+									</li>
+									<li class="divider"></li>
+									<li>
+										<a href="#" type="button" data-toggle="modal" data-target="#renameModal" data-id="{{ f.id }}" data-href="{{ path('ag_vault_folder_rename', { id:f.id }) }}">
+											{{ fa('edit') }} Renommer
+										</a>
+									</li>
+									<li>
+										<a href="{{ path('ag_vault_folder_remove', { id:f.id }) }}">
+											{{ fa('remove') }} Supprimer
+										</a>
+									</li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				{% else %}
+					{% set noFolder = 1 %}
+				{% endfor %}
+				{% for file in listFiles %}
+					<tr data-row="file" data-file-id="{{ file.id }}">
+						<td>
+							{{ fa('file-pdf-o') }}
+							<a class="pdf" href="{{ path('ag_vault_file_preview', { id:file.id }) }}" data-name>{{ file.name }}</a>
+						</td>
+						<td>{{ file.lastModified|date_fr }}</td>
+						<td>{{ file.size|size }}</td>
+						<td>
+							<div class="btn-group dropdown actions pull-right">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="{{ path('ag_vault_file_download', { id:file.id }) }}">
+											{{ fa('download') }} Télécharger
+										</a>
+									</li>
+									<li>
+										<a href="{{ path('ag_vault_file_send', { id:file.id }) }}">
+											{{ fa('envelope') }} Envoyer par e-mail
+										</a>
+									</li>
+									<li>
+										<a href="#" data-toggle="modal" data-target="#fileDetailsModal" data-details="{{ path('ag_vault_file_details', {id:file.id}) }}">
+											{{ fa('bar-chart') }} Voir détails
+										</a>
+									</li>
+									<li>
+										<a href="{{ path('ag_vault_file_move', {id:file.id}) }}">
+											{{ fa('location-arrow') }} Modifier emplacement
+										</a>
+									</li>
+									<li class="divider"></li>
+									<li>
+										<a href="#" type="button" data-toggle="modal" data-target="#renameModal" data-id="{{ file.id }}" data-href="{{ path('ag_vault_file_rename', { id:file.id }) }}">
+											{{ fa('edit') }} Renommer
+										</a>
+									</li>
+									<li>
+										<a href="{{ path('ag_vault_file_remove', { id:file.id }) }}">
+											{{ fa('times') }} Supprimer
+										</a>
+									</li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				{% else %}
+					{% if noFolder %}
+						<tr>
+							<td class="text-center" colspan="5">
+								{% if search is not null %}
+								Aucun résultat pour la recherche <em>{{ search }}</em>.
+								{% else %}
+								Aucun contenu dans {% if folder is not null %}ce dossier.{% else %}votre Vault.{% endif %}
+								{% endif %}
+							</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+
+	{# Mobile view #}
+	<div class="row visible-xs" id="vault-mobile" style="margin-bottom: 70px;">
+		<div class="col-xs-12 text-center">
+			<h2 style="margin: 0;">
+				{% if folder is not null %}
+					{{ fa('folder-open') }} {{ folder.name }}
+				{% else %}
+					{{ fa('lock') }} Mon Vault
+				{% endif %}
+			</h2>
+			<div class="row">
+				{% set noFolder = 0 %}
+				{% set nbrElements = 0 %}
+				{% for f in listFolders %}
+					{% set nbrElements = nbrElements + 1 %}
+					<div class="col-xs-6">
+						<div class="btn-group dropdown actions{% if nbrElements % 2 == 0 %} inverse-dropdown{% endif %}">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="{{ path('ag_vault_folder_move', {id:f.id}) }}">
+										{{ fa('location-arrow') }} Modifier emplacement
+									</a>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<a href="#" type="button" data-toggle="modal" data-target="#renameModal" data-id="{{ f.id }}" data-href="{{ path('ag_vault_folder_rename', { id:f.id }) }}">
+										{{ fa('edit') }} Renommer
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('ag_vault_folder_remove', { id:f.id }) }}">
+										{{ fa('remove') }} Supprimer
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="icon">
+							{{ fa('folder') }}
+						</div>
+						<div class="title">
+							<a href="{{ path('ag_vault_folder_show', { id:f.id, slug:f.slug }) }}">
+								{{ f.name }}
+							</a>
+							<span class="size">{{ f.size|size }}</span>
+						</div>
+					</div>
+				{% else %}
+					{% set noFolder = 1 %}
+				{% endfor %}
+				{% for file in listFiles %}
+					{% set nbrElements = nbrElements + 1 %}
+					<div class="col-xs-6">
+						<div class="btn-group dropdown actions{% if nbrElements % 2 == 0 %} inverse-dropdown{% endif %}">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="{{ path('ag_vault_file_download', { id:file.id }) }}">
+										{{ fa('download') }} Télécharger
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('ag_vault_file_send', { id:file.id }) }}">
+										{{ fa('envelope') }} Envoyer par e-mail
+									</a>
+								</li>
+								<li>
+									<a href="#" data-toggle="modal" data-target="#fileDetailsModal" data-details="{{ path('ag_vault_file_details', {id:file.id}) }}">
+										{{ fa('bar-chart') }} Voir détails
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('ag_vault_file_move', {id:file.id}) }}">
+										{{ fa('location-arrow') }} Modifier emplacement
+									</a>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<a href="#" type="button" data-toggle="modal" data-target="#renameModal" data-id="{{ file.id }}" data-href="{{ path('ag_vault_file_rename', { id:file.id }) }}">
+										{{ fa('edit') }} Renommer
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('ag_vault_file_remove', { id:file.id }) }}">
+										{{ fa('times') }} Supprimer
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="icon">
+							{{ fa('file-pdf-o') }}
+						</div>
+						<div class="title">
+							<a class="pdf" href="{{ path('ag_vault_file_preview', { id:file.id }) }}">
+								{{ file.name }}
+							</a>
+							<span class="size">{{ file.size|size }}</span>
+						</div>
+					</div>
+				{% else %}
+					{% if noFolder %}
+						<div class="col-xs-12 text-center">
+							<h5 style="margin-top: 20px;">
+								{% if search is not null %}
+									Aucun résultat pour la recherche <em>{{ search }}</em>.
+								{% else %}
+									Aucun contenu dans {% if folder is not null %}ce dossier.{% else %}votre Vault.{% endif %}
+								{% endif %}
+							</h5>
+						</div>
+					{% endif %}
+				{% endfor %}				
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('js/folder.js') }}"></script>
+{% endblock %}

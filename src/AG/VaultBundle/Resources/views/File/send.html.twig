@@ -1,0 +1,25 @@
+{% extends 'AGVaultBundle::layout.html.twig' %}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block ag_vault_content %}
+	<div class="row">
+		<div class="col-md-12">
+			<h2>{{ fa('paper-plane') }} Envoi de <em>{{ file.name }}</em> par e-mail.</h2>
+			<hr/>
+			{{ form_start(form) }}
+			{{ form_errors(form) }}
+			{{ form_row(form.email) }}
+			{{ form_row(form.subject) }}
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Fichier</label>
+				<div class="col-sm-10">
+					<p class="form-control-static">{{ file.name }}</p>
+				</div>
+			</div>
+			{{ form_row(form.send) }}
+			{{ form_rest(form) }}
+			{{ form_end(form) }}
+		</div>
+	</div>
+{% endblock %}

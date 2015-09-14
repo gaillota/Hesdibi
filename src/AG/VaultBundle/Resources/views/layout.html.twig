@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block navbar %}
+	{% include 'AGVaultBundle::nav.html.twig' %}
+{% endblock %}
+
+{% block body %}
+	<ol class="breadcrumb">
+		{% block breadcrumbs %}
+			<li><a href="{{ path('ag_vault_homepage') }}">{{ fa('home') }}</a></li>
+		{% endblock %}
+	</ol>
+	{% block ag_vault_content %}
+	{% endblock %}
+{% endblock %}

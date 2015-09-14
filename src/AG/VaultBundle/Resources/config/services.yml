@@ -1,0 +1,5 @@
+services:
+#    ag_vault.font_awesome_extension:
+#        class: AG\VaultBundle\Twig\FontAwesomeExtension
+#        tags:
+#            - { name: twig.extension }

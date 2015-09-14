@@ -1,0 +1,48 @@
+ag_vault_file_remove:
+    path: /{id}/remove
+    defaults:
+        _controller: AGVaultBundle:File:remove
+    requirements:
+        id: \d+
+
+ag_vault_file_download:
+    path: /{id}/download
+    defaults:
+        _controller: AGVaultBundle:File:download
+    requirements:
+        id: \d+
+
+ag_vault_file_preview:
+    path: /{id}/preview
+    defaults:
+        _controller: AGVaultBundle:File:preview
+    requirements:
+        id: \d+
+
+ag_vault_file_rename:
+    path: /{id}/rename
+    defaults:
+        _controller: AGVaultBundle:File:rename
+    requirements:
+        id: \d+
+
+ag_vault_file_send:
+    path: /{id}/send
+    defaults:
+        _controller: AGVaultBundle:File:send
+    requirements:
+        id: \d+
+
+ag_vault_file_move:
+    path: /{id}/move
+    defaults:
+        _controller: AGVaultBundle:File:move
+    requirements:
+        id: \d+
+
+ag_vault_file_details:
+    path: /{id}/details
+    defaults:
+        _controller: AGVaultBundle:File:details
+    requirements:
+        id: \d+
