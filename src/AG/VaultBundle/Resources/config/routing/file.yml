@@ -46,3 +46,31 @@ ag_vault_file_details:
         _controller: AGVaultBundle:File:details
     requirements:
         id: \d+
+
+ag_vault_file_share_with:
+    path: /{id}/share-with
+    defaults:
+        _controller: AGVaultBundle:File:shareWith
+    requirements:
+        id: \d+
+
+ag_vault_file_generate_link:
+    path: /{id}/generate-link
+    defaults:
+        _controller: AGVaultBundle:File:generateLink
+    requirements:
+        id: \d+
+
+ag_vault_file_get_links:
+    path: /{id}/get-links
+    defaults:
+        _controller: AGVaultBundle:File:getLinks
+    requirements:
+        id: \d+
+
+ag_vault_file_show:
+    path: /{token}
+    defaults:
+        _controller: AGVaultBundle:File:show
+    requirements:
+        token: "[a-z0-9]{40}"

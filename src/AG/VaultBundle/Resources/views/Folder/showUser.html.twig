@@ -1,0 +1,89 @@
+{% extends 'AGVaultBundle::layout.html.twig' %}
+
+{% block ag_vault_content %}
+	<div class="row hidden-xs" id="vault">
+		<div class="col-md-2 text-center">
+			<div class="btn-group dropdown new">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+					Nouveau <span class="caret"></span>
+				</button>
+			</div>
+		</div>
+		<div class="col-md-10">
+			<div class="pull-right searchForm">
+				<form action="" method="GET">
+					<div class="input-group">
+						<span class="input-group-addon" id="addon1">{{ fa('search') }}</span>
+						<input type="text" class="form-control" placeholder="Recherche" name="s" aria-describedby="addon1" {% if search is defined and search is not null %}value="{{ search }}"{% endif %}>
+					</div>
+				</form>
+			</div>
+			<h2 style="margin-top: 0;">
+				{% if search is defined and search is not null %}
+					Résultat de la recherche : <em>{{ search }}</em>
+				{% else %}
+					{{ fa('lock') }} Mon Vault
+				{% endif %}
+			</h2>
+			<table class="table table-hover table-striped">
+				<tr>
+					<th>Nom</th>
+					<th>Dernière modification</th>
+					<th>Taille</th>
+					<th></th>
+				</tr>
+				{% for file in listFiles %}
+					<tr data-row="file" data-file-id="{{ file.id }}">
+						<td>
+							{{ fa('file-pdf-o') }}
+							<a class="pdf" href="{{ path('ag_vault_file_preview', { id:file.id }) }}" data-name>{{ file.name }}</a>
+						</td>
+						<td>{{ file.lastModified|date_fr }}</td>
+						<td>{{ file.size|size }}</td>
+						<td>
+							<div class="btn-group dropdown actions pull-right">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="{{ path('ag_vault_file_download', { id:file.id }) }}">
+											{{ fa('download') }} Télécharger
+										</a>
+									</li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td class="text-center" colspan="5">
+					{% if search is defined and search is not null %}
+						Aucun résultat pour la recherche <em>{{ search }}</em>.
+					{% else %}
+						Antoine n'a partagé aucun fichier avec vous.
+					{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('js/jquery.fancybox.pack.js') }}"></script>
+	<script type="text/javascript">
+		$('.pdf').click(function (e) {
+			e.preventDefault();
+
+			$.fancybox({
+				'width' : '90%',
+				'height' : '90%',
+				'autoSize' : false,
+				'content': '<embed src="'+this.href+'#nameddest=self&page=1&view=FitH,0&zoom=80,0,0" type="application/pdf" height="99%" width="100%" />'
+			});
+		});
+	</script>
+{% endblock %}

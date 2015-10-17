@@ -86,3 +86,26 @@
 	</div>
 </div>
 {# End modal #}
+
+{#
+	Modal for generating share link
+#}
+<div class="modal fade" id="shareLinkModal" tabindex="-1" role="dialog" aria-labelledby="shareLinkModal">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4>{{ fa('share-alt') }} Génération du lien de partage pour <span class="filename"></span></h4>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					<label for="shareLink">Lien</label>
+					<div class="loader">
+						<span></span><span></span><span></span>
+					</div>
+					<input id="shareLink" type="text">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

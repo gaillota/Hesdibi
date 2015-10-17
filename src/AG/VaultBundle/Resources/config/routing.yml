@@ -15,3 +15,7 @@ ag_vault_folder:
 ag_vault_file:
     resource: "routing/file.yml"
     prefix: /file
+
+ag_vault_share_link:
+    resource: "routing/share_link.yml"
+    prefix: /share-link

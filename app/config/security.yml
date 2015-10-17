@@ -15,6 +15,10 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        access_file:
+            pattern:    ^/file/[a-z0-9]{40}
+            anonymous:  true
+
         main_login:
             pattern:    ^/login$
             anonymous:  true
@@ -36,6 +40,5 @@ security:
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/file$, role: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/admin/, role: ROLE_ADMIN }

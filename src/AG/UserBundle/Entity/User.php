@@ -35,12 +35,18 @@ class User extends BaseUser
      */
     private $folders;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AG\VaultBundle\Entity\File", mappedBy="authorizedUsers")
+     */
+    private $sharedFiles;
+
     public function __construct()
     {
         parent::__construct();
         // your own logic
         $this->files = new ArrayCollection();
         $this->folders = new ArrayCollection();
+        $this->sharedFiles = new ArrayCollection();
     }
 
     /**
@@ -117,5 +123,38 @@ class User extends BaseUser
     public function getFolders()
     {
         return $this->folders;
+    }
+
+    /**
+     * Add sharedFiles
+     *
+     * @param \AG\VaultBundle\Entity\File $sharedFile
+     * @return User
+     */
+    public function addSharedFile(\AG\VaultBundle\Entity\File $sharedFile)
+    {
+        $this->sharedFiles[] = $sharedFile;
+
+        return $this;
+    }
+
+    /**
+     * Remove sharedFiles
+     *
+     * @param \AG\VaultBundle\Entity\File $sharedFile
+     */
+    public function removeSharedFile(\AG\VaultBundle\Entity\File $sharedFile)
+    {
+        $this->sharedFiles->removeElement($sharedFile);
+    }
+
+    /**
+     * Get sharedFiles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSharedFiles()
+    {
+        return $this->sharedFiles;
     }
 }

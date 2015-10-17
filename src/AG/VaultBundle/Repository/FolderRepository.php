@@ -12,10 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class FolderRepository extends EntityRepository
 {
-    public function findSearch($search, $folder)
+    public function findSearch($search, $user)
     {
         $qb = $this->createQueryBuilder('f')
             ->orderBy('f.name', 'ASC')
+            ->where('f.owner = :user')
+            ->setParameter('user', $user)
         ;
 
         $search = trim($search);

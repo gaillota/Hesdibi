@@ -1,0 +1,62 @@
+{% extends 'AGUserBundle::layout.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block flashbag %}
+	{% for type, messages in app.session.flashBag.all %}
+		{% for message in messages %}
+			<div class="alert alert-success alert-dismissible fade in" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				{{ message|trans({}, 'FOSUserBundle') }}
+			</div>
+		{% endfor %}
+	{% endfor %}
+{% endblock %}
+
+{% block breadcrumbs %}
+	{{ parent() }}
+	<li class="active">Mon compte</li>
+{% endblock %}
+
+{% block ag_user_content %}
+    <div class="row">
+	    <div class="col-md-12 text-center">
+		    <h2>{{ fa('user') }} Mon Compte</h2>
+		    <hr/>
+	    </div>
+        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+            {% for label, flashes in app.session.flashbag.all %}
+                {% for flash in flashes %}
+                    <div class="alert alert-{{ label }}">
+                        {{ 'change_password.flash.success'|trans }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Informations personnelles
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <i class="fa fa-user"></i> {{ 'profile.show.username'|trans }} : {{ user.username }}
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fa fa-envelope"></i> {{ 'profile.show.email'|trans }} : {{ user.email }}
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-default">
+                        <i class="fa fa-edit"></i> Modifier mon compte
+                    </a>
+                    <a href="{{ path('fos_user_change_password') }}" class="btn btn-default">
+                        <i class="fa fa-lock"></i> Changer mot de passe
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

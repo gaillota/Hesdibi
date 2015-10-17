@@ -3,15 +3,40 @@
 		<div class="panel-body">
 			<p><strong>Nom</strong> : {{ file.name }}</p>
 			<p><strong>Taille</strong> : {{ file.size|size }}</p>
-			<p><strong>Dernière modification</strong> : {{ file.lastModified|date("j M Y \\à H:i") }}</p>
-			<p>{{ fa('list-ul') }} Liste des envois :</p>
-			<ul>
-				{% for send in file.sendTo %}
-					<li class="small">{{ send.0 ~ ' - ' ~ send.1|date_fr }} à {{ send.1|date('H:i') }}</li>
-				{% else %}
-					<li class="small">Ce fichier n'a jamais été envoyé par mail.</li>
-				{% endfor %}
-			</ul>
+			<p><strong>Propriétaire</strong> : {{ file.owner }}</p>
+			<p><strong>Dernière modification</strong> : {{ file.lastModified|date_fr ~ ' ' ~ file.lastModified|date("\à H:i") }}</p>
 		</div>
+
+		{# List group #}
+		<ul class="list-group">
+			<li class="list-group-item">
+				<h4>{{ fa('envelope') }} Liste d'envoi</h4>
+				{% for send in file.sendTo %}
+					<p class="small">{{ send.0 ~ ' - ' ~ send.1|date_fr }} à {{ send.1|date('H:i') }}</p>
+				{% else %}
+					<p class="small"><i>Aucun envoi</i></p>
+				{% endfor %}
+			</li>
+			<li class="list-group-item">
+				<h4>{{ fa('share-alt') }} Lien de partage</h4>
+				<ul>
+					{% for shareLink in file.shareLinks %}
+						<li class="small">{{ path('ag_vault_file_show', { token:shareLink.token }) }}</li>
+					{% else %}
+						<li class="small">Aucun lien de partage</li>
+					{% endfor %}
+				</ul>
+			</li>
+			<li class="list-group-item">
+				<h4>{{ fa('users') }} Partager avec</h4>
+				<ul>
+					{% for user in file.authorizedUsers %}
+						<li class="small">{{ user }}</li>
+					{% else %}
+						<li class="small">Partagé avec personne</li>
+					{% endfor %}
+				</ul>
+			</li>
+		</ul>
 	</div>
 {% endspaceless %}

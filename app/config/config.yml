@@ -84,7 +84,7 @@ jms_di_extra:
         directories: ["%kernel.root_dir%/../src"]
     automatic_controller_injections:
         properties:
-            request: "@request"
+            request: @request
             em: @doctrine.orm.entity_manager
             paginator: @knp_paginator
             flash: @braincrafted_bootstrap.flash
@@ -109,3 +109,9 @@ stof_doctrine_extensions:
         default_file_path:       %kernel.root_dir%/../web/uploads/files
         mime_type_guesser_class: Stof\DoctrineExtensionsBundle\Uploadable\MimeTypeGuesserAdapter
         default_file_info_class: Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo
+
+mobile_detect:
+    redirect:
+        mobile: ~
+        tablet: ~
+    switch_device_view: ~

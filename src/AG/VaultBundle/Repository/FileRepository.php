@@ -2,7 +2,9 @@
 
 namespace AG\VaultBundle\Repository;
 
+use AG\UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
 /**
  * FileRepository
@@ -12,10 +14,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class FileRepository extends EntityRepository
 {
-    public function findSearch($search, $folder)
+    public function findSearch($search, $user)
     {
         $qb = $this->createQueryBuilder('f')
             ->orderBy('f.name', 'ASC')
+            ->where('f.owner = :user')
+            ->setParameter('user', $user)
         ;
 
         $search = trim($search);
@@ -32,5 +36,33 @@ class FileRepository extends EntityRepository
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function findByAuthorizedUsers(User $user)
+    {
+        $qb = $this->createQueryBuilder('f')
+            ->join('f.authorizedUsers', 'u')
+            ->where('u.id = :id')
+            ->setParameter('id', $user->getId())
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $qb;
+    }
+
+    public function findOneByToken($token)
+    {
+        $qb = $this->createQueryBuilder('f')
+            ->join('f.shareLinks', 's')
+            ->where('s.token = :token')
+            ->setParameter('token', $token)
+            ->getQuery();
+
+        try {
+            return $qb->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
     }
 }

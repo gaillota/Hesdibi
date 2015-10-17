@@ -62,8 +62,15 @@ class File
     /**
      * @Assert\File(
      *      maxSize="10M",
-     *      mimeTypes={"application/pdf", "application/x-pdf"},
-     *      mimeTypesMessage="Ce fichier n'est pas au bon au bon format",
+     *      mimeTypes={
+     *          "application/pdf",
+     *          "application/x-pdf" ,
+     *          "image/jpeg",
+     *          "image/pjpeg",
+     *          "image/png",
+     *          "image/x-png"
+     *      },
+     *      mimeTypesMessage="Ce fichier n'est pas au bon format",
      *      maxSizeMessage="Fichier trop gros (10Mo max)"
      *  )
      */
@@ -72,7 +79,7 @@ class File
     /**
      * @var Folder
      *
-     * @ORM\ManyToOne(targetEntity="folder", inversedBy="files")
+     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="files")
      */
     private $folder;
 
@@ -85,16 +92,27 @@ class File
     private $owner;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AG\UserBundle\Entity\User", inversedBy="sharedFiles")
+     */
+    private $authorizedUsers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ShareLink", mappedBy="file")
+     */
+    private $shareLinks;
+
+    /**
      * @var array
      *
-     * @ORM\Column(type="array")
+     * @ORM\Column(name="send_to", type="array")
      */
-    private $sendTo;
+    private $sendTo = array();
 
 
     public function __construct()
     {
         $this->lastModified = new \DateTime();
+        $this->authorizedUsers = new ArrayCollection();
     }
 
     /**
@@ -270,5 +288,62 @@ class File
     public function getLastModified()
     {
         return $this->lastModified;
+    }
+
+    /**
+     * Set sendTo
+     *
+     * @param array $sendTo
+     * @return File
+     */
+    public function setSendTo($sendTo)
+    {
+        $this->sendTo = $sendTo;
+
+        return $this;
+    }
+
+    /**
+     * Get sendTo
+     *
+     * @return array 
+     */
+    public function getSendTo()
+    {
+        return $this->sendTo;
+    }
+
+    /**
+     * Add authorizedUsers
+     *
+     * @param \AG\UserBundle\Entity\User $authorizedUser
+     * @return File
+     */
+    public function addAuthorizedUser(\AG\UserBundle\Entity\User $authorizedUser)
+    {
+        $this->authorizedUsers[] = $authorizedUser;
+        $authorizedUser->addSharedFile($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove authorizedUsers
+     *
+     * @param \AG\UserBundle\Entity\User $authorizedUser
+     */
+    public function removeAuthorizedUser(\AG\UserBundle\Entity\User $authorizedUser)
+    {
+        $this->authorizedUsers->removeElement($authorizedUser);
+    }
+
+    /**
+     * Get authorizedUsers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAuthorizedUsers()
+    {
+        return $this->authorizedUsers;
     }
 }

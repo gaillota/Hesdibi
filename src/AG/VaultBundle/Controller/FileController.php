@@ -5,15 +5,20 @@ namespace AG\VaultBundle\Controller;
 
 use AG\VaultBundle\Entity\File;
 use AG\VaultBundle\Entity\Folder;
+use AG\VaultBundle\Entity\ShareLink;
 use AG\VaultBundle\Form\EmailType;
 use AG\VaultBundle\Form\FileEditType;
 use AG\VaultBundle\Form\FileType;
+use AG\VaultBundle\Form\ShareWithType;
 use Doctrine\ORM\EntityManager;
+use Mailgun\Mailgun;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class FileController extends Controller
@@ -31,6 +36,7 @@ class FileController extends Controller
     /**
      * @param Folder $folder
      * @Template
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function uploadAction(Folder $folder = null)
     {
@@ -81,6 +87,7 @@ class FileController extends Controller
     /**
      * @param File $file
      * @return JsonResponse
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function renameAction(File $file)
     {
@@ -111,6 +118,7 @@ class FileController extends Controller
      * @param File $file
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @Template
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function removeAction(File $file)
     {
@@ -141,7 +149,7 @@ class FileController extends Controller
      */
     public function downloadAction(File $file)
     {
-        if ($this->getUser() !== $file->getOwner())
+        if ($this->getUser() !== $file->getOwner() && !$file->getAuthorizedUsers()->contains($this->getUser()))
             throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
 
         $response = new Response();
@@ -162,14 +170,13 @@ class FileController extends Controller
      */
     public function previewAction(File $file)
     {
-        if ($this->getUser() !== $file->getOwner())
+        if ($this->getUser() !== $file->getOwner() && !$file->getAuthorizedUsers()->contains($this->getUser()))
             throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
 
         $response = new Response();
         $response->headers->set('Content-Type', "application/pdf");
         $response->headers->set('Content-Disposition', 'inline; filename="'.$file->getName().'"');
         $response->setContent(file_get_contents($file->getPath()));
-//        @readfile($file->getPath());
 
         return $response;
     }
@@ -178,13 +185,12 @@ class FileController extends Controller
      * @param File $file
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @Template
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function sendAction(File $file)
     {
         if ($this->getUser() !== $file->getOwner())
             throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
-
-
 
         $form = $this->createForm(new EmailType());
 
@@ -193,35 +199,32 @@ class FileController extends Controller
             $form->handleRequest($this->request);
 
             if ($form->isValid()) {
+                $mg = new Mailgun($this->container->getParameter('mailgun_api_key'));
+                $domain = $this->container->getParameter('domain_name');
 
-                $message = \Swift_Message::newInstance();
-                $message
-                    ->setSubject($form->get('subject')->getData())
-                    ->setFrom(array('contact@antoine-gaillot.fr' => 'Antoine Gaillot'))
-                    ->setTo($form->get('email')->getData())
-                    ->setBody(
-                        $this->renderView(
-                            'AGVaultBundle:Mail:email.html.twig',
-                            array(
-                                'email' => $form->get('email')->getData(),
-                                'file' => $file,
-                            )
-                        ), 'text/html'
+                $message = array(
+                    'from'      => 'no-reply@antoine-gaillot.com',
+                    'to'        => $form->get('email')->getData(),
+                    'subject'   => $form->get('subject')->getData(),
+                    'html'      => $this->renderView(
+                        'AGVaultBundle:Mail:email.html.twig',
+                        array(
+                            'email' => $form->get('email')->getData(),
+                            'file' => $file,
+                        )
                     )
-                    ->attach(
-                        \Swift_Attachment::fromPath($file->getPath())->setFilename($file->getName())
-                    )
-                ;
+                );
 
-                $headers =& $message->getHeaders();
-                $headers->addIdHeader('Message-ID', "b3eb7202-d2f1-11e4-b9d6-1681e6b88ec1@".$_SERVER['SERVER_NAME']);
-                $headers->addTextHeader('MIME-Version', '1.0');
-                $headers->addTextHeader('X-Mailer', 'PHP v' . phpversion());
-                $headers->addParameterizedHeader('Content-type', 'text/html', ['charset' => 'utf-8']);
+                $mg->sendMessage($domain, $message, array(
+                    'attachment' => array($file->getPath())
+                ));
 
-                $success = $this->get('mailer')->send($message);
+                $result = $mg->get("$domain/log", array(
+                    'limit' => 1,
+                    'skip'  => 0)
+                );
 
-                if ($success > 0) {
+                if ($result->http_response_code == 200) {
                     $sendToArray = $file->getSendTo();
 
                     $sendTo = $form->get('email')->getData();
@@ -253,21 +256,7 @@ class FileController extends Controller
      * @param File $file
      * @return array
      * @Template
-     */
-    public function detailsAction(File $file)
-    {
-        if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
-
-        return array(
-            'file' => $file
-        );
-    }
-
-    /**
-     * @param File $file
-     * @return array
-     * @Template
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function moveAction(File $file)
     {
@@ -296,5 +285,121 @@ class FileController extends Controller
             'file' => $file,
             'form' => $form->createView(),
         );
+    }
+
+    /**
+     * @param File $file
+     * @return array
+     * @Template
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function detailsAction(File $file)
+    {
+        if ($this->getUser() !== $file->getOwner())
+            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+
+        return array(
+            'file' => $file
+        );
+    }
+
+    /**
+     * @param File $file
+     * @return array
+     * @Template
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function shareWithAction(File $file)
+    {
+        if ($this->getUser() !== $file->getOwner())
+            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+
+        $form = $this->createForm(new ShareWithType(), $file);
+
+        if ($this->request->isMethod('POST')) {
+            $form->handleRequest($this->request);
+
+            if ($form->isValid()) {
+                $this->em->persist($file);
+                $this->em->flush();
+
+                $this->addFlash('info', 'Fichier partagé avec succès !');
+
+                return null === $file->getFolder() ? $this->redirectToRoute('ag_vault_homepage') : $this->redirectToRoute('ag_vault_folder_show', array(
+                    'id' => $file->getFolder()->getId(),
+                    'slug' => $file->getFolder()->getSlug(),
+                ));
+            }
+
+            $this->addFlash('danger', 'Une erreur est survenue. Veuillez contacter le big boss pour un petit service après-vente qui mets dans le bien.');
+        }
+
+        return array(
+            'form' => $form->createView(),
+            'file' => $file,
+        );
+    }
+
+    /**
+     * @param File $file
+     * @return array
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function generateLinkAction(File $file)
+    {
+        if ($this->getUser() !== $file->getOwner())
+            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+
+        $shareLink = new ShareLink();
+        $file->addShareLink($shareLink);
+
+        $length = 20;
+        $token = bin2hex(openssl_random_pseudo_bytes($length));
+
+        $shareLink->setFile($file)->setToken($token);
+
+        $this->em->persist($shareLink);
+        $this->em->flush();
+
+        return new JsonResponse(array(
+            'response' => 1,
+            'route' => $this->generateUrl('ag_vault_file_show', array('token' => $shareLink->getToken()), UrlGeneratorInterface::ABSOLUTE_URL),
+        ));
+    }
+
+    /**
+     * @param File $file
+     * @return array
+     * @Template
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function getLinksAction(File $file)
+    {
+        if ($this->getUser() !== $file->getOwner())
+            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+
+        return array(
+            'file' => $file,
+        );
+    }
+
+    /**
+     * @param File $file
+     * @return Response
+     */
+    public function showAction($token)
+    {
+        $file = $this->em->getRepository('AGVaultBundle:File')->findOneByToken($token);
+
+        if (null === $file) {
+            throw $this->createNotFoundException('Le lien que vous recherchez n\'existe pas.');
+        }
+
+        $response = new Response();
+        $response->headers->set('Content-Type', "application/pdf");
+        $response->headers->set('Content-Disposition', 'inline; filename="'.$file->getName().'"');
+        $response->setContent(file_get_contents($file->getPath()));
+
+        return $response;
     }
 }

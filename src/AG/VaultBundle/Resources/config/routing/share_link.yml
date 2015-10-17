@@ -1,0 +1,11 @@
+ag_vault_link_all:
+    path: /all
+    defaults:
+        _controller: AGVaultBundle:ShareLink:all
+
+ag_vault_link_remove:
+    path: /{id}/remove
+    defaults:
+        _controller: AGVaultBundle:ShareLink:remove
+    requirements:
+        id: \d+
