@@ -1,0 +1,28 @@
+{% extends 'AGVaultBundle::layout.html.twig' %}
+
+{% form_theme formFolder 'bootstrap_3_layout.html.twig' %}
+{% form_theme formFile 'bootstrap_3_layout.html.twig' %}
+
+{% block breadcrumbs %}
+	{{ parent() }}
+	{% if folder is not null %}
+		{% for parent in listParents %}
+			<li><a href="{{ path('ag_vault_folder_show', { id:parent.id, slug:parent.slug }) }}">{{ parent.name }}</a></li>
+		{% endfor %}
+		<li class="active">{{ folder.name }}</li>
+	{% endif %}
+{% endblock %}
+
+{% block ag_vault_content %}
+	{% include 'AGVaultBundle:Folder:modals.html.twig' %}
+
+	{% include is_mobile() ? 'AGVaultBundle:Folder:mobile.html.twig' : 'AGVaultBundle:Folder:desktop.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('js/jquery.fancybox.pack.js') }}"></script>
+	<script src="{{ asset('js/folder.js') }}"></script>
+	<script src="{{ asset('js/modal.js') }}"></script>
+{% endblock %}

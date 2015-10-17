@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>My Vault</title>
+	    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	    <meta name="mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <link rel="manifest" href="{{ asset('manifest.json') }}">
+	    <link rel="icon" sizes="192x192" href="{{ asset('img/apple-icon-192x192.png') }}" />
+	    <link rel="apple-touch-icon" sizes="192x192" href="{{ asset('img/apple-icon-192x192.png') }}" />
+        {% block stylesheets %}
+	        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	        {#<link href="{{ asset('cdn/bootstrap-paper.min.css') }}" rel="stylesheet"/>#}
+	        {#<link href="{{ asset('cdn/bootstrap-yeti.min.css') }}" rel="stylesheet"/>#}
+	        {#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/lumen/bootstrap.min.css"/>#}
+	        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	        <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}"/>
+	        <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+	        <link rel="stylesheet" href="{{ asset('css/responsive.css') }}"/>
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block navbar %}
+	        {% include '::nav.html.twig' %}
+        {% endblock %}
+        <div class="container">
+	        {% block flashbag %}
+		        {% for label, flashes in app.session.flashbag.all %}
+			        {% for flash in flashes %}
+				        <div class="alert alert-{{ label }} alert-dismissible fade in" role="alert">
+					        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						        <span aria-hidden="true">&times;</span>
+					        </button>
+					        {{ flash }}
+				        </div>
+			        {% endfor %}
+		        {% endfor %}
+	        {% endblock %}
+	        {% block body %}{% endblock %}
+        </div>
+        {% block javascripts %}
+	        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        {% endblock %}
+    </body>
+</html>

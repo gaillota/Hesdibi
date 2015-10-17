@@ -1,0 +1,3 @@
+ag_user_admin:
+    resource: "@AGUserBundle/Resources/config/routing/admin.yml"
+    prefix: /admin/users

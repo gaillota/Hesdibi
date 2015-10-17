@@ -1,0 +1,191 @@
+@import url(http://fonts.googleapis.com/css?family=Poiret+One);
+@import "mixins.css";
+
+ol.breadcrumb {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid transparent;
+}
+
+#vault {
+    font-family: Roboto, HelveticaNeue-Light, Helvetica, Arial, sans-serif;
+    font-size: 0.9em;
+    margin-bottom: 200px;
+}
+
+#vault .new .dropdown-toggle {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 6px 25px;
+}
+
+#vault .new .dropdown-menu > li > a {
+    color: #444;
+}
+
+#vault .dropdown.actions button.dropdown-toggle {
+    padding: 0 10px;
+    border: 0;
+    background-color: transparent;
+    visibility: hidden;
+}
+
+#vault .table > tbody > tr:hover .actions button.dropdown-toggle {
+    visibility: visible;
+}
+
+#vault h2 {
+    color: #444;
+}
+
+#vault .table > tbody > tr {
+    cursor: pointer;
+}
+
+#vault .table > tbody > tr > td {
+    vertical-align: middle;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#vault .table > tbody > tr > td:first-child > i.fa {
+    padding: 10px;
+    margin-right: 5px;
+    font-size: 24px;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+}
+
+#vault .table > tbody > tr > td:first-child > i.fa.fa-folder, #vault-mobile i.fa.fa-folder {
+    color: #bbb;
+}
+
+#vault .table > tbody > tr > td:first-child > span.folder_length {
+    background-color: #888;
+    border-radius: 100%;
+    padding: 4px 8px;
+    margin-left: 5px;
+    color: #f0f0f0;
+    font-size: 0.9em;
+}
+
+#vault .searchForm {
+    width: 250px;
+}
+
+.dropup {
+    position: fixed;
+    bottom: 20px;
+    right: 15px;
+    display: none;
+    z-index:999;
+}
+
+.dropup button.dropdown-toggle {
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    font-family: 'Poiret One', cursive;
+    padding: 0 15px;
+    font-size: 25px;
+    font-weight: 700;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+    -webkit-transition: box-shadown 150ms ease-out;
+    transition: box-shadown 150ms ease-out;
+}
+
+.dropup button.dropdown-toggle:hover {
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.16), 0 6px 12px rgba(0, 0, 0, 0.32);
+}
+
+.dropup ul.dropdown-menu {
+    min-width: auto;
+    left: 1px;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    background-color: transparent;
+}
+
+.dropup ul.dropdown-menu li {
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
+    padding: 5px 0;
+    margin: 8px 0;
+    background-color: #fff;
+    width: 39px;
+}
+
+.dropup ul.dropdown-menu li a {
+    padding: 3px 13px;
+}
+
+.dropup .dropdown-menu li a:hover {
+    background: none;
+}
+
+#shareLinkModal .modal-header h4 {
+    overflow: hidden;
+    white-space: nowrap;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+#shareLinkModal .modal-body .container-fluid input {
+    width: 100%;
+    border: medium none;
+    /*box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);*/
+    padding: 10px 0;
+    font-size: 13px;
+    color: rgb(68, 68, 68);
+}
+
+.loader {
+    display: none;
+    margin: 20px auto;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.loader span {
+    order: 1;
+    flex-grow: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    border: 3px solid #2B8CCD;
+    margin: 0 5px;
+    transform: scale(0.5);
+    background: rgba(43, 140, 205, 0);
+    animation: LOADING 1.5s infinite;
+}
+
+.loader span:nth-child(1n) {
+    animation-delay: 0s;
+}
+.loader span:nth-child(2n) {
+    animation-delay: 0.2s;
+}
+.loader span:nth-child(3n) {
+    animation-delay: 0.4s;
+}
+
+@keyframes LOADING {
+    0%   {
+        transform: scale(0.5);
+        background: rgba(43, 140, 205, 0);
+    }
+    50%   {
+        transform: scale(1);
+        background: rgba(43, 140, 205, 1);
+    }
+    100% {
+        transform: scale(0.5);
+        background: rgba(43, 140, 205, 0);
+    }
+}

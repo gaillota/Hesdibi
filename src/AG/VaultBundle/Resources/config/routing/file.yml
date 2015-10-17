@@ -1,0 +1,76 @@
+ag_vault_file_remove:
+    path: /{id}/remove
+    defaults:
+        _controller: AGVaultBundle:File:remove
+    requirements:
+        id: \d+
+
+ag_vault_file_download:
+    path: /{id}/download
+    defaults:
+        _controller: AGVaultBundle:File:download
+    requirements:
+        id: \d+
+
+ag_vault_file_preview:
+    path: /{id}/preview
+    defaults:
+        _controller: AGVaultBundle:File:preview
+    requirements:
+        id: \d+
+
+ag_vault_file_rename:
+    path: /{id}/rename
+    defaults:
+        _controller: AGVaultBundle:File:rename
+    requirements:
+        id: \d+
+
+ag_vault_file_send:
+    path: /{id}/send
+    defaults:
+        _controller: AGVaultBundle:File:send
+    requirements:
+        id: \d+
+
+ag_vault_file_move:
+    path: /{id}/move
+    defaults:
+        _controller: AGVaultBundle:File:move
+    requirements:
+        id: \d+
+
+ag_vault_file_details:
+    path: /{id}/details
+    defaults:
+        _controller: AGVaultBundle:File:details
+    requirements:
+        id: \d+
+
+ag_vault_file_share_with:
+    path: /{id}/share-with
+    defaults:
+        _controller: AGVaultBundle:File:shareWith
+    requirements:
+        id: \d+
+
+ag_vault_file_generate_link:
+    path: /{id}/generate-link
+    defaults:
+        _controller: AGVaultBundle:File:generateLink
+    requirements:
+        id: \d+
+
+ag_vault_file_get_links:
+    path: /{id}/get-links
+    defaults:
+        _controller: AGVaultBundle:File:getLinks
+    requirements:
+        id: \d+
+
+ag_vault_file_show:
+    path: /{token}
+    defaults:
+        _controller: AGVaultBundle:File:show
+    requirements:
+        token: "[a-z0-9]{40}"

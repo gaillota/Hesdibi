@@ -1,0 +1,62 @@
+{% extends '::base.html.twig' %}
+
+{% block navbar %}
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="{{ path('ag_vault_homepage') }}">{{ fa('unlock-alt') }} Vault</a>
+			</div>
+		</div><!-- /.container -->
+	</nav>
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Bienvenue sur le Vault</h1>
+		</div>
+	</div>
+	<div class="row text-justify">
+		<div class="col-md-6">
+			<h2>Se connecter</h2>
+			<hr/>
+			{% if error %}
+				<div class="alert alert-danger">{{ error|trans({}, 'FOSUserBundle') }}</div>
+			{% endif %}
+			<form action="{{ path("fos_user_security_check") }}" method="post">
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+				<div class="form-group">
+					<label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+					<input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" autofocus="on" />
+				</div>
+				<div class="form-group">
+					<label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+					<input class="form-control" type="password" id="password" name="_password" required="required" />
+				</div>
+				<div class="checkbox">
+					<label for="remember_me">
+						<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+						{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+					</label>
+				</div>
+				<div class="form-group">
+					<input class="btn btn-primary pull-right" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
+				</div>
+			</form>
+			<div class="clearfix"></div>
+		</div>
+		<div class="col-md-6">
+			<h2>Stocker et organiser vos documents personnels</h2>
+			<p>Ici vous pouvez en toute sécurité stocker tous vos documents personnels (CNI, Passport, RIB, etc.)</p>
+			<p>Ainsi vous pourrez y avoir accèder peu importe où vous vous trouvez, à condition bien sûr d'avoir accès à internet.</p>
+			<p>Vous pourrez notamment télécharger vos documents sur votre téléphone, votre tablette, ou votre ordinateur portable, mais également envoyer des documents par mail à un quiconque vous souhaitez.</p>
+		</div>
+	</div>
+{% endblock %}

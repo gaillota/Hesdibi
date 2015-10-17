@@ -1,0 +1,20 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+    ag_vault.font_awesome_extension:
+        class: AG\VaultBundle\Twig\FontAwesomeExtension
+        tags:
+            - { name: twig.extension }
+
+    ag_vault.date_fr_extension:
+        class: AG\VaultBundle\Twig\DateFrExtension
+        tags:
+            - { name: twig.extension }
+
+    ag_vault.size_reformat_extension:
+        class: AG\VaultBundle\Twig\SizeReformatExtension
+        tags:
+            - { name: twig.extension }
