@@ -17,4 +17,3 @@ ag_user_admin_remove:
     defaults: { _controller: AGUserBundle:Admin:remove }
     requirements:
         id: \d+
-

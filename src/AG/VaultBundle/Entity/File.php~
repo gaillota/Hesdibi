@@ -116,16 +116,32 @@ class File
     private $authorizedUsers;
 
     /**
+<<<<<<< HEAD
      * @ORM\OneToMany(targetEntity="ShareLink", mappedBy="file", cascade={"persist", "remove"})
      */
     private $shareLinks;
+=======
+     * @ORM\OneToMany(targetEntity="ShareLink", mappedBy="file")
+     */
+    private $shareLinks;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="send_to", type="array")
+     */
+    private $sendTo = array();
+>>>>>>> f0593336ca8099b27789267528f5c6a7229d3788
 
 
     public function __construct()
     {
         $this->lastModified = new \DateTime();
         $this->authorizedUsers = new ArrayCollection();
+<<<<<<< HEAD
         $this->shareLinks = new ArrayCollection();
+=======
+>>>>>>> f0593336ca8099b27789267528f5c6a7229d3788
     }
 
     /**
@@ -387,6 +403,7 @@ class File
     {
         return $this->authorizedUsers;
     }
+<<<<<<< HEAD
 
     /**
      * Add shareLinks
@@ -420,4 +437,6 @@ class File
     {
         return $this->shareLinks;
     }
+=======
+>>>>>>> f0593336ca8099b27789267528f5c6a7229d3788
 }

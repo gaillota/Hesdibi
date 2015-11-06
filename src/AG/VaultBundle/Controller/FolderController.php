@@ -68,7 +68,7 @@ class FolderController extends Controller
             ));
         }
 
-        //Check if folder is owned by admin user
+        //Check if folder is owned by user
         if (null !== $folder && $this->getUser() !== $folder->getOwner())
             throw new AccessDeniedException("Vous ne pouvez pas accéder à ce dossier.");
 
@@ -94,7 +94,7 @@ class FolderController extends Controller
             $formFolder->handleRequest($this->request);
             $formFile->handleRequest($this->request);
 
-            //If the folder form is valid => Create new folder
+            //If the folder form is valid => New folder
             if ($formFolder->isValid()) {
                 $this->em->persist($newFolder);
                 $this->em->flush();
@@ -105,14 +105,14 @@ class FolderController extends Controller
                 ));
             }
 
-            //If the file form is valid => Upload new file
+            //If the file form is valid => New file
             if ($formFile->isValid()) {
                 if (null !== $folder) {
                     $folder->setLastModified(new \DateTime());
                     $this->em->persist($folder);
                 }
-                if ($file->isEncrypted())
-                    $this->get('ag_vault.encryption_service')->encrypt($file);
+//                if ($file->isEncrypted())
+//                    $this->get('ag_vault.encryption_service')->encrypt($file);
 
                 $this->em->persist($file);
                 if ($file->getFile()) {

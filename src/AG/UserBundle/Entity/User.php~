@@ -57,16 +57,26 @@ class User extends BaseUser
     private $folders;
 
     /**
+<<<<<<< HEAD
      * @ORM\ManyToMany(targetEntity="AG\VaultBundle\Entity\File", mappedBy="authorizedUsers")
      */
     private $sharedFiles;
+=======
+     * @ORM\ManyToMany(targetEntity="AG\VaultBundle\Entity\File", mappedBy="usersAuthorized")
+     */
+    private $filesShared;
+>>>>>>> f0593336ca8099b27789267528f5c6a7229d3788
 
     public function __construct()
     {
         parent::__construct();
         $this->files = new ArrayCollection();
         $this->folders = new ArrayCollection();
+<<<<<<< HEAD
         $this->sharedFiles = new ArrayCollection();
+=======
+        $this->filesShared = new ArrayCollection();
+>>>>>>> f0593336ca8099b27789267528f5c6a7229d3788
     }
 
     /**

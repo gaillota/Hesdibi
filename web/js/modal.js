@@ -104,7 +104,6 @@ $(function() {
             }
         })
     });
-
     $('#passwordModal').on('shown.bs.modal', function(event) {
         var modal = $(this);
         var button = $(event.relatedTarget); // Button that triggered the modal

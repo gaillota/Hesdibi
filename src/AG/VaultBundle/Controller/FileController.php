@@ -35,6 +35,56 @@ class FileController extends Controller
      */
     private $request;
 
+    /**
+     * @param Folder $folder
+     * @Template
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function uploadAction(Folder $folder = null)
+    {
+        if (null !== $folder && $this->getUser() !== $folder->getOwner())
+            throw new AccessDeniedException("Vous ne pouvez pas ajouter de fichier à ce dossier car il ne vous appartient pas.");
+
+        $file = new File;
+        $file->setFolder($folder);
+        $formFile = $this->createForm(new FileType, $file);
+
+        if ($this->request->isMethod('POST')) {
+            $formFile->handleRequest($this->request);
+
+            if ($formFile->isValid()) {
+                if (null !== $folder) {
+                    $folder->setLastModified(new \DateTime());
+                    $this->em->persist($folder);
+                }
+                $this->em->persist($file);
+                if ($file->getFile()) {
+                    $this->get('stof_doctrine_extensions.uploadable.manager')->markEntityToUpload($file, $file->getFile());
+                }
+                $this->em->flush();
+
+                $this->addFlash('success', 'Fichier ajouté avec succès !');
+
+                return null !== $folder ? $this->redirectToRoute('ag_vault_folder_show', array('id' => $folder->getId(), 'slug' => $folder->getSlug())) : $this->redirectToRoute('ag_vault_homepage');
+            }
+        }
+
+        $listParents = array();
+        if (null !== $folder) {
+            $nextParent = $folder->getParent();
+            while (null !== $nextParent):
+                $listParents[] = $nextParent;
+                $nextParent = $nextParent->getParent();
+            endwhile;
+            $listParents = array_reverse($listParents);
+        }
+
+        return array(
+            'form' => $formFile->createView(),
+            'folder' => $folder,
+            'listParents' => $listParents,
+        );
+    }
 
     /**
      * @param File $file
@@ -419,6 +469,22 @@ class FileController extends Controller
 //    }
 
     /**
+     * @param File $file
+     * @return array
+     * @Template
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function getLinksAction(File $file)
+    {
+        if ($this->getUser() !== $file->getOwner())
+            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+
+        return array(
+            'file' => $file,
+        );
+    }
+
+    /**
      * @param $token
      * @return Response
      */
@@ -430,8 +496,8 @@ class FileController extends Controller
             throw $this->createNotFoundException('Le lien que vous recherchez n\'existe pas.');
         }
 
-        if ($file->isEncrypted())
-            throw $this->createAccessDeniedException("Le fichier est chiffré, vous ne pouvez pas y accéder.");
+//        if ($file->isEncrypted())
+//            throw $this->createAccessDeniedException("Le fichier est chiffré, vous ne pouvez pas y accéder.");
 
         $response = new Response();
         $response->headers->set('Content-Type', "application/pdf");

@@ -57,9 +57,9 @@ class AdminController extends Controller
             //Set random password to the user
             $user->setPlainPassword($password);
 
-            $encryptionService = $this->get('ag_vault.encryption_service');
-
-            $encryptionService->setupEncryptionRequirements($password);
+//            $encryptionService = $this->get('ag_vault.encryption_service');
+//
+//            $encryptionService->setupEncryptionRequirements($password);
 
             $userManager->updateUser($user);
 
