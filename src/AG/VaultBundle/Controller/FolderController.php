@@ -14,8 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class FolderController extends Controller
 {
@@ -32,6 +35,7 @@ class FolderController extends Controller
     /**
      * @return array
      * @Template
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function indexAction()
     {
@@ -47,39 +51,50 @@ class FolderController extends Controller
     /**
      * @param Folder $folder
      * @return array
-     * @Template
      */
-    public function showAction(Folder $folder = null, $slug)
+    public function showAction(Folder $folder = null, $slug = null)
     {
-        //Check if folder is owned by user
+        //Fetch the research from the query if it exists
+        $search = $this->request->query->get('s', null);
+
+        //If user is not admin
+        if (!$this->getUser()->hasRole('ROLE_ADMIN')) {
+            //If non-admin user is somehow not in the root directory, kick the fuck outta him.
+            if (null !== $folder)
+                throw new AccessDeniedException('Vous ne pouvez pas accéder à ce dossier.');
+
+            return $this->render('AGVaultBundle:Folder:showUser.html.twig', array(
+                'listFiles' => $this->em->getRepository('AGVaultBundle:File')->findByAuthorizedUsers($this->getUser()),
+            ));
+        }
+
+        //Check if folder is owned by admin user
         if (null !== $folder && $this->getUser() !== $folder->getOwner())
-            throw new AccessDeniedException("Ce dossier ne vous appartient pas.");
+            throw new AccessDeniedException("Vous ne pouvez pas accéder à ce dossier.");
 
         //Check slug
-        if ($folder->getSlug() !== $slug)
+        if (null !== $folder && $folder->getSlug() !== $slug)
             return $this->redirectToRoute('ag_vault_folder_show', array(
                 'id' => $folder->getId(),
                 'slug' => $folder->getSlug(),
-            ));
+            ), 301);
 
-        $search = $this->request->query->get('s', null);
-
-        if (null !== $search && empty($search)) {
-            return null !== $folder ? $this->redirectToRoute('ag_vault_folder_show', array('id' => $folder->getId(), 'slug' => $folder->getSlug())) : $this->redirectToRoute('ag_vault_homepage');
-        }
-
+        //Create new folder and associated form in case of new folder
         $newFolder = new Folder;
         $newFolder->setParent($folder);
         $formFolder = $this->createForm(new FolderType, $newFolder);
 
+        //Create new file and associated form in case of upload of file
         $file = new File;
         $file->setFolder($folder);
         $formFile = $this->createForm(new FileType, $file);
 
+        //If a form has been submitted
         if ($this->request->isMethod('POST')) {
             $formFolder->handleRequest($this->request);
             $formFile->handleRequest($this->request);
 
+            //If the folder form is valid => Create new folder
             if ($formFolder->isValid()) {
                 $this->em->persist($newFolder);
                 $this->em->flush();
@@ -90,11 +105,15 @@ class FolderController extends Controller
                 ));
             }
 
+            //If the file form is valid => Upload new file
             if ($formFile->isValid()) {
                 if (null !== $folder) {
                     $folder->setLastModified(new \DateTime());
                     $this->em->persist($folder);
                 }
+                if ($file->isEncrypted())
+                    $this->get('ag_vault.encryption_service')->encrypt($file);
+
                 $this->em->persist($file);
                 if ($file->getFile()) {
                     $this->get('stof_doctrine_extensions.uploadable.manager')->markEntityToUpload($file, $file->getFile());
@@ -109,23 +128,27 @@ class FolderController extends Controller
             $this->addFlash('danger', 'Une erreur est survenue.');
         }
 
+        //If a research has been made
         if(!empty($search)) {
-            $listFolders = $this->em->getRepository('AGVaultBundle:Folder')->findSearch($search, $folder);
+            $listFolders = $this->em->getRepository('AGVaultBundle:Folder')->findSearch($search, $this->getUser());
 
-            $listFiles = $this->em->getRepository('AGVaultBundle:File')->findSearch($search, $folder);
+            $listFiles = $this->em->getRepository('AGVaultBundle:File')->findSearch($search, $this->getUser());
         } else {
             $listFolders = $this->em->getRepository('AGVaultBundle:Folder')->findBy(array(
                 'parent' => $folder,
+                'owner' => $this->getUser(),
             ), array(
                 'name' => 'ASC'
             ));
             $listFiles = $this->em->getRepository('AGVaultBundle:File')->findBy(array(
                 'folder' => $folder,
+                'owner' => $this->getUser(),
             ), array(
                 'name' => 'ASC'
             ));
         }
 
+        //Retrieve the list of every parents for the current folder
         $listParents = array();
         if (null !== $folder) {
             $nextParent = $folder->getParent();
@@ -136,9 +159,10 @@ class FolderController extends Controller
             $listParents = array_reverse($listParents);
         }
 
-        $size  = null !== $folder ? $folder->getSize() : $this->em->createQuery("SELECT SUM(f.size) FROM AG\VaultBundle\Entity\File f")->getSingleScalarResult();
+        //Get the size of the current folder
+        $size = null !== $folder ? $folder->getSize() : $this->em->createQuery("SELECT SUM(f.size) FROM AG\VaultBundle\Entity\File f")->getSingleScalarResult();
 
-        return array(
+        return $this->render('AGVaultBundle:Folder:showAdmin.html.twig', array(
             'folder' => $folder,
             'formFolder' => $formFolder->createView(),
             'formFile' => $formFile->createView(),
@@ -147,13 +171,14 @@ class FolderController extends Controller
             'listParents' => $listParents,
             'search' => $search,
             'size' => $size,
-        );
+        ));
     }
 
     /**
      * @param Folder $folder
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @Template
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function editAction(Folder $folder)
     {
@@ -180,6 +205,7 @@ class FolderController extends Controller
             $this->addFlash('error', 'Une erreur s\'est produite.');
         }
 
+        //Retrieve the list of every parents for the current folder
         $listParents = array();
         if (null !== $folder->getParent()) {
             $nextParent = $folder->getParent();
@@ -201,6 +227,7 @@ class FolderController extends Controller
      * @param Folder $folder
      * @return array
      * @Template
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function removeAction(Folder $folder)
     {
@@ -247,6 +274,7 @@ class FolderController extends Controller
     /**
      * @param Folder $folder
      * @return JsonResponse
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function renameAction(Folder $folder)
     {
@@ -281,6 +309,7 @@ class FolderController extends Controller
      * @param Folder $folder
      * @return array
      * @Template
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function moveAction(Folder $folder)
     {

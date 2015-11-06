@@ -22,6 +22,8 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new SunCat\MobileDetectBundle\MobileDetectBundle(),
+            new Sinner\Phpseclib\PhpseclibBundle(),
             new AG\UserBundle\AGUserBundle(),
             new AG\VaultBundle\AGVaultBundle(),
         );

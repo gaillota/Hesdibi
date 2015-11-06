@@ -1,0 +1,35 @@
+- Cryptage/Decryptage des fichiers
+- Analytics
+
+    public static function rijndael($text, $key, $operation) {
+218:         if (empty($key)) {
+219:             trigger_error(__d('cake_dev', 'You cannot use an empty key for %s', 'Security::rijndael()'), E_USER_WARNING);
+220:             return '';
+221:         }
+222:         if (empty($operation) || !in_array($operation, array('encrypt', 'decrypt'))) {
+223:             trigger_error(__d('cake_dev', 'You must specify the operation for Security::rijndael(), either encrypt or decrypt'), E_USER_WARNING);
+224:             return '';
+225:         }
+226:         if (strlen($key) < 32) {
+227:             trigger_error(__d('cake_dev', 'You must use a key larger than 32 bytes for Security::rijndael()'), E_USER_WARNING);
+228:             return '';
+229:         }
+230:         $algorithm = MCRYPT_RIJNDAEL_256;
+231:         $mode = MCRYPT_MODE_CBC;
+232:         $ivSize = mcrypt_get_iv_size($algorithm, $mode);
+233:
+234:         $cryptKey = substr($key, 0, 32);
+235:
+236:         if ($operation === 'encrypt') {
+237:             $iv = mcrypt_create_iv($ivSize, MCRYPT_RAND);
+238:             return $iv . '$$' . mcrypt_encrypt($algorithm, $cryptKey, $text, $mode, $iv);
+239:         }
+240:         // Backwards compatible decrypt with fixed iv
+241:         if (substr($text, $ivSize, 2) !== '$$') {
+242:             $iv = substr($key, strlen($key) - 32, 32);
+243:             return rtrim(mcrypt_decrypt($algorithm, $cryptKey, $text, $mode, $iv), "\0");
+244:         }
+245:         $iv = substr($text, 0, $ivSize);
+246:         $text = substr($text, $ivSize + 2);
+247:         return rtrim(mcrypt_decrypt($algorithm, $cryptKey, $text, $mode, $iv), "\0");
+248:     }

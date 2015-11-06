@@ -18,3 +18,7 @@ services:
         class: AG\VaultBundle\Twig\SizeReformatExtension
         tags:
             - { name: twig.extension }
+
+    ag_vault.encryption_service:
+        class: AG\VaultBundle\Services\EncryptionService
+        arguments: [@security.token_storage]

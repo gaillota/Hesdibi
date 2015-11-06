@@ -1,0 +1,55 @@
+{% extends 'AGUserBundle::layout.html.twig' %}
+
+{% block breadcrumbs %}
+    {{ parent() }}
+    <li class="active">Gestion des utilisateurs</li>
+{% endblock %}
+
+{% block ag_user_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="margin-bottom: 20px;"><i class="fa fa-users"></i> Liste des utilisateurs <a class="btn btn-success btn-xs pull-right" href="{{ path('ag_user_admin_add') }}"><i class="fa fa-user-plus"></i> Ajouter</a></h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <tr>
+                        <th>#</th>
+                        <th>Username</th>
+                        <th>E-mail</th>
+                        <th>Last Login</th>
+                        <th>Droits</th>
+                        <th class="text-center">Activé</th>
+                        <th class="text-center">Verrouillé</th>
+                        <th></th>
+                    </tr>
+                    {% for user in users %}
+	                    {% if not user.hasRole('ROLE_ADMIN') %}
+	                        <tr>
+	                            <td>{{ user.id }}</td>
+	                            <td>{{ user.username }}</td>
+	                            <td>{{ user.email }}</td>
+	                            <td>
+	                                {% if user.lastLogin is not null %}
+	                                    {{ user.lastLogin|date_fr }} à {{ user.lastLogin|date('H:i') }}
+	                                {% else %}
+	                                    Jamais connecté.
+	                                {% endif %}
+	                            </td>
+	                            <td>{% for role in user.roles %}<span class="label label-default">{{ role }}</span> {% endfor %}</td>
+	                            <td class="text-center">{{ user.enabled == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>' }}</td>
+	                            <td class="text-center">{{ user.locked == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>' }}</td>
+	                            <td>
+	                                <a class="btn btn-warning btn-xs" href="{{ path('ag_user_admin_edit', { id: user.id }) }}">
+		                                {{ fa('edit') }} Editer
+	                                </a>
+	                                <a class="btn btn-danger btn-xs" href="{{ path('ag_user_admin_remove', { id: user.id }) }}">
+	                                    {{ fa('remove') }} Supprimer
+	                                </a>
+	                            </td>
+	                        </tr>
+	                    {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

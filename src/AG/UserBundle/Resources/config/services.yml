@@ -1,4 +1,7 @@
-services:
+#services:
+#    ag_user_encryption:
+#        class: AG\UserBundle\Services\ChangePasswordListener
+
 #    ag_user.example:
 #        class: AG\UserBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]

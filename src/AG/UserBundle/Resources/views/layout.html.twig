@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+	<ol class="breadcrumb">
+		{% block breadcrumbs %}
+			<li><a href="{{ path('ag_vault_homepage') }}">{{ fa('home') }}</a></li>
+		{% endblock %}
+	</ol>
+	{% block ag_user_content %}
+	{% endblock %}
+{% endblock %}

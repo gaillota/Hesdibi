@@ -1,0 +1,62 @@
+{% extends 'AGVaultBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<style>
+		.popover-content {
+			word-break: break-all;
+		}
+	</style>
+{% endblock %}
+
+{% block breadcrumbs %}
+	{{ parent() }}
+	<li class="active">Liens de partage</li>
+{% endblock %}
+
+{% block ag_vault_content %}
+	<div class="row">
+		<div class="col-md-1 text-right hidden-sm hidden-xs" style="padding-top: 22px;">
+			<a href="{{ path('ag_vault_homepage') }}">
+				{{ fa('arrow-left fa-2x') }}
+			</a>
+		</div>
+		<div class="col-md-11">
+			<h2 style="margin-bottom: 20px;">{{ fa('share-alt') }} Liens de partage</h2>
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<tr>
+						<th>Nom</th>
+						<th></th>
+					</tr>
+					{% for shareLink in listShareLinks %}
+						<tr>
+							<td>{{ fa('file-pdf-o') }}&nbsp; &nbsp;{{ shareLink.file.name }} - <span class="small"><i>{{ shareLink.createdAt|date_fr }} à {{ shareLink.createdAt|date('H:i') }}</i></span></td>
+							<td>
+								<div class="pull-right">
+									<button type="button" class="btn btn-xs btn-success" data-toggle="popover" data-placement="left" data-content="{{ absolute_url(path('ag_vault_file_show', { token:shareLink.token })) }}">{{ fa('eye') }} Obtenir le lien</button>
+									<a class="btn btn-xs btn-danger" href="{{ path('ag_vault_link_remove', { id:shareLink.id }) }}">{{ fa('times') }} Supprimer ce lien</a>
+								</div>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td class="text-center" colspan="4">
+								Aucun lien de partage.
+							</td>
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript">
+		$(function() {
+			$('[data-toggle="popover"]').popover();
+		});
+	</script>
+{% endblock %}

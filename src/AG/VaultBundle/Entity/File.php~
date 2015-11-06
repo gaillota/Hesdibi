@@ -13,7 +13,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AG\VaultBundle\Repository\FileRepository")
- * @ORM\HasLifecycleCallbacks
  * @Gedmo\Uploadable(allowOverwrite=true, appendNumber=true, filenameGenerator="SHA1")
  */
 class File
@@ -34,6 +33,12 @@ class File
      * @Assert\NotBlank()
      */
     private $name;
+
+    /**
+     * @ORM\Column(name="mime_type", type="string")
+     * @Gedmo\UploadableFileMimeType
+     */
+    private $mimeType;
 
     /**
      * @var integer
@@ -62,17 +67,38 @@ class File
     /**
      * @Assert\File(
      *      maxSize="10M",
-     *      mimeTypes={"application/pdf", "application/x-pdf"},
-     *      mimeTypesMessage="Ce fichier n'est pas au bon au bon format",
+     *      mimeTypes={
+     *          "application/pdf",
+     *          "application/x-pdf" ,
+     *          "image/jpeg",
+     *          "image/pjpeg",
+     *          "image/png",
+     *          "image/x-png"
+     *      },
+     *      mimeTypesMessage="Ce fichier n'est pas au bon format",
      *      maxSizeMessage="Fichier trop gros (10Mo max)"
      *  )
      */
     private $file;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="encrypted", type="boolean")
+     */
+    private $encrypted = false;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="send_to", type="array")
+     */
+    private $sendTo = array();
+
+    /**
      * @var Folder
      *
-     * @ORM\ManyToOne(targetEntity="folder", inversedBy="files")
+     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="files")
      */
     private $folder;
 
@@ -85,16 +111,21 @@ class File
     private $owner;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(type="array")
+     * @ORM\ManyToMany(targetEntity="AG\UserBundle\Entity\User", inversedBy="sharedFiles")
      */
-    private $sendTo;
+    private $authorizedUsers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ShareLink", mappedBy="file", cascade={"persist", "remove"})
+     */
+    private $shareLinks;
 
 
     public function __construct()
     {
         $this->lastModified = new \DateTime();
+        $this->authorizedUsers = new ArrayCollection();
+        $this->shareLinks = new ArrayCollection();
     }
 
     /**
@@ -155,6 +186,29 @@ class File
     }
 
     /**
+     * Set mimeType
+     *
+     * @param string $mimeType
+     * @return File
+     */
+    public function setMimeType($mimeType)
+    {
+        $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    /**
+     * Get mimeType
+     *
+     * @return string
+     */
+    public function getMimeType()
+    {
+        return $this->mimeType;
+    }
+
+    /**
      * Set path
      *
      * @param string $path
@@ -188,11 +242,16 @@ class File
     }
 
     /**
+     * Set file
+     *
      * @param mixed $file
+     * @return File
      */
     public function setFile($file)
     {
         $this->file = $file;
+
+        return $this;
     }
 
     /**
@@ -270,5 +329,95 @@ class File
     public function getLastModified()
     {
         return $this->lastModified;
+    }
+
+    /**
+     * Set sendTo
+     *
+     * @param array $sendTo
+     * @return File
+     */
+    public function setSendTo($sendTo)
+    {
+        $this->sendTo = $sendTo;
+
+        return $this;
+    }
+
+    /**
+     * Get sendTo
+     *
+     * @return array 
+     */
+    public function getSendTo()
+    {
+        return $this->sendTo;
+    }
+
+    /**
+     * Add authorizedUsers
+     *
+     * @param \AG\UserBundle\Entity\User $authorizedUser
+     * @return File
+     */
+    public function addAuthorizedUser(\AG\UserBundle\Entity\User $authorizedUser)
+    {
+        $this->authorizedUsers[] = $authorizedUser;
+        $authorizedUser->addSharedFile($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove authorizedUsers
+     *
+     * @param \AG\UserBundle\Entity\User $authorizedUser
+     */
+    public function removeAuthorizedUser(\AG\UserBundle\Entity\User $authorizedUser)
+    {
+        $this->authorizedUsers->removeElement($authorizedUser);
+    }
+
+    /**
+     * Get authorizedUsers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAuthorizedUsers()
+    {
+        return $this->authorizedUsers;
+    }
+
+    /**
+     * Add shareLinks
+     *
+     * @param ShareLink $shareLinks
+     * @return File
+     */
+    public function addShareLink(ShareLink $shareLinks)
+    {
+        $this->shareLinks[] = $shareLinks;
+
+        return $this;
+    }
+
+    /**
+     * Remove shareLinks
+     *
+     * @param ShareLink $shareLinks
+     */
+    public function removeShareLink(ShareLink $shareLinks)
+    {
+        $this->shareLinks->removeElement($shareLinks);
+    }
+
+    /**
+     * Get shareLinks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getShareLinks()
+    {
+        return $this->shareLinks;
     }
 }

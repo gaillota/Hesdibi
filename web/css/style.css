@@ -9,6 +9,7 @@ ol.breadcrumb {
 #vault {
     font-family: Roboto, HelveticaNeue-Light, Helvetica, Arial, sans-serif;
     font-size: 0.9em;
+    margin-bottom: 200px;
 }
 
 #vault .new .dropdown-toggle {
@@ -70,6 +71,10 @@ ol.breadcrumb {
     font-size: 0.9em;
 }
 
+#vault .searchForm {
+    width: 250px;
+}
+
 .dropup {
     position: fixed;
     bottom: 20px;
@@ -121,4 +126,66 @@ ol.breadcrumb {
 
 .dropup .dropdown-menu li a:hover {
     background: none;
+}
+
+#shareLinkModal .modal-header h4 {
+    overflow: hidden;
+    white-space: nowrap;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+#shareLinkModal .modal-body .container-fluid input {
+    width: 100%;
+    border: medium none;
+    /*box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);*/
+    padding: 10px 0;
+    font-size: 13px;
+    color: rgb(68, 68, 68);
+}
+
+.loader {
+    display: none;
+    margin: 20px auto;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.loader span {
+    order: 1;
+    flex-grow: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    border: 3px solid #2B8CCD;
+    margin: 0 5px;
+    transform: scale(0.5);
+    background: rgba(43, 140, 205, 0);
+    animation: LOADING 0.2s infinite;
+}
+
+.loader span:nth-child(1n) {
+    animation-delay: 0s;
+}
+.loader span:nth-child(2n) {
+    animation-delay: 0.2s;
+}
+.loader span:nth-child(3n) {
+    animation-delay: 0.4s;
+}
+
+@keyframes LOADING {
+    0%   {
+        transform: scale(0.5);
+        background: rgba(43, 140, 205, 0);
+    }
+    50%   {
+        transform: scale(1);
+        background: rgba(43, 140, 205, 1);
+    }
+    100% {
+        transform: scale(0.5);
+        background: rgba(43, 140, 205, 0);
+    }
 }

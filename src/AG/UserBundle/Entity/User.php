@@ -13,7 +13,8 @@ use FOS\UserBundle\Entity\User as BaseUser;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AG\UserBundle\Repository\UserRepository")
- */
+ * @ORM\HasLifecycleCallbacks()
+*/
 class User extends BaseUser
 {
     /**
@@ -26,6 +27,27 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="password_validator", type="string", length=255, nullable=true)
+     */
+    private $passwordValidator;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="iv", type="string", length=255, nullable=true)
+     */
+    private $iv;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="encrypted_key", type="string", length=255, nullable=true)
+     */
+    private $encryptedKey;
+
+    /**
      * @ORM\OneToMany(targetEntity="AG\VaultBundle\Entity\File", mappedBy="owner")
      */
     private $files;
@@ -35,12 +57,17 @@ class User extends BaseUser
      */
     private $folders;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AG\VaultBundle\Entity\File", mappedBy="authorizedUsers")
+     */
+    private $sharedFiles;
+
     public function __construct()
     {
         parent::__construct();
-        // your own logic
         $this->files = new ArrayCollection();
         $this->folders = new ArrayCollection();
+        $this->sharedFiles = new ArrayCollection();
     }
 
     /**
@@ -117,5 +144,107 @@ class User extends BaseUser
     public function getFolders()
     {
         return $this->folders;
+    }
+
+    /**
+     * Add sharedFiles
+     *
+     * @param \AG\VaultBundle\Entity\File $sharedFile
+     * @return User
+     */
+    public function addSharedFile(\AG\VaultBundle\Entity\File $sharedFile)
+    {
+        $this->sharedFiles[] = $sharedFile;
+
+        return $this;
+    }
+
+    /**
+     * Remove sharedFiles
+     *
+     * @param \AG\VaultBundle\Entity\File $sharedFile
+     */
+    public function removeSharedFile(\AG\VaultBundle\Entity\File $sharedFile)
+    {
+        $this->sharedFiles->removeElement($sharedFile);
+    }
+
+    /**
+     * Get sharedFiles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSharedFiles()
+    {
+        return $this->sharedFiles;
+    }
+
+    /**
+     * Set passwordValidator
+     *
+     * @param string $passwordValidator
+     * @return User
+     */
+    public function setPasswordValidator($passwordValidator)
+    {
+        $this->passwordValidator = $passwordValidator;
+
+        return $this;
+    }
+
+    /**
+     * Get passwordValidator
+     *
+     * @return string 
+     */
+    public function getPasswordValidator()
+    {
+        return $this->passwordValidator;
+    }
+
+    /**
+     * Set iv
+     *
+     * @param string $iv
+     * @return User
+     */
+    public function setIv($iv)
+    {
+        $this->iv = base64_encode($iv);
+
+        return $this;
+    }
+
+    /**
+     * Get iv
+     *
+     * @return string 
+     */
+    public function getIv()
+    {
+        return base64_decode($this->iv);
+    }
+
+    /**
+     * Set encryptedKey
+     *
+     * @param string $encryptedKey
+     * @return User
+     */
+    public function setEncryptedKey($encryptedKey)
+    {
+        $this->encryptedKey = base64_encode($encryptedKey);
+
+        return $this;
+    }
+
+    /**
+     * Get encryptedKey
+     *
+     * @return string 
+     */
+    public function getEncryptedKey()
+    {
+        return base64_decode($this->encryptedKey);
     }
 }

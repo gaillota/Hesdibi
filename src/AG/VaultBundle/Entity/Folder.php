@@ -275,4 +275,16 @@ class Folder
     {
         return $this->slug;
     }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Folder
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        return $this;
+    }
 }

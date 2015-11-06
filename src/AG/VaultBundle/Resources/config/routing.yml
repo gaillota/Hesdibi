@@ -3,10 +3,10 @@ ag_vault_homepage:
     defaults:
         _controller: AGVaultBundle:Folder:show
 
-ag_vault_upload:
-    path: /upload
-    defaults:
-        _controller: AGVaultBundle:File:upload
+#ag_vault_upload:
+#    path: /upload
+#    defaults:
+#        _controller: AGVaultBundle:File:upload
 
 ag_vault_folder:
     resource: "routing/folder.yml"
@@ -15,3 +15,7 @@ ag_vault_folder:
 ag_vault_file:
     resource: "routing/file.yml"
     prefix: /file
+
+ag_vault_share_link:
+    resource: "routing/share_link.yml"
+    prefix: /share-link

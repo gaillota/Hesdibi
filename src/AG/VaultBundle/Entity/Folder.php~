@@ -37,7 +37,7 @@ class Folder
      * @var string
      *
      * @ORM\Column(name="slug", type="string", length=255)
-     * @Gedmo\Slug(fields={"name"})
+     * @Gedmo\Slug(fields={"name"}, unique=false)
      */
     private $slug;
 
@@ -77,6 +77,11 @@ class Folder
      */
     private $owner;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AG\UserBundle\Entity\User", mappedBy="foldersGranted")
+     */
+    private $usersGranted;
+
 
     public function __construct()
     {
@@ -84,6 +89,7 @@ class Folder
         $this->children = new ArrayCollection();
         $this->parent = null;
         $this->lastModified = new \DateTime();
+        $this->usersGranted = new ArrayCollection();
     }
 
     /**
@@ -264,5 +270,27 @@ class Folder
             $size += $file->getSize();
         }
         return $size;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Folder
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        return $this;
     }
 }
