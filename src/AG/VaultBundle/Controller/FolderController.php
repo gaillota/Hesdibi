@@ -111,8 +111,6 @@ class FolderController extends Controller
                     $folder->setLastModified(new \DateTime());
                     $this->em->persist($folder);
                 }
-//                if ($file->isEncrypted())
-//                    $this->get('ag_vault.encryption_service')->encrypt($file);
 
                 $this->em->persist($file);
                 if ($file->getFile()) {

@@ -22,31 +22,29 @@
                         <th></th>
                     </tr>
                     {% for user in users %}
-	                    {% if not user.hasRole('ROLE_ADMIN') %}
-	                        <tr>
-	                            <td>{{ user.id }}</td>
-	                            <td>{{ user.username }}</td>
-	                            <td>{{ user.email }}</td>
-	                            <td>
-	                                {% if user.lastLogin is not null %}
-	                                    {{ user.lastLogin|date_fr }} à {{ user.lastLogin|date('H:i') }}
-	                                {% else %}
-	                                    Jamais connecté.
-	                                {% endif %}
-	                            </td>
-	                            <td>{% for role in user.roles %}<span class="label label-default">{{ role }}</span> {% endfor %}</td>
-	                            <td class="text-center">{{ user.enabled == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>' }}</td>
-	                            <td class="text-center">{{ user.locked == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>' }}</td>
-	                            <td>
-	                                <a class="btn btn-warning btn-xs" href="{{ path('ag_user_admin_edit', { id: user.id }) }}">
-		                                {{ fa('edit') }} Editer
-	                                </a>
-	                                <a class="btn btn-danger btn-xs" href="{{ path('ag_user_admin_remove', { id: user.id }) }}">
-	                                    {{ fa('remove') }} Supprimer
-	                                </a>
-	                            </td>
-	                        </tr>
-	                    {% endif %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {% if user.lastLogin is not null %}
+                                    {{ user.lastLogin|date_fr }} à {{ user.lastLogin|date('H:i') }}
+                                {% else %}
+                                    Jamais connecté.
+                                {% endif %}
+                            </td>
+                            <td>{% for role in user.roles %}<span class="label label-default">{{ role }}</span> {% endfor %}</td>
+                            <td class="text-center">{{ user.enabled == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>' }}</td>
+                            <td class="text-center">{{ user.locked == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>' }}</td>
+                            <td>
+                                <a class="btn btn-warning btn-xs" href="{{ path('ag_user_admin_edit', { id: user.id }) }}">
+	                                {{ fa('edit') }} Editer
+                                </a>
+                                <a class="btn btn-danger btn-xs" href="{{ path('ag_user_admin_remove', { id: user.id }) }}">
+                                    {{ fa('remove') }} Supprimer
+                                </a>
+                            </td>
+                        </tr>
                     {% endfor %}
                 </table>
             </div>

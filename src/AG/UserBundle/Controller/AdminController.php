@@ -57,10 +57,6 @@ class AdminController extends Controller
             //Set random password to the user
             $user->setPlainPassword($password);
 
-//            $encryptionService = $this->get('ag_vault.encryption_service');
-//
-//            $encryptionService->setupEncryptionRequirements($password);
-
             $userManager->updateUser($user);
 
             $this->addFlash('success', 'Utilisateur crée avec succès.');
@@ -155,82 +151,4 @@ class AdminController extends Controller
             'user' => $user,
         );
     }
-
-//    /**
-//     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-//     * @Template
-//     * @Secure(roles="ROLE_ADMIN")
-//     */
-//    public function setupEncryptionSettingsAction($password)
-//    {
-//        $user = $this->getUser();
-//
-//        $encryptedKey = $user->getEncryptedKey();
-//
-//        if (null !== $encryptedKey) {
-//            $this->addFlash('danger', 'Your already have your encryption settings set up');
-//            return $this->redirectToRoute('ag_user_admin_index');
-//        }
-//
-//        $serviceEncryption = $this->get('ag_vault.encryption_service');
-//
-//        $passwordValidatorAndKey = $serviceEncryption->getPasswordValidator($password, $user->getSalt());
-//        $passwordValidator = $passwordValidatorAndKey['passwordValidator'];
-//        $user
-//            ->setPasswordValidator($passwordValidator)
-//            ->setIv($serviceEncryption->generateIV())
-//        ;
-//        $encryptionKey = $passwordValidatorAndKey['encryptionKey'];
-//
-//        $key = $serviceEncryption->generateFileEncryptionKey();
-//
-//        $encryptedKey = $serviceEncryption->encryptEncryptionKey($encryptionKey, $key, $user->getIv());
-//        $user->setEncryptedKey($encryptedKey);
-//
-//        $this->get('fos_user.user_manager')->updateUser($user);
-//
-//        $this->addFlash('success', 'Encryption settings successfully setup !');
-//        return $this->redirectToRoute('ag_user_admin_index');
-//    }
-//
-//    public function editEncryptionSettingsAction($password, $newPassword)
-//    {
-//        $user = $this->getUser();
-//
-//        $encryptedKey = $user->getEncryptedKey();
-//
-//        if (null === $encryptedKey) {
-//            $this->addFlash('danger', 'You need to set your encryption settings up first');
-//            return $this->redirectToRoute('ag_user_admin_index');
-//        }
-//
-//        $serviceEncryption = $this->get('ag_vault.encryption_service');
-//
-//        $passwordValidatorAndKey = $serviceEncryption->getPasswordValidator($password, $user->getSalt());
-//
-//        $key = $serviceEncryption->decryptFileEncryptionKey()
-//
-//        if ($passwordValidator != $user->getPasswordValidator()) {
-//            $this->addFlash('danger', 'Wrong password !');
-//            return $this->redirectToRoute('ag_user_admin_index');
-//        }
-//
-//        // Retrieve user's file encryption key
-//        $key = $serviceEncryption->decryptFileEncryptionKey($encryptionKey, $user->getEncryptedKey(), $user->getIv());
-//
-//        $passwordValidatorAndKey = $serviceEncryption->getPasswordValidator($newPassword, $user->getSalt());
-//        $passwordValidator = $passwordValidatorAndKey['passwordValidator'];
-//        $user->setPasswordValidator($passwordValidator);
-//        $iv = $serviceEncryption->generateIV();
-//        $user->setIv($iv);
-//        $encryptionKey = $passwordValidatorAndKey['encryptionKey'];
-//        $encryptedKey = $serviceEncryption->encryptEncryptionKey($encryptionKey, $key, $user->getIv());
-//        $user->setEncryptedKey($encryptedKey);
-//
-//        // Persist user's new settings in database
-//        $this->get('fos_user.user_manager')->updateUser($user);
-//
-//        $this->addFlash('success', 'Encryption settings successfully changed !');
-//        return $this->redirectToRoute('ag_user_admin_index');
-//    }
 }

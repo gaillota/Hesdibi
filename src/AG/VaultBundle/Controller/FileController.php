@@ -154,40 +154,7 @@ class FileController extends Controller
         if ($this->getUser() !== $file->getOwner() && !$file->getAuthorizedUsers()->contains($this->getUser()))
             throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
 
-//        if ($file->isEncrypted()) {
-//            $password = $this->request->request->get('password', null);
-//
-//            if (null === $password or empty($password)) {
-//                $this->addFlash('danger', 'Veuillez fournir le mot de passe permettant le décryptage du fichier.');
-//                return $this->redirectCorrectly($file);
-//            }
-//
-//            $user = $this->getUser();
-//
-//            $encryptionService = $this->get('ag_vault.encryption_service');
-//
-//            $passwordValidatorAndKey = $encryptionService->getPasswordValidator($password, $user->getSalt());
-//
-//            if ($passwordValidatorAndKey['passwordValidator'] != $user->getPasswordValidator()) {
-//                $this->addFlash('danger', 'Wrong password for file decryption.');
-//                return $this->redirectCorrectly($file);
-//            }
-//
-//            $cipher = new Crypt_AES(CRYPT_AES_MODE_CBC);
-//
-//            $cipher->setKey($passwordValidatorAndKey['encryptionKey']);
-//            $cipher->setIV($user->getIv());
-//            // Decrypt File encryption key
-//            $key = $cipher->decrypt($user->getEncryptedKey());
-//
-//
-//            $cipher->setKey($key);
-//            $cipher->setIV(null);
-//
-//            $content = $cipher->decrypt(file_get_contents($file->getPath()));
-//        } else {
-            $content = file_get_contents($file->getPath());
-//        }
+        $content = file_get_contents($file->getPath());
 
         $response = new Response();
         $response->headers->set('Content-Type', $file->getMimeType());
@@ -417,57 +384,6 @@ class FileController extends Controller
 //        );
 //    }
 
-//    public function encryptAction(File $file)
-//    {
-//        $password = $this->request->request->get('password', null);
-//
-//        if (null === $password or empty($password)) {
-//            $this->addFlash('danger', 'Veuillez fournir le mot de passe permettant le décryptage du fichier.');
-//            return $this->redirectCorrectly($file);
-//        }
-//
-//        $encryptionService = $this->get('ag_vault.encryption_service');
-//
-//        $user = $this->getUser();
-//
-//        $passwordValidatorAndKey = $encryptionService->getPasswordValidator($password, $user->getSalt());
-//
-//        if ($passwordValidatorAndKey['passwordValidator'] != $user->getPasswordValidator()) {
-//            $this->addFlash('danger', 'Wrong password for file\'s encryption');
-//            return $this->redirectCorrectly($file);
-//        }
-//
-//        $cipher = new Crypt_AES(CRYPT_AES_MODE_CBC);
-//
-//        $cipher->setKey($passwordValidatorAndKey['encryptionKey']);
-//        $cipher->setIV($user->getIv());
-//        // Decrypt File encryption key
-//        $key = $cipher->decrypt($user->getEncryptedKey());
-//
-//
-//        $cipher->setKey($key);
-//        $cipher->setIV(null);
-//
-//        $oldFile = $file->getPath();
-//
-//        $encryptedData = $cipher->encrypt(file_get_contents($oldFile));
-//
-//        $filename = basename($oldFile).".enc";
-//        $targetDirectory = dirname($oldFile) . "/" . $filename;
-//
-//        $fileEncrypted = fopen($targetDirectory, "wb");
-//        fwrite($fileEncrypted, $encryptedData);
-//        fclose($fileEncrypted);
-//
-//        $file->setEncrypted(true);
-//        $this->em->persist($file);
-//        $this->em->flush();
-//
-//        $this->addFlash('success', 'Fichier encrypté avec succès !');
-//
-//        return $this->redirectCorrectly($file);
-//    }
-
     /**
      * @param File $file
      * @return array
@@ -495,9 +411,6 @@ class FileController extends Controller
         if (null === $file) {
             throw $this->createNotFoundException('Le lien que vous recherchez n\'existe pas.');
         }
-
-//        if ($file->isEncrypted())
-//            throw $this->createAccessDeniedException("Le fichier est chiffré, vous ne pouvez pas y accéder.");
 
         $response = new Response();
         $response->headers->set('Content-Type', "application/pdf");

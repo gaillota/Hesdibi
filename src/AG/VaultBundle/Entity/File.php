@@ -66,7 +66,7 @@ class File
 
     /**
      * @Assert\File(
-     *      maxSize="10M",
+     *      maxSize="64M",
      *      mimeTypes={
      *          "application/pdf",
      *          "application/x-pdf" ,
@@ -80,13 +80,6 @@ class File
      *  )
      */
     private $file;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="is_encrypted", type="boolean")
-     */
-    private $encrypted = false;
 
     /**
      * @var array
@@ -419,28 +412,5 @@ class File
     public function getShareLinks()
     {
         return $this->shareLinks;
-    }
-
-    /**
-     * Set encrypted
-     *
-     * @param boolean $encrypted
-     * @return File
-     */
-    public function setEncrypted($encrypted)
-    {
-        $this->encrypted = $encrypted;
-
-        return $this;
-    }
-
-    /**
-     * Get encrypted
-     *
-     * @return boolean 
-     */
-    public function isEncrypted()
-    {
-        return $this->encrypted;
     }
 }

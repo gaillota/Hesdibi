@@ -61,13 +61,6 @@ ag_vault_file_generate_link:
     requirements:
         id: \d+
 
-#ag_vault_file_encrypt:
-#    path: /{id}/encrypt
-#    defaults:
-#        _controller: AGVaultBundle:File:encrypt
-#    requirements:
-#        id: \d+
-
 ag_vault_file_get_links:
     path: /{id}/get-links
     defaults:
