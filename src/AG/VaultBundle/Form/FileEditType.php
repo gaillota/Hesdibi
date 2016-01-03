@@ -3,6 +3,7 @@
 namespace AG\VaultBundle\Form;
 
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -17,14 +18,21 @@ class FileEditType extends AbstractType
         $builder
             ->remove('name')
             ->remove('file')
+            ->remove('isEncrypted')
             ->remove('save')
             ->add('folder', 'entity', array(
+                'label' => 'Dossier',
                 'class' => 'AGVaultBundle:Folder',
                 'property' => 'name',
                 'empty_value' => 'Mon Vault',
                 'empty_data' => null,
                 'required' => false,
-                'label' => 'Dossier',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er
+                        ->createQueryBuilder('f')
+                        ->orderBy('f.name', 'ASC')
+                        ;
+                }
             ))
             ->add('save', 'submit', array(
                 'label' => 'Enregistrer'

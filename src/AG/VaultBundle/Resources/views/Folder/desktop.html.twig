@@ -7,12 +7,12 @@
 			</button>
 			<ul class="dropdown-menu">
 				<li>
-					<a href="#" type="button" data-toggle="modal" data-target="#newFileModal">
+					<a data-toggle="modal" data-target="#newFileModal">
 						{{ fa('file-pdf-o') }} Fichier
 					</a>
 				</li>
 				<li>
-					<a href="#" type="button" data-toggle="modal" data-target="#newFolderModal">
+					<a data-toggle="modal" data-target="#newFolderModal">
 						{{ fa('folder') }} Dossier
 					</a>
 				</li>
@@ -69,10 +69,9 @@
 							<ul class="dropdown-menu">
 								<li>
 									<a href="{{ path('ag_vault_folder_move', {id:f.id}) }}">
-										{{ fa('location-arrow') }} Modifier emplacement
+										{{ fa('arrows') }} Modifier emplacement
 									</a>
 								</li>
-								<li class="divider"></li>
 								<li>
 									<a href="#" type="button" data-toggle="modal" data-target="#renameModal" data-id="{{ f.id }}" data-href="{{ path('ag_vault_folder_rename', { id:f.id }) }}">
 										{{ fa('edit') }} Renommer
@@ -93,6 +92,7 @@
 			{% for file in listFiles %}
 				<tr data-row="file" data-file-id="{{ file.id }}">
 					<td>
+						{#{{ file.isEncrypted ? fa('expeditedssl') : fa('file-pdf-o') }}#}
 						{{ fa('file-pdf-o') }}
 						<a class="pdf" href="{{ path('ag_vault_file_preview', { id:file.id }) }}" data-name>{{ file.name }}</a>
 					</td>
@@ -111,8 +111,19 @@
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu">
+								{#{% if not file.isEncrypted %}#}
+									{#<li>#}
+										{#<a href="#" data-toggle="modal" data-target="#passwordModal" data-path="{{ path('ag_vault_file_encrypt', { id:file.id }) }}">#}
+											{#{{ fa('lock') }} Encrypter#}
+										{#</a>#}
+									{#</li>#}
+								{#{% endif %}#}
 								<li>
+									{#{% if file.isEncrypted %}#}
+									{#<a href="#" data-toggle="modal" data-target="#passwordModal" data-path="{{ path('ag_vault_file_download', { id:file.id }) }}">#}
+									{#{% else %}#}
 									<a href="{{ path('ag_vault_file_download', { id:file.id }) }}">
+									{#{% endif %}#}
 										{{ fa('download') }} Télécharger
 									</a>
 								</li>
@@ -133,13 +144,13 @@
 								</li>
 								<li>
 									<a href="#" data-toggle="modal" data-target="#fileDetailsModal" data-details="{{ path('ag_vault_file_details', {id:file.id}) }}">
-										{{ fa('bar-chart') }} Voir détails
+										{{ fa('info-circle') }} Détails du fichier
 									</a>
 								</li>
 								<li class="divider"></li>
 								<li>
 									<a href="{{ path('ag_vault_file_move', {id:file.id}) }}">
-										{{ fa('location-arrow') }} Modifier emplacement
+										{{ fa('arrows') }} Modifier emplacement
 									</a>
 								</li>
 								<li>
