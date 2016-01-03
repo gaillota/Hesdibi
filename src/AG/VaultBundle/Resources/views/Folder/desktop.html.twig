@@ -7,12 +7,12 @@
 			</button>
 			<ul class="dropdown-menu">
 				<li>
-					<a data-toggle="modal" data-target="#newFileModal">
+					<a href="#" type="button" data-toggle="modal" data-target="#newFileModal">
 						{{ fa('file-pdf-o') }} Fichier
 					</a>
 				</li>
 				<li>
-					<a data-toggle="modal" data-target="#newFolderModal">
+					<a href="#" type="button" data-toggle="modal" data-target="#newFolderModal">
 						{{ fa('folder') }} Dossier
 					</a>
 				</li>
@@ -92,7 +92,6 @@
 			{% for file in listFiles %}
 				<tr data-row="file" data-file-id="{{ file.id }}">
 					<td>
-						{#{{ file.isEncrypted ? fa('expeditedssl') : fa('file-pdf-o') }}#}
 						{{ fa('file-pdf-o') }}
 						<a class="pdf" href="{{ path('ag_vault_file_preview', { id:file.id }) }}" data-name>{{ file.name }}</a>
 					</td>
@@ -111,19 +110,8 @@
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu">
-								{#{% if not file.isEncrypted %}#}
-									{#<li>#}
-										{#<a href="#" data-toggle="modal" data-target="#passwordModal" data-path="{{ path('ag_vault_file_encrypt', { id:file.id }) }}">#}
-											{#{{ fa('lock') }} Encrypter#}
-										{#</a>#}
-									{#</li>#}
-								{#{% endif %}#}
 								<li>
-									{#{% if file.isEncrypted %}#}
-									{#<a href="#" data-toggle="modal" data-target="#passwordModal" data-path="{{ path('ag_vault_file_download', { id:file.id }) }}">#}
-									{#{% else %}#}
 									<a href="{{ path('ag_vault_file_download', { id:file.id }) }}">
-									{#{% endif %}#}
 										{{ fa('download') }} Télécharger
 									</a>
 								</li>

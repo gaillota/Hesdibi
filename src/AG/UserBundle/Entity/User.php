@@ -13,7 +13,8 @@ use FOS\UserBundle\Entity\User as BaseUser;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AG\UserBundle\Repository\UserRepository")
- */
+ * @ORM\HasLifecycleCallbacks()
+*/
 class User extends BaseUser
 {
     /**
@@ -43,7 +44,6 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        // your own logic
         $this->files = new ArrayCollection();
         $this->folders = new ArrayCollection();
         $this->sharedFiles = new ArrayCollection();

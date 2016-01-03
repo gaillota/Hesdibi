@@ -13,7 +13,7 @@ use FOS\UserBundle\Entity\User as BaseUser;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AG\UserBundle\Repository\UserRepository")
- */
+*/
 class User extends BaseUser
 {
     /**
@@ -26,6 +26,27 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="password_validator", type="string", length=255, nullable=true)
+     */
+    private $passwordValidator;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="iv", type="string", length=255, nullable=true)
+     */
+    private $iv;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="encrypted_key", type="string", length=255, nullable=true)
+     */
+    private $encryptedKey;
+
+    /**
      * @ORM\OneToMany(targetEntity="AG\VaultBundle\Entity\File", mappedBy="owner")
      */
     private $files;
@@ -36,17 +57,26 @@ class User extends BaseUser
     private $folders;
 
     /**
+<<<<<<< HEAD
+     * @ORM\ManyToMany(targetEntity="AG\VaultBundle\Entity\File", mappedBy="authorizedUsers")
+     */
+    private $sharedFiles;
+=======
      * @ORM\ManyToMany(targetEntity="AG\VaultBundle\Entity\File", mappedBy="usersAuthorized")
      */
     private $filesShared;
+>>>>>>> f0593336ca8099b27789267528f5c6a7229d3788
 
     public function __construct()
     {
         parent::__construct();
-        // your own logic
         $this->files = new ArrayCollection();
         $this->folders = new ArrayCollection();
+<<<<<<< HEAD
+        $this->sharedFiles = new ArrayCollection();
+=======
         $this->filesShared = new ArrayCollection();
+>>>>>>> f0593336ca8099b27789267528f5c6a7229d3788
     }
 
     /**
@@ -123,5 +153,38 @@ class User extends BaseUser
     public function getFolders()
     {
         return $this->folders;
+    }
+
+    /**
+     * Add sharedFiles
+     *
+     * @param \AG\VaultBundle\Entity\File $sharedFile
+     * @return User
+     */
+    public function addSharedFile(\AG\VaultBundle\Entity\File $sharedFile)
+    {
+        $this->sharedFiles[] = $sharedFile;
+
+        return $this;
+    }
+
+    /**
+     * Remove sharedFiles
+     *
+     * @param \AG\VaultBundle\Entity\File $sharedFile
+     */
+    public function removeSharedFile(\AG\VaultBundle\Entity\File $sharedFile)
+    {
+        $this->sharedFiles->removeElement($sharedFile);
+    }
+
+    /**
+     * Get sharedFiles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSharedFiles()
+    {
+        return $this->sharedFiles;
     }
 }

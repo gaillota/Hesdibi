@@ -18,7 +18,6 @@ class FileEditType extends AbstractType
         $builder
             ->remove('name')
             ->remove('file')
-            ->remove('isEncrypted')
             ->remove('save')
             ->add('folder', 'entity', array(
                 'label' => 'Dossier',

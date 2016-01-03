@@ -3,6 +3,7 @@
 namespace AG\VaultBundle\Repository;
 
 use AG\UserBundle\Entity\User;
+use AG\VaultBundle\Entity\File;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 
@@ -14,6 +15,11 @@ use Doctrine\ORM\NoResultException;
  */
 class FileRepository extends EntityRepository
 {
+    /**
+     * @param $search
+     * @param $user
+     * @return array
+     */
     public function findSearch($search, $user)
     {
         $qb = $this->createQueryBuilder('f')
@@ -38,6 +44,10 @@ class FileRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param User $user
+     * @return array
+     */
     public function findByAuthorizedUsers(User $user)
     {
         $qb = $this->createQueryBuilder('f')
@@ -51,6 +61,11 @@ class FileRepository extends EntityRepository
         return $qb;
     }
 
+    /**
+     * @param $token
+     * @return File|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function findOneByToken($token)
     {
         $qb = $this->createQueryBuilder('f')

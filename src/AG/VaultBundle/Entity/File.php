@@ -13,7 +13,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AG\VaultBundle\Repository\FileRepository")
- * @ORM\HasLifecycleCallbacks
  * @Gedmo\Uploadable(allowOverwrite=true, appendNumber=true, filenameGenerator="SHA1")
  */
 class File
@@ -34,6 +33,12 @@ class File
      * @Assert\NotBlank()
      */
     private $name;
+
+    /**
+     * @ORM\Column(name="mime_type", type="string")
+     * @Gedmo\UploadableFileMimeType
+     */
+    private $mimeType;
 
     /**
      * @var integer
@@ -61,7 +66,7 @@ class File
 
     /**
      * @Assert\File(
-     *      maxSize="10M",
+     *      maxSize="64M",
      *      mimeTypes={
      *          "application/pdf",
      *          "application/x-pdf" ,
@@ -75,6 +80,13 @@ class File
      *  )
      */
     private $file;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="send_to", type="array")
+     */
+    private $sendTo = array();
 
     /**
      * @var Folder
@@ -100,14 +112,6 @@ class File
      * @ORM\OneToMany(targetEntity="ShareLink", mappedBy="file", cascade={"persist", "remove"})
      */
     private $shareLinks;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="send_to", type="array")
-     */
-    private $sendTo = array();
-
 
     public function __construct()
     {
@@ -174,6 +178,29 @@ class File
     }
 
     /**
+     * Set mimeType
+     *
+     * @param string $mimeType
+     * @return File
+     */
+    public function setMimeType($mimeType)
+    {
+        $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    /**
+     * Get mimeType
+     *
+     * @return string
+     */
+    public function getMimeType()
+    {
+        return $this->mimeType;
+    }
+
+    /**
      * Set path
      *
      * @param string $path
@@ -207,11 +234,16 @@ class File
     }
 
     /**
+     * Set file
+     *
      * @param mixed $file
+     * @return File
      */
     public function setFile($file)
     {
         $this->file = $file;
+
+        return $this;
     }
 
     /**

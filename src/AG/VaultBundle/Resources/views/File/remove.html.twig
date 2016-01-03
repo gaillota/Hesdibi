@@ -14,18 +14,17 @@
 	<div class="row">
 		<div class="col-md-12 text-center">
 			<p>Êtes-vous sûr de vouloir supprimer le fichier <em>{{ file.name }}</em> {% if file.folder is not null %}du dossier {{ file.folder.name }}{% else %}de votre Vault{% endif %} ?</p>
-			{% if file.folder is not null %}
-				<a class="btn btn-default" href="{{ path('ag_vault_folder_show', { id:file.folder.id }) }}">
-					{{ fa('arrow-left') }} Retour à mon dossier.
-				</a>
-			{% else %}
-				<a class="btn btn-default" href="{{ path('ag_vault_homepage') }}">
-					{{ fa('arrow-left') }} Retour à mon Vault.
-				</a>
-			{% endif %}
-
 			<hr/>
 			<form action="" method="POST">
+				{% if file.folder is not null %}
+					<a class="btn btn-default" href="{{ path('ag_vault_folder_show', { id:file.folder.id }) }}">
+						{{ fa('arrow-left') }} Retour à mon dossier.
+					</a>
+				{% else %}
+					<a class="btn btn-default" href="{{ path('ag_vault_homepage') }}">
+						{{ fa('arrow-left') }} Retour à mon Vault.
+					</a>
+				{% endif %}
 				<button class="btn btn-danger" type="submit">
 					{{ fa('times') }} Supprimer ce fichier
 				</button>

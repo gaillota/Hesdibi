@@ -36,3 +36,7 @@
 # Composer PHAR
 /composer.phar
 
+# Custom files
+/web/bundles/
+/web/uploads/
+/.idea/

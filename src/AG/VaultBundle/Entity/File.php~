@@ -13,7 +13,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AG\VaultBundle\Repository\FileRepository")
- * @ORM\HasLifecycleCallbacks
  * @Gedmo\Uploadable(allowOverwrite=true, appendNumber=true, filenameGenerator="SHA1")
  */
 class File
@@ -34,6 +33,12 @@ class File
      * @Assert\NotBlank()
      */
     private $name;
+
+    /**
+     * @ORM\Column(name="mime_type", type="string")
+     * @Gedmo\UploadableFileMimeType
+     */
+    private $mimeType;
 
     /**
      * @var integer
@@ -77,6 +82,20 @@ class File
     private $file;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="encrypted", type="boolean")
+     */
+    private $encrypted = false;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="send_to", type="array")
+     */
+    private $sendTo = array();
+
+    /**
      * @var Folder
      *
      * @ORM\ManyToOne(targetEntity="Folder", inversedBy="files")
@@ -97,6 +116,11 @@ class File
     private $authorizedUsers;
 
     /**
+<<<<<<< HEAD
+     * @ORM\OneToMany(targetEntity="ShareLink", mappedBy="file", cascade={"persist", "remove"})
+     */
+    private $shareLinks;
+=======
      * @ORM\OneToMany(targetEntity="ShareLink", mappedBy="file")
      */
     private $shareLinks;
@@ -107,12 +131,17 @@ class File
      * @ORM\Column(name="send_to", type="array")
      */
     private $sendTo = array();
+>>>>>>> f0593336ca8099b27789267528f5c6a7229d3788
 
 
     public function __construct()
     {
         $this->lastModified = new \DateTime();
         $this->authorizedUsers = new ArrayCollection();
+<<<<<<< HEAD
+        $this->shareLinks = new ArrayCollection();
+=======
+>>>>>>> f0593336ca8099b27789267528f5c6a7229d3788
     }
 
     /**
@@ -173,6 +202,29 @@ class File
     }
 
     /**
+     * Set mimeType
+     *
+     * @param string $mimeType
+     * @return File
+     */
+    public function setMimeType($mimeType)
+    {
+        $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    /**
+     * Get mimeType
+     *
+     * @return string
+     */
+    public function getMimeType()
+    {
+        return $this->mimeType;
+    }
+
+    /**
      * Set path
      *
      * @param string $path
@@ -206,11 +258,16 @@ class File
     }
 
     /**
+     * Set file
+     *
      * @param mixed $file
+     * @return File
      */
     public function setFile($file)
     {
         $this->file = $file;
+
+        return $this;
     }
 
     /**
@@ -346,4 +403,40 @@ class File
     {
         return $this->authorizedUsers;
     }
+<<<<<<< HEAD
+
+    /**
+     * Add shareLinks
+     *
+     * @param ShareLink $shareLinks
+     * @return File
+     */
+    public function addShareLink(ShareLink $shareLinks)
+    {
+        $this->shareLinks[] = $shareLinks;
+
+        return $this;
+    }
+
+    /**
+     * Remove shareLinks
+     *
+     * @param ShareLink $shareLinks
+     */
+    public function removeShareLink(ShareLink $shareLinks)
+    {
+        $this->shareLinks->removeElement($shareLinks);
+    }
+
+    /**
+     * Get shareLinks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getShareLinks()
+    {
+        return $this->shareLinks;
+    }
+=======
+>>>>>>> f0593336ca8099b27789267528f5c6a7229d3788
 }

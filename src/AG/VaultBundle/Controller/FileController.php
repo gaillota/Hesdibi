@@ -12,12 +12,14 @@ use AG\VaultBundle\Form\FileType;
 use AG\VaultBundle\Form\ShareWithType;
 use Doctrine\ORM\EntityManager;
 use Mailgun\Mailgun;
+use Sinner\Phpseclib\Crypt\Crypt_AES;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -128,7 +130,7 @@ class FileController extends Controller
         $form = $this->createFormBuilder()->getForm();
 
         if ($form->handleRequest($this->request)->isValid()) {
-            unlink($file->getPath());
+            @unlink($file->getPath());
             $this->em->remove($file);
             $this->em->flush();
 
@@ -152,13 +154,15 @@ class FileController extends Controller
         if ($this->getUser() !== $file->getOwner() && !$file->getAuthorizedUsers()->contains($this->getUser()))
             throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
 
+        $content = file_get_contents($file->getPath());
+
         $response = new Response();
-        $response->headers->set('Content-Type', "application/pdf");
+        $response->headers->set('Content-Type', $file->getMimeType());
         $response->headers->set('Content-Disposition', 'attachment; filename="'.$file->getName().'"');
         $response->headers->set('Content-Transfer-Encoding', 'binary');
         $response->headers->set('Content-Length', filesize($file->getPath()));
         $response->setStatusCode(200);
-        $response->setContent(file_get_contents($file->getPath()));
+        $response->setContent($content);
 
         return $response;
     }
@@ -174,7 +178,7 @@ class FileController extends Controller
             throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
 
         $response = new Response();
-        $response->headers->set('Content-Type', "application/pdf");
+        $response->headers->set('Content-Type', $file->getMimeType());
         $response->headers->set('Content-Disposition', 'inline; filename="'.$file->getName().'"');
         $response->setContent(file_get_contents($file->getPath()));
 
@@ -240,7 +244,7 @@ class FileController extends Controller
                     $this->addFlash('danger', 'Erreur lors de l\'envoi de l\'email');
                 }
 
-                return null !== $file->getFolder() ? $this->redirectToRoute('ag_vault_folder_show', array('id' => $file->getFolder()->getId(), 'slug' => $file->getFolder()->getSlug())) : $this->redirectToRoute('ag_vault_homepage');
+                return $this->redirectCorrectly($file);
             }
 
             $this->addFlash('danger', 'Une erreur est survenue. Veuillez contacter le big boss pour un petit service après-vente qui mets dans le bien.');
@@ -325,10 +329,7 @@ class FileController extends Controller
 
                 $this->addFlash('info', 'Fichier partagé avec succès !');
 
-                return null === $file->getFolder() ? $this->redirectToRoute('ag_vault_homepage') : $this->redirectToRoute('ag_vault_folder_show', array(
-                    'id' => $file->getFolder()->getId(),
-                    'slug' => $file->getFolder()->getSlug(),
-                ));
+                return $this->redirectCorrectly($file);
             }
 
             $this->addFlash('danger', 'Une erreur est survenue. Veuillez contacter le big boss pour un petit service après-vente qui mets dans le bien.');
@@ -367,6 +368,22 @@ class FileController extends Controller
         ));
     }
 
+//    /**
+//     * @param File $file
+//     * @return array
+//     * @Template
+//     * @Secure(roles="ROLE_ADMIN")
+//     */
+//    public function getLinksAction(File $file)
+//    {
+//        if ($this->getUser() !== $file->getOwner())
+//            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+//
+//        return array(
+//            'file' => $file,
+//        );
+//    }
+
     /**
      * @param File $file
      * @return array
@@ -384,7 +401,7 @@ class FileController extends Controller
     }
 
     /**
-     * @param File $file
+     * @param $token
      * @return Response
      */
     public function showAction($token)
@@ -401,5 +418,19 @@ class FileController extends Controller
         $response->setContent(file_get_contents($file->getPath()));
 
         return $response;
+    }
+
+    /**
+     * @param File $file
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * Get the correct redirection depending on where we are on the files' tree
+     */
+    private function redirectCorrectly(File $file)
+    {
+        return null === $file->getFolder() ? $this->redirectToRoute('ag_vault_homepage') : $this->redirectToRoute('ag_vault_folder_show', array(
+            'id' => $file->getFolder()->getId(),
+            'slug' => $file->getFolder()->getSlug(),
+        ));
     }
 }
