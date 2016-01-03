@@ -33,8 +33,6 @@ framework:
 
 # Twig Configuration
 twig:
-    globals:
-        container_type: "container"
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
 

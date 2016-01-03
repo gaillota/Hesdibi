@@ -25,7 +25,7 @@
         {% block navbar %}
 	        {% include '::nav.html.twig' %}
         {% endblock %}
-        <div class="{{ container_type }}">
+        <div class="container">
 	        {% block flashbag %}
 		        {% for label, flashes in app.session.flashbag.all %}
 			        {% for flash in flashes %}
