@@ -36,6 +36,15 @@ ol.breadcrumb {
     color: #444;
 }
 
+#vault h2:hover .folderButtons {
+    visibility: visible;
+}
+
+#vault .folderButtons {
+    display: inline-block;
+    visibility: hidden;
+}
+
 #vault .table > tbody > tr {
     cursor: pointer;
 }
