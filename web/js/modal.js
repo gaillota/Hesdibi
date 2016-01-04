@@ -29,7 +29,7 @@ $(function() {
 
     $('#renameModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
-        var name = button.parents('tr').first('td').find('a[data-name]').text(); // Extract info from data-* attributes
+        var name = button.data('name'); // Extract info from data-* attributes
         var modal = $(this);
 
         if (name.indexOf(".pdf") >= 0) name = name.replace(".pdf", "");
@@ -52,7 +52,7 @@ $(function() {
             $.get(target, {name: newName }, function (data) {
                 if(data.success) {
                     var $row = $('[data-'+data.type+'-id='+data.id+']');
-                    var $text = $row.first('td').find('a[data-name]');
+                    var $text = $row.length > 0 ? $row.first('td').find('a[data-name]') : $('span.foldername');
 
                     $('#renameModal').modal('hide');
                     input.data('former-name', data.name);

@@ -34,13 +34,24 @@
 			{% else %}
 				{% if folder is not null %}
 					<a href="{{ folder.parent is null ? path('ag_vault_homepage') : path('ag_vault_folder_show', {id:folder.parent.id, slug:folder.parent.slug}) }}">
-						{{ fa('arrow-left') }}&nbsp;
+						{{ fa('reply') }}&nbsp;
 					</a>
-					{{ fa('folder-open') }} {{ folder.name }}
+					{{ fa('folder-open') }} <span class="foldername">{{ folder.name }}</span>
 				{% else %}
-					{{ fa('lock') }} Mon Vault
+					{{ fa('home') }} Mon Vault
 				{% endif %}
 				<small>{{ size|size }}</small>
+				{% if folder is not null %}
+					<a href="{{ path('ag_vault_folder_move', { id:folder.id }) }}" class="btn btn-sm btn-default">
+						{{ fa('arrows') }}
+					</a>
+					<button class="btn btn-sm btn-warning" data-toggle="modal" data-name="{{ folder.name }}" data-target="#renameModal" data-id="{{ folder.id }}" data-href="{{ path('ag_vault_folder_rename', { id:folder.id }) }}">
+						{{ fa('edit') }}
+					</button>
+					<a class="btn btn-sm btn-danger" href="{{ path('ag_vault_folder_remove', { id:folder.id }) }}">
+						{{ fa('remove') }}
+					</a>
+				{% endif %}
 			{% endif %}
 		</h2>
 		<table class="table table-hover table-striped">
@@ -73,7 +84,7 @@
 									</a>
 								</li>
 								<li>
-									<a href="#" type="button" data-toggle="modal" data-target="#renameModal" data-id="{{ f.id }}" data-href="{{ path('ag_vault_folder_rename', { id:f.id }) }}">
+									<a href="#" type="button" data-toggle="modal" data-target="#renameModal" data-name="{{ f.name }}" data-id="{{ f.id }}" data-href="{{ path('ag_vault_folder_rename', { id:f.id }) }}">
 										{{ fa('edit') }} Renommer
 									</a>
 								</li>
@@ -142,7 +153,7 @@
 									</a>
 								</li>
 								<li>
-									<a href="#" type="button" data-toggle="modal" data-target="#renameModal" data-id="{{ file.id }}" data-href="{{ path('ag_vault_file_rename', { id:file.id }) }}">
+									<a href="#" type="button" data-toggle="modal" data-name="{{ file.name }}" data-target="#renameModal" data-id="{{ file.id }}" data-href="{{ path('ag_vault_file_rename', { id:file.id }) }}">
 										{{ fa('edit') }} Renommer
 									</a>
 								</li>

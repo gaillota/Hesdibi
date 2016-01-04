@@ -21,10 +21,6 @@ class UserType extends AbstractType
             ->add('email', 'email', array(
                 'label' => 'Adresse mail'
             ))
-            ->add('enabled', 'checkbox', array(
-                'label' => 'Activé',
-                'required' => false,
-            ))
             ->add('locked', 'checkbox', array(
                 'label' => 'Verrouillé',
                 'required' => false
