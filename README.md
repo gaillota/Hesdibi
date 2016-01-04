@@ -13,8 +13,8 @@ TODO List
 - [ ] Check file size (in addition to mime-type) in js after selecting one in the modal
 - [ ] Display parents' folder on the folder moving page (for folders with same name)
 - [ ] Add returning arrow on folder moving page
-- [ ] Change button color on folder renaming modal
-- [ ] Add js confirm on folder delete page
+- [x] Change button color on folder renaming modal
+- [x] Add js confirm on folder delete page
 - [ ] Add folder options next to h2
 - [ ] Add returning arrow on email sending page
 - [ ] Add returning arrow on share-with page
@@ -25,3 +25,4 @@ TODO List
 - [ ] Take care of the mobile interface
 - [ ] Check breadcrumb on all pages
 - [ ] Resolve email / username login error
+- [ ] Change js preview of PDF
