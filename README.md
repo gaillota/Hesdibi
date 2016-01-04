@@ -7,7 +7,7 @@ No need to write the README file, this is just for myself.
 
 TODO List
 ------
-- [ ] Remove table header on sharedLinks and expend table on all width (12)
+- [x] Remove table header on sharedLinks and expend table on all width (12)
 - [ ] Add returning arrow on users list and folders list
 - [ ] Display folder tree somehow in the folders list page
 - [ ] Check file size (in addition to mime-type) in js after selecting one in the modal
@@ -24,3 +24,4 @@ TODO List
 - [ ] Add fontawesome icon on alerts
 - [ ] Take care of the mobile interface
 - [ ] Check breadcrumb on all pages
+- [ ] Resolve email / username login error

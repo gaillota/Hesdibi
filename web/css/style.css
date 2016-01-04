@@ -139,7 +139,7 @@ ol.breadcrumb {
     width: 100%;
     border: medium none;
     /*box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);*/
-    padding: 10px 0;
+    padding: 10px;
     font-size: 13px;
     color: rgb(68, 68, 68);
 }
