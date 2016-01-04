@@ -15,7 +15,7 @@ TODO List
 - [ ] Add returning arrow on folder moving page
 - [x] Change button color on folder renaming modal
 - [x] Add js confirm on folder delete page
-- [ ] Add folder options next to h2
+- [x] Add folder options next to h2
 - [ ] Add returning arrow on email sending page
 - [ ] Add returning arrow on share-with page
 - [ ] Display error on share-with page when no simple users
