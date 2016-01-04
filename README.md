@@ -23,6 +23,4 @@ TODO List
 - [ ] Go back button on share link removing
 - [ ] Add fontawesome icon on alerts
 - [ ] Take care of the mobile interface
-- [ ] Add breadcrumb on pages :
-  - Email sending
-  - Share link removing
+- [ ] Check breadcrumb on all pages
