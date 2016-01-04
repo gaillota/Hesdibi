@@ -4,9 +4,18 @@
 
 {% block ag_vault_content %}
 	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-sm-1 text-center hidden-xs" style="padding-top: 22px;">
+			<a href="{{ file.folder is null ? path('ag_vault_homepage') : path('ag_vault_folder_show', { id:file.folder.id, slug:file.folder.slug}) }}">
+				{{ fa('reply fa-2x') }}
+			</a>
+		</div>
+		<div class="col-sm-11">
 			<h2>{{ fa('share-alt') }} Partage de <em>{{ file.name }}</em></h2>
-			<hr/>
+		</div>
+	</div>
+	<hr/>
+	<div class="row">
+		<div class="col-md-12">
 			{{ form(form) }}
 		</div>
 	</div>
