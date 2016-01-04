@@ -74,16 +74,5 @@
 {% block javascripts %}
 	{{ parent() }}
 	<script src="{{ asset('js/jquery.fancybox.pack.js') }}"></script>
-	<script type="text/javascript">
-		$('.pdf').click(function (e) {
-			e.preventDefault();
-
-			$.fancybox({
-				'width' : '90%',
-				'height' : '90%',
-				'autoSize' : false,
-				'content': '<embed src="'+this.href+'#nameddest=self&page=1&view=FitH,0&zoom=80,0,0" type="application/pdf" height="99%" width="100%" />'
-			});
-		});
-	</script>
+	<script src="{{ asset('js/folder.js') }}"></script>
 {% endblock %}

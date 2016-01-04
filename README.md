@@ -6,7 +6,7 @@ A Symfony project created on June 26, 2015, 8:25 pm.
 No need to write the README file, this is just for myself.
 
 TODO List
-------
+-----
 - [x] Remove table header on sharedLinks and expend table on all width (12)
 - [x] Add returning arrow on users list and folders list
 - [ ] Display folder tree somehow in the folders list page
