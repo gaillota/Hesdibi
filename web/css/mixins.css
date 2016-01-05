@@ -9,3 +9,7 @@ a, a:visited, a:active, a:hover, a:focus {
     outline: 0;
     text-decoration: none;
 }
+
+.nfloat {
+    float: none;
+}

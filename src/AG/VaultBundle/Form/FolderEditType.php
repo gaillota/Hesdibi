@@ -31,7 +31,20 @@ class FolderEditType extends AbstractType
             ->remove('save')
             ->add('parent', 'entity', array(
                 'class' => 'AGVaultBundle:Folder',
-                'property' => 'name',
+                'expanded' => true,
+                'data_class' => 'AG\VaultBundle\Entity\Folder',
+                'choice_label' => function(Folder $folder) {
+                    $listParents = array(
+                        $folder->getName()
+                    );
+                    $nextParent = $folder->getParent();
+                    while(null !== $nextParent) {
+                        $listParents[] = $nextParent->getName();
+                        $nextParent = $nextParent->getParent();
+                    }
+                    $listParents = array_reverse($listParents);
+                    return implode(" > ", $listParents);
+                },
                 'empty_value' => 'Mon Vault',
                 'empty_data' => null,
                 'required' => false,
