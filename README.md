@@ -26,3 +26,4 @@ TODO List
 - [ ] Check breadcrumb on all pages
 - [ ] Resolve email / username login error
 - [ ] Change js preview of PDF
+- [ ] Use macro for dropdowns
