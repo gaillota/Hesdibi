@@ -42,8 +42,8 @@ class FolderEditType extends AbstractType
                         $listParents[] = $nextParent->getName();
                         $nextParent = $nextParent->getParent();
                     }
-//                    $listParents = array_reverse($listParents);
-                    return implode(" < ", $listParents);
+                    $listParents = array_reverse($listParents);
+                    return implode(" > ", $listParents);
                 },
                 'empty_value' => 'Mon Vault',
                 'empty_data' => null,
