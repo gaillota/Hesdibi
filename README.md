@@ -10,7 +10,7 @@ TODO List
 - [x] Remove table header on sharedLinks and expend table on all width (12)
 - [x] Add returning arrow on users list and folders list
 - [ ] Display folder tree somehow in the folders list page
-- [ ] Check file size (in addition to mime-type) in js after selecting one in the modal
+- [x] Check file size (in addition to mime-type) in js after selecting one in the modal
 - [ ] Display parents' folder on the folder moving page (for folders with same name)
 - [ ] Add returning arrow on folder moving page
 - [x] Change button color on folder renaming modal
