@@ -3,6 +3,7 @@
 namespace AG\VaultBundle\Form;
 
 
+use AG\VaultBundle\Entity\Folder;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,8 +23,21 @@ class FileEditType extends AbstractType
             ->add('folder', 'entity', array(
                 'label' => 'Dossier',
                 'class' => 'AGVaultBundle:Folder',
-                'property' => 'name',
-                'empty_value' => 'Mon Vault',
+                'expanded' => true,
+                'data_class' => 'AG\VaultBundle\Entity\Folder',
+                'choice_label' => function(Folder $folder) {
+                    $listParents = array(
+                        $folder->getName()
+                    );
+                    $nextParent = $folder->getParent();
+                    while(null !== $nextParent) {
+                        $listParents[] = $nextParent->getName();
+                        $nextParent = $nextParent->getParent();
+                    }
+                    $listParents = array_reverse($listParents);
+                    return implode(" > ", $listParents);
+                },
+                'empty_value' => 'My Vault',
                 'empty_data' => null,
                 'required' => false,
                 'query_builder' => function(EntityRepository $er) {
@@ -34,7 +48,10 @@ class FileEditType extends AbstractType
                 }
             ))
             ->add('save', 'submit', array(
-                'label' => 'Enregistrer'
+                'label' => 'Enregistrer',
+                'attr' => array(
+                    'class' => 'pull-right btn-default'
+                )
             ))
         ;
     }

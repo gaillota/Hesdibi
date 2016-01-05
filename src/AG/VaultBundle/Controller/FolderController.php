@@ -331,9 +331,19 @@ class FolderController extends Controller
             $this->addFlash('danger', 'Une erreur est survenue. Veuillez contacter le big boss pour un petit service après-vente qui mets dans le bien.');
         }
 
+        //Retrieve the list of every parents for the current folder
+        $listParents = array();
+        $nextParent = $folder->getParent();
+        while (null !== $nextParent) {
+            $listParents[] = $nextParent;
+            $nextParent = $nextParent->getParent();
+        }
+        $listParents = array_reverse($listParents);
+
         return array(
             'folder' => $folder,
             'form' => $form->createView(),
+            'listParents' => $listParents,
         );
     }
 }

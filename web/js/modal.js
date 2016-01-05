@@ -17,8 +17,12 @@ $(function() {
             var typeAccepted = ['application/pdf', 'application-x-pdf', 'application/x-download'];
 
             // Make sure we have a pdf, jpeg or pngZ
-            if(typeAccepted.indexOf(file.type) <= -1){
+            if (typeAccepted.indexOf(file.type) <= -1) {
                 modal.find('form').append('<div class="alert alert-danger">Ce fichier n\'est pas un fichier pdf, jpeg ou png.</div>');
+                modal.find('button[type="submit"]').attr("disabled", true);
+            // Make sure the file doesn't exceed the maximum size
+            } else if (file.size > 64000000) {
+                modal.find('form').append('<div class="alert alert-danger">Ce fichier dépasse la taille maximum de 64Mo.</div>');
                 modal.find('button[type="submit"]').attr("disabled", true);
             } else {
                 modal.find('input#ag_vaultbundle_file_name').val(file.name);
