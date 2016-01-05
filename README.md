@@ -20,7 +20,7 @@ TODO List
 - [x] Add returning arrow on share-with page
 - [ ] Display error on share-with page when no simple users
 - [ ] Display folder tree on moving file page
-- [ ] Go back button on share link removing
+- [x] Go back button on share link removing
 - [ ] Add fontawesome icon on alerts
 - [ ] Take care of the mobile interface
 - [ ] Check breadcrumb on all pages
