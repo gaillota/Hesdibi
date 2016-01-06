@@ -29,3 +29,4 @@ TODO List
 - [ ] Change js preview of PDF
 - [ ] Use macro for dropdowns
 - [ ] Remove children folder when moving one
+- [ ] Add folder on share links page
