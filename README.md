@@ -21,7 +21,7 @@ TODO List
 - [ ] Display error on share-with page when no simple users
 - [x] Display folder tree on moving file page
 - [x] Go back button on share link removing
-- [ ] Add fontawesome icon on alerts
+- [x] Add fontawesome icon on alerts
 - [ ] Take care of the mobile interface
 - [ ] Check breadcrumb on all pages
   - Folder deletion

@@ -54,7 +54,7 @@ class ShareLinkController extends Controller
             $this->em->remove($shareLink);
             $this->em->flush();
 
-            $this->addFlash('danger', 'Lien supprimé avec succès !');
+            $this->addFlash('danger', '<i class="fa fa-trash"></i> Lien supprimé avec succès !');
 
             return $this->redirectToRoute('ag_vault_link_all');
         }
