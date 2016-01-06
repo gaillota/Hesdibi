@@ -8,11 +8,16 @@
 
 {% block ag_user_content %}
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <h1>{{ fa('user-plus') }} Ajouter un utilisateur</h1>
-            <hr/>
+	    <div class="col-sm-1 text-center hidden-xs" style="padding-top: 22px;">
+		    <a href="{{ path('ag_user_admin_index') }}">
+			    {{ fa('reply fa-2x') }}
+		    </a>
+	    </div>
+        <div class="col-sm-11">
+            <h2>{{ fa('user-plus') }} Ajouter un utilisateur</h2>
         </div>
     </div>
+	<hr/>
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             {% include 'AGUserBundle:Admin:form.html.twig' %}

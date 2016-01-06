@@ -117,12 +117,12 @@ class FolderController extends Controller
                 }
                 $this->em->flush();
 
-                $this->addFlash('success', 'Fichier ajouté avec succès !');
+                $this->addFlash('success', '<i class="fa fa-file-pdf-o"></i> Fichier ajouté avec succès !');
 
                 return null !== $folder ? $this->redirectToRoute('ag_vault_folder_show', array('id' => $folder->getId(), 'slug' => $folder->getSlug())) : $this->redirectToRoute('ag_vault_homepage');
             }
 
-            $this->addFlash('danger', 'Une erreur est survenue.');
+            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Une erreur est survenue.');
         }
 
         //If a research has been made
@@ -191,7 +191,7 @@ class FolderController extends Controller
                 $this->em->persist($folder);
                 $this->em->flush();
 
-                $this->addFlash('success', 'Dossier modifié avec succès !');
+                $this->addFlash('success', '<i class="fa fa-edit"></i> Dossier modifié avec succès !');
 
                 return $this->redirectToRoute('ag_vault_folder_show', array(
                     'id' => $folder->getId(),
@@ -199,7 +199,7 @@ class FolderController extends Controller
                 ));
             }
 
-            $this->addFlash('error', 'Une erreur s\'est produite.');
+            $this->addFlash('error', '<i class="fa fa-times-circle"></i> Une erreur s\'est produite.');
         }
 
         //Retrieve the list of every parents for the current folder
@@ -257,7 +257,7 @@ class FolderController extends Controller
             $this->em->remove($folder);
             $this->em->flush();
 
-            $this->addFlash('danger', 'Dossier supprimé avec succès !');
+            $this->addFlash('danger', '<i class="fa fa-trash"></i> Dossier supprimé avec succès !');
 
             return $this->redirectToRoute('ag_vault_homepage');
         }
@@ -323,12 +323,12 @@ class FolderController extends Controller
                 $this->em->persist($folder);
                 $this->em->flush();
 
-                $this->addFlash('success', 'Emplacement du dossier modifé avec succès !');
+                $this->addFlash('success', '<i class="fa fa-arrows"></i> Emplacement du dossier modifé avec succès !');
 
                 return null !== $formerFolder ? $this->redirectToRoute('ag_vault_folder_show', array('id' => $formerFolder->getId(), 'slug' => $formerFolder->getSlug())) : $this->redirectToRoute('ag_vault_homepage');
             }
 
-            $this->addFlash('danger', 'Une erreur est survenue. Veuillez contacter le big boss pour un petit service après-vente qui mets dans le bien.');
+            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Une erreur est survenue. Veuillez contacter le big boss pour un petit service après-vente qui mets dans le bien.');
         }
 
         //Retrieve the list of every parents for the current folder
