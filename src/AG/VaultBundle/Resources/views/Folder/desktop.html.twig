@@ -104,7 +104,7 @@
 					{% if listFolders is empty %}
 						<tr>
 							<td class="text-center" colspan="5">
-								Aucun contenu dans {% if folder is not null %}ce dossier.{% else %}votre Vault.{% endif %}
+								Aucun contenu dans {% if currentFolder is not null %}ce dossier.{% else %}votre Vault.{% endif %}
 							</td>
 						</tr>
 					{% endif %}
