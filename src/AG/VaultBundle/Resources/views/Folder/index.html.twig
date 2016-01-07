@@ -1,12 +1,14 @@
 {% extends 'AGVaultBundle::layout.html.twig' %}
 
+{% import '@AGVault/macros.html.twig' as macros %}
+
 {% block breadcrumbs %}
 	{{ parent() }}
 	<li class="active">Tous mes dossiers</li>
 {% endblock %}
 
-{% block ag_vault_content %}
 
+{% block ag_vault_content %}
 	{# Modal box for renaming folders #}
 	<div class="modal fade" id="renameModal" tabindex="-1" role="dialog" aria-labelledby="renameModal">
 		<div class="modal-dialog modal-md">
@@ -35,10 +37,19 @@
 	</div>
 	{# End modal #}
 
+	<div class="row">
+		<div class="col-sm-1 text-center hidden-xs" style="padding-top: 22px;">
+			<a href="{{ path('ag_vault_homepage') }}">
+				{{ fa('reply fa-2x') }}
+			</a>
+		</div>
+		<div class="col-sm-11">
+			<h2>{{ fa('folder') }} Tous mes dossiers</h2>
+		</div>
+	</div>
 	<div class="row" id="vault">
 		<div class="col-md-12">
-			<h2>{{ fa('folder') }} Tous mes dossiers</h2>
-			<hr/>
+			{{ dump(listFolders) }}
 			<table class="table table-hover table-striped">
 				<tr>
 					<th>Nom</th>
@@ -48,40 +59,7 @@
 					<th></th>
 				</tr>
 				{% for folder in listFolders %}
-					<tr data-row="folder" data-folder-id="{{ folder.id }}">
-						<td>
-							{{ fa('folder') }}
-							<a href="{{ path('ag_vault_folder_show', { id:folder.id, slug:folder.slug }) }}" data-name>{{ folder.name }}</a>
-						</td>
-						<td><i>{{ folder.parent is not null ? folder.parent.name : 'Mon Vault' }}</i></td>
-						<td>{{ folder.lastModified|date_fr }}</td>
-						<td>{{ folder.size|size }}</td>
-						<td>
-							<div class="btn-group dropdown actions pull-right">
-								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="{{ path('ag_vault_folder_move', {id:folder.id}) }}">
-											{{ fa('location-arrow') }} Modifier emplacement
-										</a>
-									</li>
-									<li class="divider"></li>
-									<li>
-										<a href="#" type="button" data-toggle="modal" data-target="#renameModal" data-id="{{ folder.id }}" data-href="{{ path('ag_vault_folder_rename', { id:folder.id }) }}">
-											{{ fa('edit') }} Renommer
-										</a>
-									</li>
-									<li>
-										<a href="{{ path('ag_vault_folder_remove', { id:folder.id }) }}">
-											{{ fa('remove') }} Supprimer
-										</a>
-									</li>
-								</ul>
-							</div>
-						</td>
-					</tr>
+					{{ macros.folder_list_row(folder, 0) }}
 				{% else %}
 					<tr>
 						<td class="text-center" colspan="4">Aucun dossier crée pour l'instant.</td>

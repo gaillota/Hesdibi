@@ -1,3 +1,5 @@
+{% import '@AGVault/macros.html.twig' as macros %}
+
 {# Desktop view #}
 <div class="row" id="vault">
 	<div class="col-md-2 text-center">
@@ -62,7 +64,6 @@
 				<th>Partage</th>
 				<th></th>
 			</tr>
-			{% set noFolder = 0 %}
 			{% for f in listFolders %}
 				<tr data-row="folder" data-folder-id="{{ f.id }}">
 					<td>
@@ -97,8 +98,6 @@
 						</div>
 					</td>
 				</tr>
-			{% else %}
-				{% set noFolder = 1 %}
 			{% endfor %}
 			{% for file in listFiles %}
 				<tr data-row="file" data-file-id="{{ file.id }}">
@@ -174,7 +173,7 @@
 						</td>
 					</tr>
 				{% else %}
-					{% if noFolder %}
+					{% if listFolders is empty %}
 						<tr>
 							<td class="text-center" colspan="5">
 								Aucun contenu dans {% if folder is not null %}ce dossier.{% else %}votre Vault.{% endif %}

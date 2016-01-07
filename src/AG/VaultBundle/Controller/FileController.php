@@ -277,6 +277,13 @@ class FileController extends Controller
         if ($this->getUser() !== $file->getOwner())
             throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
 
+        $regularUsers = $this->em->getRepository('AGUserBundle:User')->findRegularUsers();
+
+        if (count($regularUsers) <= 0) {
+            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Veuillez d\'abord ajouter un utilisateur avant de pouvoir partager un fichier');
+            return $this->redirectCorrectly($file);
+        }
+
         $form = $this->createForm(new ShareWithType(), $file);
 
         if ($this->request->isMethod('POST')) {

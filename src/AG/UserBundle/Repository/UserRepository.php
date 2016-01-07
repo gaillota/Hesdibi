@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    public function findRegularUsers()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb
+            ->where($qb->expr()->notLike('u.roles', $qb->expr()->literal('%ROLE_ADMIN%')))
+            ;
+
+        return $qb->getQuery()->getResult();
+    }
 }

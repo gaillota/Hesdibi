@@ -1,0 +1,45 @@
+{% macro folder_dropdown(folder) %}
+	<div class="btn-group dropdown actions pull-right">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+			<li>
+				<a href="{{ path('ag_vault_folder_move', {id:folder.id}) }}">
+					{{ fa('location-arrow') }} Modifier emplacement
+				</a>
+			</li>
+			<li>
+				<a href="#" type="button" data-toggle="modal" data-target="#renameModal" data-id="{{ folder.id }}" data-href="{{ path('ag_vault_folder_rename', { id:folder.id }) }}">
+					{{ fa('edit') }} Renommer
+				</a>
+			</li>
+			<li>
+				<a href="{{ path('ag_vault_folder_remove', { id:folder.id }) }}">
+					{{ fa('remove') }} Supprimer
+				</a>
+			</li>
+		</ul>
+	</div>
+{% endmacro %}
+
+{% macro folder_list_row(folder, level) %}
+	{% import _self as macro %}
+	<tr data-row="folder" data-folder-id="{{ folder.id }}">
+		<td style="padding-left: {{ level * 5 }}px;">
+			{{ fa('folder') }}
+			<a href="{{ path('ag_vault_folder_show', { id:folder.id, slug:folder.slug }) }}" data-name>{{ folder.name }}</a>
+		</td>
+		<td><i>{{ folder.parent is not null ? folder.parent.name : 'Mon Vault' }}</i></td>
+		<td>{{ folder.lastModified|date_fr }}</td>
+		<td>{{ folder.size|size }}</td>
+		<td>
+			{{ macro.folder_dropdown(folder) }}
+		</td>
+	</tr>
+	{#{% if folder.children is not null %}#}
+		{#{{ macro.folder_list_row(folder.children, level + 1) }}#}
+	{#{% endif %}#}
+{% endmacro %}
+
+

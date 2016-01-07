@@ -18,7 +18,7 @@ TODO List
 - [x] Add folder options next to h2
 - [x] Add returning arrow on email sending page
 - [x] Add returning arrow on share-with page
-- [ ] Display error on share-with page when no simple users
+- [x] Display error on share-with page when no simple users
 - [x] Display folder tree on moving file page
 - [x] Go back button on share link removing
 - [x] Add fontawesome icon on alerts
