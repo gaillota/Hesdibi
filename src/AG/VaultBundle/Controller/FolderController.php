@@ -193,7 +193,7 @@ class FolderController extends Controller
         $size = null !== $folder ? $folder->getSize() : $this->em->createQuery("SELECT SUM(f.size) FROM AG\VaultBundle\Entity\File f")->getSingleScalarResult();
 
         return $this->render('AGVaultBundle:Folder:showAdmin.html.twig', array(
-            'folder' => $folder,
+            'currentFolder' => $folder,
             'formFolder' => $formFolder->createView(),
             'formFile' => $formFile->createView(),
             'listFolders' => $listFolders,

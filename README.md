@@ -27,6 +27,6 @@ TODO List
   - Folder deletion
 - [ ] Resolve email / username login error
 - [ ] Change js preview of PDF
-- [ ] Use macro for dropdowns
+- [x] Use macro for dropdowns
 - [ ] Remove children folder when moving one
 - [ ] Add folder on share links page

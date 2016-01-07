@@ -1,3 +1,55 @@
+{% macro file_dropdown(file) %}
+	<div class="btn-group dropdown actions pull-right">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+			<li>
+				<a href="{{ path('ag_vault_file_download', { id:file.id }) }}">
+					{{ fa('download') }} Télécharger
+				</a>
+			</li>
+			<li>
+				<a href="{{ path('ag_vault_file_send', { id:file.id }) }}">
+					{{ fa('envelope') }} Envoyer par e-mail
+				</a>
+			</li>
+			<li>
+				<a href="#" data-toggle="modal" data-target="#shareLinkModal" data-get-link="{{ path('ag_vault_file_generate_link', { id:file.id }) }}">
+					{{ fa('share-alt') }} Générer lien de partage
+				</a>
+			</li>
+			<li>
+				<a href="{{ path('ag_vault_file_share_with', { id:file.id }) }}">
+					{{ fa('users') }} Partager avec
+				</a>
+			</li>
+			<li>
+				<a href="#" data-toggle="modal" data-target="#fileDetailsModal" data-details="{{ path('ag_vault_file_details', {id:file.id}) }}">
+					{{ fa('info-circle') }} Détails du fichier
+				</a>
+			</li>
+			<li class="divider"></li>
+			<li>
+				<a href="{{ path('ag_vault_file_move', {id:file.id}) }}">
+					{{ fa('arrows') }} Modifier emplacement
+				</a>
+			</li>
+			<li>
+				<a href="#" type="button" data-toggle="modal" data-name="{{ file.name }}" data-target="#renameModal" data-id="{{ file.id }}" data-href="{{ path('ag_vault_file_rename', { id:file.id }) }}">
+					{{ fa('edit') }} Renommer
+				</a>
+			</li>
+			<li>
+				<a href="{{ path('ag_vault_file_remove', { id:file.id }) }}">
+					{{ fa('times') }} Supprimer
+				</a>
+			</li>
+		</ul>
+	</div>
+{% endmacro %}
+
+
 {% macro folder_dropdown(folder) %}
 	<div class="btn-group dropdown actions pull-right">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

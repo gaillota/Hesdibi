@@ -58,11 +58,11 @@
 				{% else %}
 					<tr>
 						<td class="text-center" colspan="5">
-					{% if search is defined and search is not null %}
-						Aucun résultat pour la recherche <em>{{ search }}</em>.
-					{% else %}
-						Antoine n'a partagé aucun fichier avec vous.
-					{% endif %}
+						{% if search is defined and search is not null %}
+							Aucun résultat pour la recherche <em>{{ search }}</em>.
+						{% else %}
+							Antoine n'a partagé aucun fichier avec vous.
+						{% endif %}
 						</td>
 					</tr>
 				{% endfor %}
