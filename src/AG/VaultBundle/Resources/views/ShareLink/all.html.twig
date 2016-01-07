@@ -32,15 +32,23 @@
 					<table class="table table-hover">
 						<tr>
 							<th>Nom</th>
+							<th>Dossier</th>
 							<th></th>
 						</tr>
 						{% for shareLink in listShareLinks %}
 							<tr>
-								<td>{{ fa('file-pdf-o') }}&nbsp; &nbsp;{{ shareLink.file.name }} - <span class="small"><i>{{ shareLink.createdAt|date_fr }} à {{ shareLink.createdAt|date('H:i') }}</i></span></td>
+								<td>
+									{{ fa('file-pdf-o') }} {{ shareLink.file.name }} - <span class="small"><i>{{ shareLink.createdAt|date_fr }} à {{ shareLink.createdAt|date('H:i') }}</i></span>
+								</td>
+								<td>
+									<a href="{{ path('ag_vault_folder_show', { id:shareLink.file.folder.id, slug:shareLink.file.folder.slug }) }}">
+										{{ fa('folder') }} {{ shareLink.file.folder.name }}
+									</a>
+								</td>
 								<td>
 									<div class="pull-right">
 										<button type="button" class="btn btn-xs btn-success" data-toggle="popover" data-placement="left" data-content="{{ absolute_url(path('ag_vault_file_show', { token:shareLink.token })) }}">{{ fa('eye') }} Obtenir le lien</button>
-										<a class="btn btn-xs btn-danger" href="{{ path('ag_vault_link_remove', { id:shareLink.id }) }}">{{ fa('times') }} Supprimer ce lien</a>
+										<a class="btn btn-xs btn-danger" href="{{ path('ag_vault_link_remove', { id:shareLink.id }) }}">{{ fa('trash') }} Supprimer ce lien</a>
 									</div>
 								</td>
 							</tr>

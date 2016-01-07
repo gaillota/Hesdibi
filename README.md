@@ -25,8 +25,9 @@ TODO List
 - [ ] Take care of the mobile interface
 - [ ] Check breadcrumb on all pages
   - Folder deletion
+  - Share Link deletion
 - [ ] Resolve email / username login error
 - [ ] Change js preview of PDF
 - [x] Use macro for dropdowns
 - [ ] Remove children folder when moving one
-- [ ] Add folder on share links page
+- [x] Add folder on share links page
