@@ -49,7 +49,6 @@
 	</div>
 	<div class="row" id="vault">
 		<div class="col-md-12">
-			{{ dump(listFolders) }}
 			<table class="table table-hover table-striped">
 				<tr>
 					<th>Nom</th>
@@ -59,7 +58,7 @@
 					<th></th>
 				</tr>
 				{% for folder in listFolders %}
-					{{ macros.folder_list_row(folder, 0) }}
+					{{ macros.folder_list_row(folder) }}
 				{% else %}
 					<tr>
 						<td class="text-center" colspan="4">Aucun dossier crée pour l'instant.</td>

@@ -75,10 +75,10 @@
 	</div>
 {% endmacro %}
 
-{% macro folder_list_row(folder, level) %}
+{% macro folder_list_row(folder) %}
 	{% import _self as macro %}
 	<tr data-row="folder" data-folder-id="{{ folder.id }}">
-		<td style="padding-left: {{ level * 5 }}px;">
+		<td>
 			{{ fa('folder') }}
 			<a href="{{ path('ag_vault_folder_show', { id:folder.id, slug:folder.slug }) }}" data-name>{{ folder.name }}</a>
 		</td>
@@ -89,9 +89,6 @@
 			{{ macro.folder_dropdown(folder) }}
 		</td>
 	</tr>
-	{#{% if folder.children is not null %}#}
-		{#{{ macro.folder_list_row(folder.children, level + 1) }}#}
-	{#{% endif %}#}
 {% endmacro %}
 
 
