@@ -1,3 +1,5 @@
+{% import '@AGVault/macros.html.twig' as macros %}
+
 {# Desktop view #}
 <div class="row" id="vault">
 	<div class="col-md-2 text-center">
@@ -32,23 +34,23 @@
 			{% if search is defined and search is not null %}
 				Résultat de la recherche : <em>{{ search }}</em>
 			{% else %}
-				{% if folder is not null %}
-					<a href="{{ folder.parent is null ? path('ag_vault_homepage') : path('ag_vault_folder_show', {id:folder.parent.id, slug:folder.parent.slug}) }}">
+				{% if currentFolder is not null %}
+					<a href="{{ currentFolder.parent is null ? path('ag_vault_homepage') : path('ag_vault_folder_show', {id:currentFolder.parent.id, slug:currentFolder.parent.slug}) }}">
 						{{ fa('reply') }}&nbsp;
 					</a>
-					{{ fa('folder-open') }} <span class="foldername">{{ folder.name }}</span>
+					{{ fa('folder-open') }} <span class="foldername">{{ currentFolder.name }}</span>
 				{% else %}
 					{{ fa('home') }} My Vault
 				{% endif %}
 				<small>{{ size|size }}</small>
-				{% if folder is not null %}
-					<a href="{{ path('ag_vault_folder_move', { id:folder.id }) }}" class="btn btn-sm btn-default">
+				{% if currentFolder is not null %}
+					<a href="{{ path('ag_vault_folder_move', { id:currentFolder.id }) }}" class="btn btn-sm btn-default">
 						{{ fa('arrows') }}
 					</a>
-					<button class="btn btn-sm btn-warning" data-toggle="modal" data-name="{{ folder.name }}" data-target="#renameModal" data-id="{{ folder.id }}" data-href="{{ path('ag_vault_folder_rename', { id:folder.id }) }}">
+					<button class="btn btn-sm btn-warning" data-toggle="modal" data-name="{{ currentFolder.name }}" data-target="#renameModal" data-id="{{ currentFolder.id }}" data-href="{{ path('ag_vault_folder_rename', { id:currentFolder.id }) }}">
 						{{ fa('edit') }}
 					</button>
-					<a class="btn btn-sm btn-danger" href="{{ path('ag_vault_folder_remove', { id:folder.id }) }}">
+					<a class="btn btn-sm btn-danger" href="{{ path('ag_vault_folder_remove', { id:currentFolder.id }) }}">
 						{{ fa('remove') }}
 					</a>
 				{% endif %}
@@ -62,43 +64,17 @@
 				<th>Partage</th>
 				<th></th>
 			</tr>
-			{% set noFolder = 0 %}
-			{% for f in listFolders %}
-				<tr data-row="folder" data-folder-id="{{ f.id }}">
+			{% for folder in listFolders %}
+				<tr data-row="folder" data-folder-id="{{ folder.id }}">
 					<td>
 						{{ fa('folder') }}
-						<a href="{{ path('ag_vault_folder_show', { id:f.id, slug:f.slug }) }}" data-name>{{ f.name }}</a>
+						<a href="{{ path('ag_vault_folder_show', { id:folder.id, slug:folder.slug }) }}" data-name>{{ folder.name }}</a>
 					</td>
-					<td>{{ f.lastModified|date_fr }}</td>
-					<td>{{ f.size|size }}</td>
+					<td>{{ folder.lastModified|date_fr }}</td>
+					<td>{{ folder.size|size }}</td>
 					<td></td>
-					<td>
-						<div class="btn-group dropdown actions pull-right">
-							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="{{ path('ag_vault_folder_move', {id:f.id}) }}">
-										{{ fa('arrows') }} Modifier emplacement
-									</a>
-								</li>
-								<li>
-									<a href="#" type="button" data-toggle="modal" data-target="#renameModal" data-name="{{ f.name }}" data-id="{{ f.id }}" data-href="{{ path('ag_vault_folder_rename', { id:f.id }) }}">
-										{{ fa('edit') }} Renommer
-									</a>
-								</li>
-								<li>
-									<a href="{{ path('ag_vault_folder_remove', { id:f.id }) }}">
-										{{ fa('remove') }} Supprimer
-									</a>
-								</li>
-							</ul>
-						</div>
-					</td>
+					<td>{{ macros.folder_dropdown(folder) }}</td>
 				</tr>
-			{% else %}
-				{% set noFolder = 1 %}
 			{% endfor %}
 			{% for file in listFiles %}
 				<tr data-row="file" data-file-id="{{ file.id }}">
@@ -115,56 +91,7 @@
 							Non partagé
 						{% endif %}
 					</td>
-					<td>
-						<div class="btn-group dropdown actions pull-right">
-							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="{{ path('ag_vault_file_download', { id:file.id }) }}">
-										{{ fa('download') }} Télécharger
-									</a>
-								</li>
-								<li>
-									<a href="{{ path('ag_vault_file_send', { id:file.id }) }}">
-										{{ fa('envelope') }} Envoyer par e-mail
-									</a>
-								</li>
-								<li>
-									<a href="#" data-toggle="modal" data-target="#shareLinkModal" data-get-link="{{ path('ag_vault_file_generate_link', { id:file.id }) }}">
-										{{ fa('share-alt') }} Générer lien de partage
-									</a>
-								</li>
-								<li>
-									<a href="{{ path('ag_vault_file_share_with', { id:file.id }) }}">
-										{{ fa('users') }} Partager avec
-									</a>
-								</li>
-								<li>
-									<a href="#" data-toggle="modal" data-target="#fileDetailsModal" data-details="{{ path('ag_vault_file_details', {id:file.id}) }}">
-										{{ fa('info-circle') }} Détails du fichier
-									</a>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<a href="{{ path('ag_vault_file_move', {id:file.id}) }}">
-										{{ fa('arrows') }} Modifier emplacement
-									</a>
-								</li>
-								<li>
-									<a href="#" type="button" data-toggle="modal" data-name="{{ file.name }}" data-target="#renameModal" data-id="{{ file.id }}" data-href="{{ path('ag_vault_file_rename', { id:file.id }) }}">
-										{{ fa('edit') }} Renommer
-									</a>
-								</li>
-								<li>
-									<a href="{{ path('ag_vault_file_remove', { id:file.id }) }}">
-										{{ fa('times') }} Supprimer
-									</a>
-								</li>
-							</ul>
-						</div>
-					</td>
+					<td>{{ macros.file_dropdown(file) }}</td>
 				</tr>
 			{% else %}
 				{% if search is defined and search is not null %}
@@ -174,10 +101,10 @@
 						</td>
 					</tr>
 				{% else %}
-					{% if noFolder %}
+					{% if listFolders is empty %}
 						<tr>
 							<td class="text-center" colspan="5">
-								Aucun contenu dans {% if folder is not null %}ce dossier.{% else %}votre Vault.{% endif %}
+								Aucun contenu dans {% if currentFolder is not null %}ce dossier.{% else %}votre Vault.{% endif %}
 							</td>
 						</tr>
 					{% endif %}

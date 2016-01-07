@@ -2,6 +2,7 @@
 
 namespace AG\VaultBundle\Repository;
 
+use AG\UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**

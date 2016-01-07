@@ -18,8 +18,8 @@
 <div class="row" id="vault-mobile" style="margin-bottom: 70px;">
 	<div class="col-xs-12 text-center">
 		<h2 style="margin: 0;">
-			{% if folder is not null %}
-				{{ fa('folder-open') }} {{ folder.name }}
+			{% if currentFolder is not null %}
+				{{ fa('folder-open') }} {{ currentFolder.name }}
 			{% else %}
 				{{ fa('lock') }} Mon Vault
 			{% endif %}
@@ -27,7 +27,7 @@
 		<div class="row">
 			{% set nbrElements = 0 %}
 			{% set noFolder = 0 %}
-			{% for f in listFolders %}
+			{% for folder in listFolders %}
 				{% set nbrElements = nbrElements + 1 %}
 				<div class="col-xs-6">
 					<div class="btn-group dropdown actions{% if nbrElements % 2 == 0 %} inverse-dropdown{% endif %}">
@@ -36,18 +36,17 @@
 						</button>
 						<ul class="dropdown-menu">
 							<li>
-								<a href="{{ path('ag_vault_folder_move', {id:f.id}) }}">
+								<a href="{{ path('ag_vault_folder_move', { id:folder.id }) }}">
 									{{ fa('location-arrow') }} Modifier emplacement
 								</a>
 							</li>
-							<li class="divider"></li>
 							<li>
-								<a href="#" type="button" data-toggle="modal" data-target="#renameModal" data-id="{{ f.id }}" data-href="{{ path('ag_vault_folder_rename', { id:f.id }) }}">
+								<a href="#" type="button" data-toggle="modal" data-target="#renameModal" data-id="{{ folder.id }}" data-href="{{ path('ag_vault_folder_rename', { id:folder.id }) }}">
 									{{ fa('edit') }} Renommer
 								</a>
 							</li>
 							<li>
-								<a href="{{ path('ag_vault_folder_remove', { id:f.id }) }}">
+								<a href="{{ path('ag_vault_folder_remove', { id:folder.id }) }}">
 									{{ fa('remove') }} Supprimer
 								</a>
 							</li>
@@ -57,14 +56,12 @@
 						{{ fa('folder') }}
 					</div>
 					<div class="title">
-						<a href="{{ path('ag_vault_folder_show', { id:f.id, slug:f.slug }) }}">
-							{{ f.name }}
+						<a href="{{ path('ag_vault_folder_show', { id:folder.id, slug:folder.slug }) }}">
+							{{ folder.name }}
 						</a>
-						<span class="size">{{ f.size|size }}</span>
+						<span class="size">{{ folder.size|size }}</span>
 					</div>
 				</div>
-			{% else %}
-				{% set noFolder = 1 %}
 			{% endfor %}
 			{% for file in listFiles %}
 				{% set nbrElements = nbrElements + 1 %}
@@ -89,12 +86,12 @@
 									{{ fa('bar-chart') }} Voir détails
 								</a>
 							</li>
+							<li class="divider"></li>
 							<li>
 								<a href="{{ path('ag_vault_file_move', {id:file.id}) }}">
 									{{ fa('location-arrow') }} Modifier emplacement
 								</a>
 							</li>
-							<li class="divider"></li>
 							<li>
 								<a href="#" type="button" data-toggle="modal" data-target="#renameModal" data-id="{{ file.id }}" data-href="{{ path('ag_vault_file_rename', { id:file.id }) }}">
 									{{ fa('edit') }} Renommer
@@ -102,7 +99,7 @@
 							</li>
 							<li>
 								<a href="{{ path('ag_vault_file_remove', { id:file.id }) }}">
-									{{ fa('times') }} Supprimer
+									{{ fa('trash') }} Supprimer
 								</a>
 							</li>
 						</ul>
@@ -111,7 +108,7 @@
 						{{ fa('file-pdf-o') }}
 					</div>
 					<div class="title">
-						<a class="pdf" href="{{ path('ag_vault_file_preview', { id:file.id }) }}">
+						<a href="{{ path('ag_vault_file_preview', { id:file.id }) }}">
 							{{ file.name }}
 						</a>
 						<span class="size">{{ file.size|size }}</span>
@@ -125,10 +122,10 @@
 						</h5>
 					</div>
 				{% else %}
-					{% if  noFolder %}
+					{% if listFolder is empty %}
 						<div class="col-xs-12 text-center">
 							<h5 style="margin-top: 20px;">
-								Aucun contenu dans {% if folder is not null %}ce dossier.{% else %}votre Vault.{% endif %}
+								Aucun contenu dans {% if currentFolder is not null %}ce dossier.{% else %}votre Vault.{% endif %}
 							</h5>
 						</div>
 					{% endif %}

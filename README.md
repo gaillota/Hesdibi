@@ -18,15 +18,16 @@ TODO List
 - [x] Add folder options next to h2
 - [x] Add returning arrow on email sending page
 - [x] Add returning arrow on share-with page
-- [ ] Display error on share-with page when no simple users
+- [x] Display error on share-with page when no simple users
 - [x] Display folder tree on moving file page
 - [x] Go back button on share link removing
 - [x] Add fontawesome icon on alerts
 - [ ] Take care of the mobile interface
 - [ ] Check breadcrumb on all pages
   - Folder deletion
+  - Share Link deletion
 - [ ] Resolve email / username login error
-- [ ] Change js preview of PDF
-- [ ] Use macro for dropdowns
+- [ ] //Change js preview of PDF
+- [x] Use macro for dropdowns
 - [ ] Remove children folder when moving one
-- [ ] Add folder on share links page
+- [x] Add folder on share links page

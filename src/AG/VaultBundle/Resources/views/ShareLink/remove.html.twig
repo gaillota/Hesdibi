@@ -3,7 +3,7 @@
 {% block ag_vault_content %}
 	<div class="row">
 		<div class="col-md-12 text-center">
-			<h2>Supprimer le lien de partage  du fichier <em>{{ file.name }}</em> ?</h2>
+			<h2>{{ fa('trash') }} Supprimer le lien de partage  du fichier <em>{{ file.name }}</em> ?</h2>
 			<hr/>
 			<form action="" method="POST">
 				{% if file.folder is not null %}
@@ -16,7 +16,7 @@
 					</a>
 				{% endif %}
 				<button class="btn btn-danger" type="submit">
-					{{ fa('times') }} Supprimer ce lien
+					{{ fa('trash') }} Supprimer ce lien
 				</button>
 				{{ form_rest(form) }}
 			</form>

@@ -31,6 +31,7 @@
                         <th>E-mail</th>
                         <th>Dernière co.</th>
                         <th>Droits</th>
+	                    <th class="text-center">Fichiers partagés</th>
                         <th class="text-center">Status</th>
                         <th></th>
                     </tr>
@@ -47,6 +48,11 @@
                                 {% endif %}
                             </td>
                             <td>{% for role in user.roles %}<span class="label label-info">{{ role }}</span> {% endfor %}</td>
+	                        <td class="text-center">
+		                        {% if not user.hasRole('role_admin') %}
+			                        {{ user.sharedFiles|length }}
+		                        {% endif %}
+	                        </td>
                             <td class="text-center">
 	                            {% if user.locked %}
 		                            <span class="label label-danger">

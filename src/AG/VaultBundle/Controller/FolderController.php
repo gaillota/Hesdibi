@@ -39,14 +39,46 @@ class FolderController extends Controller
      */
     public function indexAction()
     {
+        $listFolders = $this->em->getRepository('AGVaultBundle:Folder')->findBy(array(
+            'owner' => $this->getUser(),
+            'parent' => null,
+        ), array(
+            'name' => 'ASC'
+        ));
+
+//        foreach($listFolders as $folder) {
+//            echo '<pre>';
+//            var_dump($folder->getId() . ' - ' . $folder->getName());
+//            echo '</pre>';
+//            if (null !== $folder->getChildren()) {
+//                foreach ($folder->getChildren() as $child) {
+//                    $child->addChild($this->getSubFolder($child));
+//                }
+//            }
+//        }
+
         return array(
-            'listFolders' => $this->em->getRepository('AGVaultBundle:Folder')->findBy(array(
-                'owner' => $this->getUser(),
-            ), array(
-                'name' => 'ASC'
-            )),
+            'listFolders' => $listFolders,
         );
     }
+
+//    private function getSubFolder(Folder $folder)
+//    {
+//        echo '<pre>';
+//        var_dump($folder->getId() . ' - ' . $folder->getName());
+//        echo '</pre>';
+//
+//        $children = $this->em->getRepository('AGVaultBundle:Folder')->findBy(array(
+//            'owner' => $this->getUser(),
+//            'parent' => $folder->getId(),
+//        ));
+//
+//        foreach ($children as $child) {
+//            $child->addChild($this->getSubFolder($child));
+//        }
+//
+//        return $folder;
+//    }
 
     /**
      * @param Folder $folder
@@ -160,7 +192,7 @@ class FolderController extends Controller
         $size = null !== $folder ? $folder->getSize() : $this->em->createQuery("SELECT SUM(f.size) FROM AG\VaultBundle\Entity\File f")->getSingleScalarResult();
 
         return $this->render('AGVaultBundle:Folder:showAdmin.html.twig', array(
-            'folder' => $folder,
+            'currentFolder' => $folder,
             'formFolder' => $formFolder->createView(),
             'formFile' => $formFile->createView(),
             'listFolders' => $listFolders,
