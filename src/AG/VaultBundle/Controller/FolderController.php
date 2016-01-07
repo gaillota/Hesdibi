@@ -131,6 +131,8 @@ class FolderController extends Controller
                 $this->em->persist($newFolder);
                 $this->em->flush();
 
+                $this->addFlash('success', '<i class="fa fa-thumbs-up"></i> Dossier crée avec succès');
+
                 return $this->redirectToRoute('ag_vault_folder_show', array(
                     'id' => $newFolder->getId(),
                     'slug' => $newFolder->getSlug()
