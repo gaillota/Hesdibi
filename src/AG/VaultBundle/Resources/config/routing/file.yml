@@ -47,6 +47,11 @@ ag_vault_file_details:
     requirements:
         id: \d+
 
+ag_vault_file_get_last:
+    path: /get-last
+    defaults:
+        _controller: AGVaultBundle:File:getLast
+
 ag_vault_file_share_with:
     path: /{id}/share-with
     defaults:

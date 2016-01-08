@@ -267,6 +267,26 @@ class FileController extends Controller
     }
 
     /**
+     * @return array
+     * @Template
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function getLastAction()
+    {
+        $nbrFile = 5;
+
+        $listFiles = $this->em->getRepository('AGVaultBundle:File')->findBy(array(
+            'owner' => $this->getUser(),
+        ), array(
+            'lastModified' => 'DESC'
+        ), $nbrFile);
+
+        return array(
+            'listFiles' => $listFiles,
+        );
+    }
+
+    /**
      * @param File $file
      * @return array
      * @Template
