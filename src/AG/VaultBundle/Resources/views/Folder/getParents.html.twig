@@ -1,0 +1,5 @@
+{% spaceless %}
+	{% for parent in listParents %}
+		<li><a href="{{ path('ag_vault_folder_show', { id:parent.id, slug:parent.slug }) }}">{{ parent.name }}</a></li>
+	{% endfor %}
+{% endspaceless %}

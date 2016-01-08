@@ -23,7 +23,7 @@ TODO List
 - [x] Go back button on share link removing
 - [x] Add fontawesome icon on alerts
 - [ ] Take care of the mobile interface
-- [ ] Check breadcrumb on all pages
+- [x] Check breadcrumb on all pages
   - Folder deletion
   - Share Link deletion
 - [x] Resolve email / username login error (works on prod somehow)

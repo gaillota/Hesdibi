@@ -39,3 +39,10 @@ ag_vault_folder_move:
         _controller: AGVaultBundle:Folder:move
     requirements:
         id: \d+
+
+ag_vault_folder_get_parents:
+    path: /{id}/get-parents
+    defaults:
+        _controller: AGVaultBundle:Folder:getParents
+    requirements:
+        id: \d+

@@ -1,5 +1,11 @@
 {% extends 'AGVaultBundle::layout.html.twig' %}
 
+{% block breadcrumbs %}
+	{{ parent() }}
+	{{ render(controller('AGVaultBundle:Folder:getParents', { id:folder.id })) }}
+	<li class="active">Supprimer un dossier</li>
+{% endblock %}
+
 {% block ag_vault_content %}
 	<div class="row">
 		<div class="col-md-12 text-center">

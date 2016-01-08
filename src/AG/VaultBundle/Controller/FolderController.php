@@ -268,9 +268,21 @@ class FolderController extends Controller
             return $this->redirectToRoute('ag_vault_homepage');
         }
 
+        //Retrieve the list of every parents for the current folder
+        $listParents = array();
+        if (null !== $folder->getParent()) {
+            $nextParent = $folder->getParent();
+            while (null !== $nextParent):
+                $listParents[] = $nextParent;
+                $nextParent = $nextParent->getParent();
+            endwhile;
+            $listParents = array_reverse($listParents);
+        }
+
         return array(
             'form' => $form->createView(),
-            'folder' => $folder
+            'folder' => $folder,
+            'listParents' => $listParents,
         );
     }
 
@@ -349,6 +361,31 @@ class FolderController extends Controller
         return array(
             'folder' => $folder,
             'form' => $form->createView(),
+            'listParents' => $listParents,
+        );
+    }
+
+    /**
+     * @param Folder|null $folder
+     * @return array
+     * @Template
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function getParentsAction(Folder $folder = null)
+    {
+        //Retrieve the list of every parents for the current folder
+        $listParents = array();
+        if (null !== $folder) {
+            $listParents[] = $folder;
+            $nextParent = $folder->getParent();
+            while (null !== $nextParent):
+                $listParents[] = $nextParent;
+                $nextParent = $nextParent->getParent();
+            endwhile;
+            $listParents = array_reverse($listParents);
+        }
+
+        return array(
             'listParents' => $listParents,
         );
     }

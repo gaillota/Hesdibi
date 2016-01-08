@@ -234,19 +234,9 @@ class FileController extends Controller
             $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Une erreur est survenue. Veuillez contacter le big boss pour un petit service après-vente qui mets dans le bien.');
         }
 
-        //Retrieve the list of every parents for the current folder
-        $listParents = array();
-        $nextParent = $file->getFolder();
-        while (null !== $nextParent) {
-            $listParents[] = $nextParent;
-            $nextParent = $nextParent->getParent();
-        }
-        $listParents = array_reverse($listParents);
-
         return array(
             'file' => $file,
             'form' => $form->createView(),
-            'listParents' => $listParents,
         );
     }
 
@@ -271,7 +261,7 @@ class FileController extends Controller
      * @Template
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function getLastAction()
+    public function getLastFilesAction()
     {
         $nbrFile = 5;
 
