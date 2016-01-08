@@ -2,6 +2,12 @@
 
 {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
+{% block breadcrumb %}
+	{{ parent() }}
+	{{ render(controller('AGVaultBundle:Folder:getParents', { id:file.folder.id })) }}
+	<li class="active">Partager un fichier</li>
+{% endblock %}
+
 {% block ag_vault_content %}
 	<div class="row">
 		<div class="col-sm-1 text-center hidden-xs" style="padding-top: 22px;">

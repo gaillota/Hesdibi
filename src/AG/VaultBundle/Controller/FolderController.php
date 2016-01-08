@@ -46,39 +46,10 @@ class FolderController extends Controller
             'name' => 'ASC'
         ));
 
-//        foreach($listFolders as $folder) {
-//            echo '<pre>';
-//            var_dump($folder->getId() . ' - ' . $folder->getName());
-//            echo '</pre>';
-//            if (null !== $folder->getChildren()) {
-//                foreach ($folder->getChildren() as $child) {
-//                    $child->addChild($this->getSubFolder($child));
-//                }
-//            }
-//        }
-
         return array(
             'listFolders' => $listFolders,
         );
     }
-
-//    private function getSubFolder(Folder $folder)
-//    {
-//        echo '<pre>';
-//        var_dump($folder->getId() . ' - ' . $folder->getName());
-//        echo '</pre>';
-//
-//        $children = $this->em->getRepository('AGVaultBundle:Folder')->findBy(array(
-//            'owner' => $this->getUser(),
-//            'parent' => $folder->getId(),
-//        ));
-//
-//        foreach ($children as $child) {
-//            $child->addChild($this->getSubFolder($child));
-//        }
-//
-//        return $folder;
-//    }
 
     /**
      * @param Folder $folder
@@ -130,6 +101,8 @@ class FolderController extends Controller
             if ($formFolder->isValid()) {
                 $this->em->persist($newFolder);
                 $this->em->flush();
+
+                $this->addFlash('success', '<i class="fa fa-thumbs-up"></i> Dossier crée avec succès');
 
                 return $this->redirectToRoute('ag_vault_folder_show', array(
                     'id' => $newFolder->getId(),
@@ -294,9 +267,21 @@ class FolderController extends Controller
             return $this->redirectToRoute('ag_vault_homepage');
         }
 
+        //Retrieve the list of every parents for the current folder
+        $listParents = array();
+        if (null !== $folder->getParent()) {
+            $nextParent = $folder->getParent();
+            while (null !== $nextParent):
+                $listParents[] = $nextParent;
+                $nextParent = $nextParent->getParent();
+            endwhile;
+            $listParents = array_reverse($listParents);
+        }
+
         return array(
             'form' => $form->createView(),
-            'folder' => $folder
+            'folder' => $folder,
+            'listParents' => $listParents,
         );
     }
 
@@ -375,6 +360,31 @@ class FolderController extends Controller
         return array(
             'folder' => $folder,
             'form' => $form->createView(),
+            'listParents' => $listParents,
+        );
+    }
+
+    /**
+     * @param Folder|null $folder
+     * @return array
+     * @Template
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function getParentsAction(Folder $folder = null)
+    {
+        //Retrieve the list of every parents for the current folder
+        $listParents = array();
+        if (null !== $folder) {
+            $listParents[] = $folder;
+            $nextParent = $folder->getParent();
+            while (null !== $nextParent):
+                $listParents[] = $nextParent;
+                $nextParent = $nextParent->getParent();
+            endwhile;
+            $listParents = array_reverse($listParents);
+        }
+
+        return array(
             'listParents' => $listParents,
         );
     }

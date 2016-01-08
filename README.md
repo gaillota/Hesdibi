@@ -23,11 +23,13 @@ TODO List
 - [x] Go back button on share link removing
 - [x] Add fontawesome icon on alerts
 - [ ] Take care of the mobile interface
-- [ ] Check breadcrumb on all pages
+- [x] Check breadcrumb on all pages
   - Folder deletion
   - Share Link deletion
-- [ ] Resolve email / username login error
+- [x] Resolve email / username login error (works on prod somehow)
 - [ ] //Change js preview of PDF
 - [x] Use macro for dropdowns
 - [ ] Remove children folder when moving one
 - [x] Add folder on share links page
+- [ ] Add redirectCorrectly method in FolderController
+- [ ] Add phone book
