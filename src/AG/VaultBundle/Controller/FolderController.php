@@ -167,43 +167,6 @@ class FolderController extends Controller
 
     /**
      * @param Folder $folder
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @Template
-     * @Secure(roles="ROLE_ADMIN")
-     */
-    public function editAction(Folder $folder)
-    {
-        if ($this->getUser() !== $folder->getOwner())
-            throw new AccessDeniedException("Ce dossier ne vous appartient pas.");
-
-        $form = $this->createForm(new FolderType, $folder);
-
-        if ($this->request->isMethod('POST')) {
-            $form->handleRequest($this->request);
-
-            if ($form->isValid()) {
-                $this->em->persist($folder);
-                $this->em->flush();
-
-                $this->addFlash('success', '<i class="fa fa-edit"></i> Dossier modifié avec succès !');
-
-                return $this->redirectToRoute('ag_vault_folder_show', array(
-                    'id' => $folder->getId(),
-                    'slug' => $folder->getSlug()
-                ));
-            }
-
-            $this->addFlash('error', '<i class="fa fa-times-circle"></i> Une erreur s\'est produite.');
-        }
-
-        return array(
-            'form' => $form->createView(),
-            'folder' => $folder,
-        );
-    }
-
-    /**
-     * @param Folder $folder
      * @return array
      * @Template
      * @Secure(roles="ROLE_ADMIN")
