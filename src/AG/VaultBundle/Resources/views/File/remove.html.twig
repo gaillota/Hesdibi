@@ -3,6 +3,7 @@
 {% block breadcrumbs %}
 	{{ parent() }}
 	{{ render(controller('AGVaultBundle:Folder:getParents', { id:file.folder.id })) }}
+	<li><a href="{{ path('ag_vault_folder_show', { id:file.folder.id, slug:file.folder.slug}) }}">{{ file.folder.name }}</a></li>
 	<li class="active">Supprimer un fichier</li>
 {% endblock %}
 

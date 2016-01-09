@@ -151,17 +151,6 @@ class FolderController extends Controller
             ));
         }
 
-        //Retrieve the list of every parents for the current folder
-        $listParents = array();
-        if (null !== $folder) {
-            $nextParent = $folder->getParent();
-            while (null !== $nextParent):
-                $listParents[] = $nextParent;
-                $nextParent = $nextParent->getParent();
-            endwhile;
-            $listParents = array_reverse($listParents);
-        }
-
         //Get the size of the current folder
         $size = null !== $folder ? $folder->getSize() : $this->em->createQuery("SELECT SUM(f.size) FROM AG\VaultBundle\Entity\File f")->getSingleScalarResult();
 
@@ -171,7 +160,6 @@ class FolderController extends Controller
             'formFile' => $formFile->createView(),
             'listFolders' => $listFolders,
             'listFiles' => $listFiles,
-            'listParents' => $listParents,
             'search' => $search,
             'size' => $size,
         ));
@@ -208,21 +196,9 @@ class FolderController extends Controller
             $this->addFlash('error', '<i class="fa fa-times-circle"></i> Une erreur s\'est produite.');
         }
 
-        //Retrieve the list of every parents for the current folder
-        $listParents = array();
-        if (null !== $folder->getParent()) {
-            $nextParent = $folder->getParent();
-            while (null !== $nextParent):
-                $listParents[] = $nextParent;
-                $nextParent = $nextParent->getParent();
-            endwhile;
-            $listParents = array_reverse($listParents);
-        }
-
         return array(
             'form' => $form->createView(),
             'folder' => $folder,
-            'listParents' => $listParents
         );
     }
 
@@ -349,19 +325,9 @@ class FolderController extends Controller
             $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Une erreur est survenue. Veuillez contacter le big boss pour un petit service après-vente qui mets dans le bien.');
         }
 
-        //Retrieve the list of every parents for the current folder
-        $listParents = array();
-        $nextParent = $folder->getParent();
-        while (null !== $nextParent) {
-            $listParents[] = $nextParent;
-            $nextParent = $nextParent->getParent();
-        }
-        $listParents = array_reverse($listParents);
-
         return array(
             'folder' => $folder,
             'form' => $form->createView(),
-            'listParents' => $listParents,
         );
     }
 
@@ -375,8 +341,7 @@ class FolderController extends Controller
     {
         //Retrieve the list of every parents for the current folder
         $listParents = array();
-        if (null !== $folder) {
-            $listParents[] = $folder;
+        if (null !== $folder && null !== $folder->getParent()) {
             $nextParent = $folder->getParent();
             while (null !== $nextParent):
                 $listParents[] = $nextParent;
