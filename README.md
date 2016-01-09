@@ -31,5 +31,5 @@ TODO List
 - [x] Use macro for dropdowns
 - [ ] Remove children folder when moving one
 - [x] Add folder on share links page
-- [ ] Add redirectCorrectly method in FolderController
+- [x] Add redirectCorrectly method in FolderController
 - [ ] Add phone book
