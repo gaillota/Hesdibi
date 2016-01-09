@@ -1,3 +1,10 @@
+ag_vault_file_rename:
+    path: /{id}/rename
+    defaults:
+        _controller: AGVaultBundle:File:rename
+    requirements:
+        id: \d+
+
 ag_vault_file_remove:
     path: /{id}/remove
     defaults:
@@ -16,13 +23,6 @@ ag_vault_file_preview:
     path: /{id}/preview
     defaults:
         _controller: AGVaultBundle:File:preview
-    requirements:
-        id: \d+
-
-ag_vault_file_rename:
-    path: /{id}/rename
-    defaults:
-        _controller: AGVaultBundle:File:rename
     requirements:
         id: \d+
 
@@ -46,11 +46,6 @@ ag_vault_file_details:
         _controller: AGVaultBundle:File:details
     requirements:
         id: \d+
-
-ag_vault_file_get_last:
-    path: /get-last
-    defaults:
-        _controller: AGVaultBundle:File:getLast
 
 ag_vault_file_share_with:
     path: /{id}/share-with

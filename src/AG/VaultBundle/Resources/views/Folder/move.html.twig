@@ -5,6 +5,7 @@
 {% block breadcrumbs %}
 	{{ parent() }}
 	{{ render(controller('AGVaultBundle:Folder:getParents', { id:folder.id })) }}
+	<li><a href="{{ path('ag_vault_folder_show', { id:folder.id, slug:folder.slug}) }}">{{ folder.name }}</a></li>
 	<li class="active">Déplacer</li>
 {% endblock %}
 

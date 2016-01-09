@@ -12,13 +12,6 @@ ag_vault_folder_show:
         id: \d+
         slug: "[a-zA-Z0-9-_/]+"
 
-ag_vault_folder_edit:
-    path: /{id}/edit
-    defaults:
-        _controller: AGVaultBundle:Folder:edit
-    requirements:
-        id: \d+
-
 ag_vault_folder_remove:
     path: /{id}/remove
     defaults:
