@@ -29,7 +29,7 @@ TODO List
 - [x] Resolve email / username login error (works on prod somehow)
 - [ ] //Change js preview of PDF
 - [x] Use macro for dropdowns
-- [ ] Remove children folder when moving one
+- [x] Remove children folder when moving one
 - [x] Add folder on share links page
 - [x] Add redirectCorrectly method in FolderController
 - [ ] Add phone book

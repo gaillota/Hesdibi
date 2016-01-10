@@ -270,7 +270,18 @@ class FolderController extends Controller
         if ($this->getUser() !== $folder->getOwner())
             throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
 
-        $form = $this->createForm(new FolderEditType($folder), $folder);
+        $children = array();
+        $nextChild = $this->em->getRepository('AGVaultBundle:Folder')->findOneBy(array(
+            'parent' => $folder->getId()
+        ));
+        while (null !== $nextChild) {
+            $children[] = $nextChild;
+            $nextChild = $this->em->getRepository('AGVaultBundle:Folder')->findOneBy(array(
+                'parent' => $nextChild->getId()
+            ));
+        }
+
+        $form = $this->createForm(new FolderEditType($folder, $children), $folder);
         $formerFolder = $folder->getParent();
 
         if ($this->request->isMethod('POST')) {
