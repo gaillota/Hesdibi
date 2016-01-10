@@ -332,10 +332,10 @@ class FolderController extends Controller
     /**
      * Method used to redirect either in the root node or in the correct folder
      *
-     * @param Folder $folder
+     * @param Folder|null $folder
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function redirectCorrectly(Folder $folder)
+    private function redirectCorrectly(Folder $folder = null)
     {
         return null === $folder ?  $this->redirectToRoute('ag_vault_homepage') : $this->redirectToRoute('ag_vault_folder_show', array(
             'id' => $folder->getId(),

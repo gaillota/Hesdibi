@@ -27,9 +27,11 @@ TODO List
   - Folder deletion
   - Share Link deletion
 - [x] Resolve email / username login error (works on prod somehow)
-- [ ] //Change js preview of PDF
+- [x] //Change js preview of PDF
 - [x] Use macro for dropdowns
 - [x] Remove children folder when moving one
 - [x] Add folder on share links page
 - [x] Add redirectCorrectly method in FolderController
 - [ ] Add phone book
+- [ ] Create a search page
+- [ ] Check regular user page
