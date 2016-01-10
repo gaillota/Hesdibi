@@ -59,11 +59,17 @@ class AdminController extends Controller
 
             $userManager->updateUser($user);
 
-            $this->addFlash('success', '<i class="fa fa-user-plus"></i> Utilisateur crée avec succès.');
+            $this->addFlash('success', 'Utilisateur crée avec succès.');
+
+            if (!$this->container->hasParameter('mailgun_api_key')) {
+                $this->addFlash('danger', 'Mailgun API key missing !');
+
+                return $this->redirectToRoute('ag_user_admin_index');
+            }
 
             //Send confirmation mail to user
             $mg = new Mailgun($this->container->getParameter('mailgun_api_key'));
-            $domain = $this->container->getParameter('domain_name');
+            $domain = $this->container->hasParameter('domain_name') ? $this->container->getParameter('domain_name') : 'hesdibi.co';
 
             $message = array(
                 'from'      => 'no-reply@antoine-gaillot.com',
@@ -88,9 +94,9 @@ class AdminController extends Controller
             );
 
             if ($result->http_response_code == 200) {
-                $this->addFlash('success', '<i class="fa fa-send-o"></i> E-mail envoyé avec succès !');
+                $this->addFlash('success', 'E-mail envoyé avec succès !');
             } else {
-                $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Erreur lors de l\'envoi de l\'email');
+                $this->addFlash('danger', 'Erreur lors de l\'envoi de l\'email');
             }
 
             return $this->redirect($this->generateUrl('ag_user_admin_index'));
@@ -115,7 +121,7 @@ class AdminController extends Controller
             if ($form->handleRequest($this->request)->isValid()) {
                 $userManager = $this->get('fos_user.user_manager');
                 $userManager->updateUser($user);
-                $this->addFlash('warning', '<i class="fa fa-edit"></i> Utilisateur mis à jour.');
+                $this->addFlash('warning', 'Utilisateur mis à jour.');
 
                 return $this->redirect($this->generateUrl('ag_user_admin_index'));
             }
@@ -140,7 +146,7 @@ class AdminController extends Controller
             if ($form->handleRequest($this->request)->isValid()) {
                 $this->em->remove($user);
                 $this->em->flush();
-                $this->addFlash('danger', '<i class="fa fa-trash"></i> Utilisateur supprimé avec succès.');
+                $this->addFlash('danger', 'Utilisateur supprimé avec succès.');
 
                 return $this->redirectToRoute('ag_user_admin_index');
             }
