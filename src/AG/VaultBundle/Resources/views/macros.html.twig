@@ -1,5 +1,5 @@
-{% macro file_dropdown(file) %}
-	<div class="btn-group dropdown actions pull-right">
+{% macro file_dropdown(file, class) %}
+	<div class="btn-group dropdown actions {{ class|default('pull-right') }}">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<span class="caret"></span>
 		</button>
@@ -50,8 +50,8 @@
 {% endmacro %}
 
 
-{% macro folder_dropdown(folder) %}
-	<div class="btn-group dropdown actions pull-right">
+{% macro folder_dropdown(folder, class) %}
+	<div class="btn-group dropdown actions {{ class|default('pull-right') }}">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<span class="caret"></span>
 		</button>

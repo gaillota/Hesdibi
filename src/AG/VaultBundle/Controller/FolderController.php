@@ -124,7 +124,7 @@ class FolderController extends Controller
 
                 $this->addFlash('success', '<i class="fa fa-file-pdf-o"></i> Fichier ajouté avec succès !');
 
-                return null !== $folder ? $this->redirectToRoute('ag_vault_folder_show', array('id' => $folder->getId(), 'slug' => $folder->getSlug())) : $this->redirectToRoute('ag_vault_homepage');
+                return $this->redirectCorrectly($folder);
             }
 
             $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Une erreur est survenue.');
@@ -269,7 +269,18 @@ class FolderController extends Controller
         if ($this->getUser() !== $folder->getOwner())
             throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
 
-        $form = $this->createForm(new FolderEditType($folder), $folder);
+        $children = array();
+        $nextChild = $this->em->getRepository('AGVaultBundle:Folder')->findOneBy(array(
+            'parent' => $folder->getId()
+        ));
+        while (null !== $nextChild) {
+            $children[] = $nextChild;
+            $nextChild = $this->em->getRepository('AGVaultBundle:Folder')->findOneBy(array(
+                'parent' => $nextChild->getId()
+            ));
+        }
+
+        $form = $this->createForm(new FolderEditType($folder, $children), $folder);
         $formerFolder = $folder->getParent();
 
         if ($this->request->isMethod('POST')) {
@@ -281,7 +292,7 @@ class FolderController extends Controller
 
                 $this->addFlash('success', '<i class="fa fa-arrows"></i> Emplacement du dossier modifé avec succès !');
 
-                return null !== $formerFolder ? $this->redirectToRoute('ag_vault_folder_show', array('id' => $formerFolder->getId(), 'slug' => $formerFolder->getSlug())) : $this->redirectToRoute('ag_vault_homepage');
+                return $this->redirectCorrectly($formerFolder);
             }
 
             $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Une erreur est survenue. Veuillez contacter le big boss pour un petit service après-vente qui mets dans le bien.');
@@ -315,5 +326,19 @@ class FolderController extends Controller
         return array(
             'listParents' => $listParents,
         );
+    }
+
+    /**
+     * Method used to redirect either in the root node or in the correct folder
+     *
+     * @param Folder|null $folder
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    private function redirectCorrectly(Folder $folder = null)
+    {
+        return null === $folder ?  $this->redirectToRoute('ag_vault_homepage') : $this->redirectToRoute('ag_vault_folder_show', array(
+            'id' => $folder->getId(),
+            'slug' => $folder->getSlug()
+        ));
     }
 }

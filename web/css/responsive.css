@@ -9,9 +9,13 @@
 }
 
 /* CSS rules for XS screens */
-#vault-mobile .col-xs-6 {
+#vault-mobile .item {
     position: relative;
-    margin-top: 20px;
+    margin: 20px 0;
+}
+
+#vault-mobile h2 {
+    color: #444;
 }
 
 #vault-mobile .icon {
@@ -49,13 +53,13 @@
     visibility: hidden;
 }
 
-#vault-mobile .col-xs-6:hover .dropdown.actions button.dropdown-toggle {
+#vault-mobile .item:hover .dropdown.actions button.dropdown-toggle, #vault-mobile .item:active .dropdown.actions button.dropdown-toggle {
     visibility: visible;
 }
 
-#vault-mobile .inverse-dropdown .dropdown-menu {
- left: -190px;
-}
+ #vault-mobile .inverse-dropdown .dropdown-menu {
+     left: -190px;
+ }
 
 .mobile-search {
     position: fixed;
@@ -63,7 +67,9 @@
     right: 60px;
     z-index: 999;
     width: 60%;
+    max-width: 300px;
 }
+
 .mobile-search span#addon2, .mobile-search input.form-control {
     border-radius: 50px;
 }

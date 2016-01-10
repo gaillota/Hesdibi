@@ -33,7 +33,7 @@ $(function() {
 
     $('#renameModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
-        var name = button.data('name'); // Extract info from data-* attributes
+        var name = button.data('name').toString(); // Extract info from data-* attributes
         var modal = $(this);
 
         if (name.indexOf(".pdf") >= 0) name = name.replace(".pdf", "");

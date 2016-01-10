@@ -15,9 +15,15 @@ class FolderEditType extends AbstractType
      */
     private $folder;
 
-    public function __construct(Folder $folder = null)
+    /**
+     * @var array $children
+     */
+    private $children;
+
+    public function __construct(Folder $folder, $children)
     {
         $this->folder = $folder;
+        $this->children = $children;
     }
 
     /**
@@ -43,7 +49,7 @@ class FolderEditType extends AbstractType
                         $nextParent = $nextParent->getParent();
                     }
                     $listParents = array_reverse($listParents);
-                    return implode(" > ", $listParents);
+                    return "Mon Vault => " . implode(" > ", $listParents);
                 },
                 'empty_value' => 'Mon Vault',
                 'empty_data' => null,
@@ -52,12 +58,17 @@ class FolderEditType extends AbstractType
                 'query_builder' => function(EntityRepository $er) {
                     $qb = $er->createQueryBuilder('f');
 
-                    $qb->leftJoin('f.parent', 'p');
-                    if ($this->folder instanceof Folder) {
+                    $qb
+                        ->leftJoin('f.parent', 'p')
+                        ->where('f.id != :id')
+                        ->setParameter('id', $this->folder->getId())
+                    ;
+
+                    foreach ($this->children as $k => $child) {
                         $qb
-                            ->where('f.id != :id')
-                            ->setParameter('id', $this->folder->getId())
-                            ;
+                            ->andWhere("f.id != :id$k")
+                            ->setParameter("id$k", $child->getId())
+                        ;
                     }
 
                     $qb->orderBy('f.name', 'ASC');
