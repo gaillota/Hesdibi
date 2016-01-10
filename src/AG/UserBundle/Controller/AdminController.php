@@ -80,7 +80,7 @@ class AdminController extends Controller
                     array(
                         'user' => $user,
                         'password' => $password,
-                        'homepage' => $this->generateUrl('ag_vault_homepage', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                        'login' => $this->generateUrl('fos_user_security_login', array(), UrlGeneratorInterface::ABSOLUTE_URL),
                         'changePassword' => $this->generateUrl('fos_user_change_password', array(), UrlGeneratorInterface::ABSOLUTE_URL),
                     )
                 )
