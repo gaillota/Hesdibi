@@ -116,7 +116,6 @@ class FolderController extends Controller
                     $folder->setLastModified(new \DateTime());
                     $this->em->persist($folder);
                 }
-
                 $this->em->persist($file);
                 if ($file->getFile()) {
                     $this->get('stof_doctrine_extensions.uploadable.manager')->markEntityToUpload($file, $file->getFile());

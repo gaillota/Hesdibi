@@ -118,7 +118,7 @@ ol.breadcrumb {
     margin: 0 5px;
     transform: scale(0.5);
     background: rgba(43, 140, 205, 0);
-    animation: LOADING 0.2s infinite;
+    animation: LOADING 1.5s infinite;
 }
 
 .loader span:nth-child(1n) {

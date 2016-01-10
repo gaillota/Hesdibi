@@ -113,7 +113,6 @@ class File
      */
     private $shareLinks;
 
-
     public function __construct()
     {
         $this->lastModified = new \DateTime();

@@ -108,12 +108,4 @@ $(function() {
             }
         })
     });
-    $('#passwordModal').on('shown.bs.modal', function(event) {
-        var modal = $(this);
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var href = button.data('path'); // Extract info from data-* attributes
-
-        modal.find('form').attr('action', href);
-        modal.find('input#password').focus();
-    });
 });
