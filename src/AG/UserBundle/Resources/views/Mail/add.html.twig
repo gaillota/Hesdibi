@@ -1,11 +1,13 @@
-Salut {{ user.username }},<br><br>
-Ton compte a bien été crée sur <a href="{{ homepage }}">My Vault</a>.<br><br>
-Informations de connexion :<br>
+Bonjour {{ user.username }},<br><br>
+{{ app.user }} vient de te créer un compte sur <strong>My Vault</strong>.<br><br>
+Informations de connexion :<br><br>
 - Nom d'utilisateur : {{ user.username }}<br>
+- Adresse email : {{ user.email }}<br>
 - Mot de passe : {{ password }}<br><br>
-Nous te conseillons vivement de changer ton mot de passe en cliquant ici : <br><br>
-<a style="padding: 10px 15px; text-decoration: none; color:white; font-weight: 500; background: #5CB85C;border-color: #4CAE4C;border-radius: 3px;" href="{{ changePassword }}">Changer mon mot de passe</a>
+Tu peux accéder au site en cliquant ici : <a href="{{ login }}">Se connecter</a>.<br>
+/!\ Nous te conseillons vivement de changer ton mot de passe en cliquant ici : <a href="{{ changePassword }}">Changer mon mot de passe</a>
 <br><br>
 A bientôt,<br>
 L'administrateur.<br><br>
-<i><small>Ce message est à destination de {{ user.email }}. Si ce n'est pas vous, merci d'ignorer son contenu.</small></i>
+<i><small>Ce message est à destination de {{ user.email }}. Si ce n'est pas vous, merci d'ignorer son contenu.</small></i><br><br>
+<i>/!\ Ce message a été generé automatiquement, veuillez ne pas y répondre.</i>

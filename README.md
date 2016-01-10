@@ -37,3 +37,4 @@ TODO List
 - [ ] Add phone book
 - [ ] Create a search page
 - [ ] Check regular user page
+- [ ] Check fontawesome icons on all pages
