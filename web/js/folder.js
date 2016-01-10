@@ -1,10 +1,4 @@
 $(function() {
-    $('tr[data-row]').dblclick(function(e) {
-        if (!$(e.target).hasClass("dropdown-toggle")) {
-            window.location = $(this).first('td').find('a[data-name]').attr('href');
-        }
-    });
-
     $('.pdf').click(function (e) {
         e.preventDefault();
 

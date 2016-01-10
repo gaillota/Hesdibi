@@ -96,7 +96,7 @@
 					<td>{{ macros.file_dropdown(file) }}</td>
 				</tr>
 			{% else %}
-				{% if search is defined and search is not null %}
+				{% if search is defined and search is not null and listFolders is empty %}
 					<tr>
 						<td class="text-center" colspan="5">
 							Aucun résultat pour la recherche <em>{{ search }}</em>.

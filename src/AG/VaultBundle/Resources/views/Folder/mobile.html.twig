@@ -2,19 +2,22 @@
 
 {# Button displayed in mobile view #}
 <div class="btn-group dropup">
-	<button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+</button>
+	<button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ fa('plus') }}</button>
 	<ul class="dropdown-menu">
 		<li><a href="#" type="button" data-toggle="modal" data-target="#newFolderModal">{{ fa('folder') }}</a></li>
 		<li><a href="#" type="button" data-toggle="modal" data-target="#newFileModal">{{ fa('file-pdf-o') }}</a></li>
 	</ul>
 </div>
+{# End button #}
+
+{# Input search on bottom #}
 <form action="" method="GET" class="mobile-search">
 	<div class="input-group">
 		<span class="input-group-addon" id="addon2">{{ fa('search') }}</span>
 		<input type="text" class="form-control" placeholder="Recherche" name="s" aria-describedby="addon2" autocomplete="off">
 	</div>
 </form>
-{# End button #}
+{# End input #}
 
 {# Mobile view #}
 <div class="row">
@@ -61,7 +64,7 @@
 					</div>
 				</div>
 			{% else %}
-				{% if search is defined and search is not null %}
+				{% if search is defined and search is not null and listFolders is empty %}
 					<div class="col-xs-12 text-center">
 						<h5 style="margin-top: 20px;">
 							Aucun résultat pour la recherche <em>{{ search }}</em>.

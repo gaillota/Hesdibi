@@ -84,59 +84,6 @@ ol.breadcrumb {
     width: 250px;
 }
 
-.dropup {
-    position: fixed;
-    bottom: 20px;
-    right: 15px;
-    display: none;
-    z-index:999;
-}
-
-.dropup button.dropdown-toggle {
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    border-radius: 100%;
-    font-family: 'Poiret One', cursive;
-    padding: 0 15px;
-    font-size: 25px;
-    font-weight: 700;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
-    -webkit-transition: box-shadown 150ms ease-out;
-    transition: box-shadown 150ms ease-out;
-}
-
-.dropup button.dropdown-toggle:hover {
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.16), 0 6px 12px rgba(0, 0, 0, 0.32);
-}
-
-.dropup ul.dropdown-menu {
-    min-width: auto;
-    left: 1px;
-    border: 0;
-    box-shadow: none;
-    padding: 0;
-    background-color: transparent;
-}
-
-.dropup ul.dropdown-menu li {
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    border-radius: 100%;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
-    padding: 5px 0;
-    margin: 8px 0;
-    background-color: #fff;
-    width: 39px;
-}
-
-.dropup ul.dropdown-menu li a {
-    padding: 3px 13px;
-}
-
-.dropup .dropdown-menu li a:hover {
-    background: none;
-}
-
 #shareLinkModal .modal-header h4 {
     overflow: hidden;
     white-space: nowrap;
