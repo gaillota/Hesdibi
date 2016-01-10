@@ -14,7 +14,7 @@
 <form action="" method="GET" class="mobile-search">
 	<div class="input-group">
 		<span class="input-group-addon" id="addon2">{{ fa('search') }}</span>
-		<input type="text" class="form-control" placeholder="Recherche" name="s" aria-describedby="addon2" autocomplete="off">
+		<input type="text" class="form-control" placeholder="Recherche" name="s" aria-describedby="addon2" autocomplete="off"{% if search is defined and search is not null %} value="{{ search }}"{% endif %}>
 	</div>
 </form>
 {# End input #}
@@ -23,10 +23,14 @@
 <div class="row">
 	<div class="col-xs-12 text-center">
 		<h2 style="margin: 0;">
-			{% if currentFolder is not null %}
-				{{ fa('folder-open') }} {{ currentFolder.name }}
+			{% if search is defined and search is not null %}
+				<small>Résultat pour la recherche : <em>{{ search }}</em></small>
 			{% else %}
-				{{ fa('lock') }} Mon Vault
+				{% if currentFolder is not null %}
+					{{ fa('folder-open') }} {{ currentFolder.name }}
+				{% else %}
+					{{ fa('lock') }} Mon Vault
+				{% endif %}
 			{% endif %}
 		</h2>
 	</div>

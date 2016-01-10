@@ -22,7 +22,9 @@ TODO List
 - [x] Display folder tree on moving file page
 - [x] Go back button on share link removing
 - [x] Add fontawesome icon on alerts
-- [ ] Take care of the mobile interface
+- [x] Take care of the mobile interface
+  - Display search key when there's one
+  - "Results for xxx"
 - [x] Check breadcrumb on all pages
   - Folder deletion
   - Share Link deletion

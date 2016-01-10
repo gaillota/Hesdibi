@@ -28,13 +28,13 @@
 			<form action="" method="GET">
 				<div class="input-group">
 					<span class="input-group-addon" id="addon1">{{ fa('search') }}</span>
-					<input type="text" class="form-control" placeholder="Recherche" name="s" aria-describedby="addon1" {% if search is defined and search is not null %}value="{{ search }}"{% endif %}>
+					<input type="text" class="form-control" placeholder="Recherche" name="s" aria-describedby="addon1"{% if search is defined and search is not null %} value="{{ search }}"{% endif %}>
 				</div>
 			</form>
 		</div>
 		<h2 style="margin-top: 0;">
 			{% if search is defined and search is not null %}
-				Résultat de la recherche : <em>{{ search }}</em>
+				<small>Résultat de la recherche : <em>{{ search }}</em></small>
 			{% else %}
 				{% if currentFolder is not null %}
 					<a href="{{ currentFolder.parent is null ? path('ag_vault_homepage') : path('ag_vault_folder_show', {id:currentFolder.parent.id, slug:currentFolder.parent.slug}) }}">
