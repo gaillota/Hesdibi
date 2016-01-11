@@ -35,6 +35,6 @@ TODO List
 - [x] Add folder on share links page
 - [x] Add redirectCorrectly method in FolderController
 - [ ] Add phone book
-- [ ] Create a search page
+- [ ] Create a search page (optional)
 - [x] Check regular user page
 - [x] Check fontawesome icons on all pages
