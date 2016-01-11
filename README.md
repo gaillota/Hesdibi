@@ -36,5 +36,5 @@ TODO List
 - [x] Add redirectCorrectly method in FolderController
 - [ ] Add phone book
 - [ ] Create a search page
-- [ ] Check regular user page
-- [ ] Check fontawesome icons on all pages
+- [x] Check regular user page
+- [x] Check fontawesome icons on all pages

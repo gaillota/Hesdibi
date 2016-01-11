@@ -9,16 +9,21 @@
 
 {% block ag_vault_content %}
 	<div class="row">
+		<div class="col-sm-1 text-center hidden-xs" style="padding-top: 22px;">
+			<a href="{{ folder is null ? path('ag_vault_homepage') : path('ag_vault_folder_show', { id:folder.id, slug:folder.slug }) }}">
+				{{ fa('reply fa-2x') }}
+			</a>
+		</div>
+		<div class="col-sm-11">
+			<h2>{{ fa('trash') }} Supprimer un dossier <small>{{ folder.name }}</small> ?</h2>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-md-12 text-center">
-			<p>Êtes-vous certain de vouloir supprimer le dossier "{{ folder.name }}" ?</p>
+			<p>Êtes-vous certain de vouloir supprimer le dossier <em>{{ folder.name }}</em> ?</p>
 			<p>Ce dossier contient pas moins de {{ folder.children|length }} dossier(s) et {{ folder.files|length }} fichier(s) !</p>
-			{% if folder.parent is not null %}
-				<a class="btn btn-default" href="{{ path('ag_vault_folder_show', { id:folder.parent.id, slug:folder.parent.slug }) }}">
-					{{ fa('arrow-left') }} Retour au dossier parent
-				</a>
-			{% endif %}
-			<a class="btn btn-default" href="{{ path('ag_vault_homepage') }}">
-				{{ fa('home') }} Retour à mon Vault
+			<a class="btn btn-default" href="{{ folder.parent is null ? path('ag_vault_homepage') : path('ag_vault_folder_show', { id:folder.parent.id, slug:folder.parent.slug }) }}">
+				{{ fa('arrow-left') }} Retour
 			</a>
 			<hr/>
 			<form action="" method="POST">
