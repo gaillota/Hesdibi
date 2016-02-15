@@ -2,6 +2,7 @@
 
 namespace AG\UserBundle\Repository;
 
+use AG\UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,12 +13,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
-    public function findRegularUsers()
+    public function myFindAll(User $user)
     {
         $qb = $this->createQueryBuilder('u');
 
         $qb
-            ->where($qb->expr()->notLike('u.roles', $qb->expr()->literal('%ROLE_ADMIN%')))
+            ->where('u.id != :id')
+            ->andWhere($qb->expr()->notLike('u.roles', $qb->expr()->literal('%ROLE_SUPER_ADMIN%')))
+            ->setParameter('id', $user->getId())
             ;
 
         return $qb->getQuery()->getResult();

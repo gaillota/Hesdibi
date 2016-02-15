@@ -69,14 +69,14 @@ class File
      *      maxSize="64M",
      *      mimeTypes={
      *          "application/pdf",
-     *          "application/x-pdf" ,
+     *          "application/x-pdf",
      *          "image/jpeg",
      *          "image/pjpeg",
      *          "image/png",
      *          "image/x-png"
      *      },
      *      mimeTypesMessage="Ce fichier n'est pas au bon format",
-     *      maxSizeMessage="Fichier trop gros (10Mo max)"
+     *      maxSizeMessage="Fichier trop gros (64 Mo max)"
      *  )
      */
     private $file;

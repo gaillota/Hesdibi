@@ -69,7 +69,7 @@
 	                            {% endif %}
                             </td>
                             <td>
-	                            {% if not user.hasRole('role_admin') %}
+	                            {% if not user.hasRole('role_admin') or app.user.hasRole('role_super_admin') %}
 		                            <div class="pull-right">
 			                            <a class="btn btn-warning btn-xs" href="{{ path('ag_user_admin_edit', { id: user.id }) }}">
 				                            {{ fa('edit') }} Editer

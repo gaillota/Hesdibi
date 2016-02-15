@@ -32,7 +32,7 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        $users = $this->em->getRepository('AGUserBundle:User')->findAll();
+        $users = $this->em->getRepository('AGUserBundle:User')->myFindAll($this->getUser());
 
         return array(
             'users' => $users,
@@ -111,7 +111,7 @@ class AdminController extends Controller
      * @param User $user
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @Template
-     * @Secure(roles="ROLE_ADMIN")
+     * @Secure(roles="ROLE_SUPER_ADMIN")
      */
     public function editAction(User $user)
     {
@@ -136,7 +136,7 @@ class AdminController extends Controller
      * @param User $user
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @Template
-     * @Secure(roles="ROLE_ADMIN")
+     * @Secure(roles="ROLE_SUPER_ADMIN")
      */
     public function removeAction(User $user)
     {

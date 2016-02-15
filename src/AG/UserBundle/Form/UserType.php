@@ -21,9 +21,14 @@ class UserType extends AbstractType
             ->add('email', 'email', array(
                 'label' => 'Adresse mail'
             ))
-            ->add('locked', 'checkbox', array(
-                'label' => 'Verrouillé',
-                'required' => false
+            ->add('roles', 'choice', array(
+                'label' => 'Droits',
+                'choices' => array(
+                    'ROLE_ADMIN' => 'ROLE_ADMIN'
+                ),
+                'choices_as_values' => true,
+                'multiple' => true,
+                'expanded' => true
             ))
             ->add('save', 'submit', array(
                 'label' => 'Sauvegarder'
