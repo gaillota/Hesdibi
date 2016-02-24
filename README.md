@@ -53,7 +53,7 @@ TODO List
   - [ ] Upload file (leeeeel)
   - Folder API
   - [ ] Get folder information
-  - [ ] (Change folder location)
+  - [ ] Change folder location
   - [ ] Rename folder
   - [ ] Delete folder
   - Users API
