@@ -21,9 +21,9 @@
                     </div>
                 {% endfor %}
             {% endfor %}
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">
-                    Informations personnelles
+	                {{ fa('list-alt') }} Informations personnelles
                 </div>
                 <ul class="list-group">
                     <li class="list-group-item">
@@ -32,6 +32,16 @@
                     <li class="list-group-item">
                         <i class="fa fa-envelope"></i> {{ 'profile.show.email'|trans }} : {{ user.email }}
                     </li>
+	                {% if is_granted('ROLE_SUPER_ADMIN') %}
+		                <li class="list-group-item">
+			                {{ fa('key') }} Clé d'API :
+			                {% if user.apiKey %}
+				                {{ user.apiKey }} <a href="{{ path('ag_user_admin_generateApiKey') }}" class="btn btn-warning btn-xs pull-right">Regénérer clé d'API</a>
+			                {% else %}
+				                <a href="{{ path('ag_user_admin_generateApiKey') }}" class="btn btn-warning btn-xs">{{ fa('key') }} Générer clé d'API</a>
+			                {% endif %}
+		                </li>
+	                {% endif %}
                 </ul>
             </div>
             <div class="row">

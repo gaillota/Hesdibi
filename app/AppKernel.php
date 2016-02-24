@@ -16,16 +16,36 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
+            // FOS
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+
+            // JMS
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+            new \JMS\SerializerBundle\JMSSerializerBundle(),
+
+            // KNP
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+
+            // Doctrine
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+
+            // Mobile detect
             new SunCat\MobileDetectBundle\MobileDetectBundle(),
+
+            // Nelmio
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+
+            // PHP Seclib
             new Sinner\Phpseclib\PhpseclibBundle(),
+
+            // Vault
             new AG\UserBundle\AGUserBundle(),
             new AG\VaultBundle\AGVaultBundle(),
+            new AG\ApiBundle\AGApiBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

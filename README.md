@@ -38,3 +38,28 @@ TODO List
 - [ ] Create a search page (optional)
 - [x] Check regular user page
 - [x] Check fontawesome icons on all pages
+
+- [ ] Build RESTful API:
+  - Files API
+  - [ ] Retrieve files from a folder
+  - [ ] Retrieve file data for display
+  - [ ] Download file
+  - [ ] Get file informations
+  - [ ] Send file via email
+  - [ ] Generate share link
+  - [ ] Change file location
+  - [ ] Rename file
+  - [ ] Delete file
+  - [ ] Upload file (leeeeel)
+  - Folder API
+  - [ ] Get folder information
+  - [ ] (Change folder location)
+  - [ ] Rename folder
+  - [ ] Delete folder
+  - Users API
+  - [ ] Get user informations
+  - [ ] Change user password
+  - [ ] Change username/email
+  - [ ] Create user
+  - Share Link API
+  - [ ] Get shared links

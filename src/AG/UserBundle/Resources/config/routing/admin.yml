@@ -17,3 +17,7 @@ ag_user_admin_remove:
     defaults: { _controller: AGUserBundle:Admin:remove }
     requirements:
         id: \d+
+
+ag_user_admin_generateApiKey:
+    path: /generate-api-key
+    defaults: { _controller: AGUserBundle:Admin:generateApiKey }

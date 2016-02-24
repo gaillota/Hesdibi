@@ -1,0 +1,14 @@
+files:
+    type: rest
+    resource: "AGApiBundle:Files"
+    name_prefix: api_
+
+folders:
+    type: rest
+    resource: "AGApiBundle:Folders"
+    name_prefix: api_
+
+users:
+    type: rest
+    resource: "AGApiBundle:Users"
+    name_prefix: api_

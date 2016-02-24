@@ -40,7 +40,10 @@
         "knplabs/knp-paginator-bundle": "~2.4",
         "suncat/mobile-detect-bundle": "0.10.*",
         "mailgun/mailgun-php": "~1.7.2",
-        "sinner/phpseclib-bundle": "dev-master"
+        "sinner/phpseclib-bundle": "dev-master",
+        "friendsofsymfony/rest-bundle": "^1.7",
+        "jms/serializer-bundle": "^1.1",
+        "nelmio/api-doc-bundle": "^2.11"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

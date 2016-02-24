@@ -157,4 +157,20 @@ class AdminController extends Controller
             'user' => $user,
         );
     }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Secure(roles="ROLE_SUPER_ADMIN")
+     */
+    public function generateApiKeyAction()
+    {
+        $user = $this->getUser();
+
+        $user->generateApiKey();
+
+        $this->get('fos_user.user_manager')->updateUser($user);
+
+        $this->addFlash('success', 'You api key is now set.');
+        return $this->redirectToRoute('fos_user_profile_show');
+    }
 }

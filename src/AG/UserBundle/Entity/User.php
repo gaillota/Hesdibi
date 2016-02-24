@@ -27,6 +27,13 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @var String
+     *
+     * @ORM\Column(name="api_key", type="string", length=255, nullable=true)
+     */
+    private $apiKey;
+
+    /**
      * @ORM\OneToMany(targetEntity="AG\VaultBundle\Entity\File", mappedBy="owner")
      */
     private $files;
@@ -156,5 +163,33 @@ class User extends BaseUser
     public function getSharedFiles()
     {
         return $this->sharedFiles;
+    }
+
+    /**
+     * Set apiKey
+     *
+     * @param string $apiKey
+     * @return User
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * Get apiKey
+     *
+     * @return string 
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    public function generateApiKey()
+    {
+        $this->apiKey = uniqid("api_");
     }
 }

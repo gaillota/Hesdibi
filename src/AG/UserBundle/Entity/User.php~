@@ -13,6 +13,7 @@ use FOS\UserBundle\Entity\User as BaseUser;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AG\UserBundle\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
 */
 class User extends BaseUser
 {
@@ -26,25 +27,11 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var string
+     * @var String
      *
-     * @ORM\Column(name="password_validator", type="string", length=255, nullable=true)
+     * @ORM\Column(name="api_key", type="string", length=255)
      */
-    private $passwordValidator;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="iv", type="string", length=255, nullable=true)
-     */
-    private $iv;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="encrypted_key", type="string", length=255, nullable=true)
-     */
-    private $encryptedKey;
+    private $apiKey;
 
     /**
      * @ORM\OneToMany(targetEntity="AG\VaultBundle\Entity\File", mappedBy="owner")
@@ -57,26 +44,16 @@ class User extends BaseUser
     private $folders;
 
     /**
-<<<<<<< HEAD
      * @ORM\ManyToMany(targetEntity="AG\VaultBundle\Entity\File", mappedBy="authorizedUsers")
      */
     private $sharedFiles;
-=======
-     * @ORM\ManyToMany(targetEntity="AG\VaultBundle\Entity\File", mappedBy="usersAuthorized")
-     */
-    private $filesShared;
->>>>>>> f0593336ca8099b27789267528f5c6a7229d3788
 
     public function __construct()
     {
         parent::__construct();
         $this->files = new ArrayCollection();
         $this->folders = new ArrayCollection();
-<<<<<<< HEAD
         $this->sharedFiles = new ArrayCollection();
-=======
-        $this->filesShared = new ArrayCollection();
->>>>>>> f0593336ca8099b27789267528f5c6a7229d3788
     }
 
     /**
