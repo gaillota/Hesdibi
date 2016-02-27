@@ -190,6 +190,6 @@ class User extends BaseUser
 
     public function generateApiKey()
     {
-        $this->apiKey = uniqid("api_");
+        $this->apiKey = md5(uniqid());
     }
 }

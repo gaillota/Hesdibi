@@ -4,17 +4,25 @@ parameters:
 #    parameter_name: value
 
 services:
-    ag_vault.font_awesome_extension:
+    font_awesome_extension:
         class: AG\VaultBundle\Twig\FontAwesomeExtension
         tags:
             - { name: twig.extension }
 
-    ag_vault.date_fr_extension:
+    date_fr_extension:
         class: AG\VaultBundle\Twig\DateFrExtension
         tags:
             - { name: twig.extension }
 
-    ag_vault.size_reformat_extension:
+    size_reformat_extension:
         class: AG\VaultBundle\Twig\SizeReformatExtension
         tags:
             - { name: twig.extension }
+
+    api_key_authenticator:
+            class:  AG\ApiBundle\Security\ApiKeyAuthenticator
+            public: false
+
+    api_key_user_provider:
+        class: AG\ApiBundle\Security\ApiKeyUserProvider
+        arguments: [@fos_user.user_manager]

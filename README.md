@@ -42,9 +42,9 @@ TODO List
 - [ ] Build RESTful API:
   - Files API
   - [ ] Retrieve files from a folder
-  - [ ] Retrieve file data for display
   - [ ] Download file
   - [ ] Get file informations
+  - [ ] Get file data
   - [ ] Send file via email
   - [ ] Generate share link
   - [ ] Change file location
@@ -57,7 +57,7 @@ TODO List
   - [ ] Rename folder
   - [ ] Delete folder
   - Users API
-  - [ ] Get user informations
+  - [X] Get user informations
   - [ ] Change user password
   - [ ] Change username/email
   - [ ] Create user

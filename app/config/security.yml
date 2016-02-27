@@ -2,6 +2,8 @@ security:
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username_email
+        api_key_user_provider:
+            id: api_key_user_provider
 
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
@@ -22,6 +24,13 @@ security:
         main_login:
             pattern:    ^/login$
             anonymous:  true
+
+        api:
+            pattern: ^/api(?!/doc)
+            stateless: true
+            simple_preauth:
+                authenticator: api_key_authenticator
+            provider: api_key_user_provider
 
         main:
             pattern:                ^/
