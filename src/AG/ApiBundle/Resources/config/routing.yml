@@ -8,6 +8,11 @@ folders:
     resource: "AGApiBundle:Folders"
     name_prefix: api_
 
+sharelinks:
+    type: rest
+    resource: "AGApiBundle:ShareLinks"
+    name_prefix: api_
+
 users:
     type: rest
     resource: "AGApiBundle:Users"

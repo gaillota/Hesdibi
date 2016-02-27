@@ -46,6 +46,9 @@ class FilesController extends Controller
     {
         $file = $this->em->getRepository('AGVaultBundle:File')->find($id);
 
+        if ($this->getUser() !== $file->getOwner())
+            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+
         return $file;
     }
 
@@ -68,6 +71,9 @@ class FilesController extends Controller
     public function getFilesDataAction($id)
     {
         $file = $this->em->getRepository('AGVaultBundle:File')->find($id);
+
+        if ($this->getUser() !== $file->getOwner())
+            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
 
         $response = new Response();
         $response->headers->set('Content-Type', $file->getMimeType());
@@ -107,9 +113,12 @@ class FilesController extends Controller
      *     }
      * )
      */
-    public function getFilesEmailAction($id)
+    public function postFilesEmailAction($id)
     {
         $file = $this->em->getRepository('AGVaultBundle:File')->find($id);
+
+        if ($this->getUser() !== $file->getOwner())
+            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
 
         if ($this->getUser() !== $file->getOwner())
             throw new AccessDeniedException("Ce fichier ne vous appartient pas.");

@@ -42,10 +42,10 @@ TODO List
 - [ ] Build RESTful API:
   - Files API
   - [X] Retrieve files from a folder
-  - [ ] Download file
-  - [ ] Get file informations
-  - [ ] Get file data
-  - [ ] Send file via email
+  - [X] Download file
+  - [X] Get file informations
+  - [X] Get file data
+  - [X] Send file via email
   - [ ] Generate share link
   - [ ] Change file location
   - [ ] Rename file

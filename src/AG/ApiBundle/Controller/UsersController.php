@@ -21,13 +21,17 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class UsersController extends Controller
 {
     /**
+     * @var Request
+     */
+    private $request;
+
+    /**
      * Récupérer tous les utilisateurs
      *
      * @ApiDoc(
      *     section="Utilisateurs",
      *     description="Récupére tous les utilisateurs"
      * )
-     * @Get()
      */
     public function getUsersAction()
     {
@@ -85,14 +89,14 @@ class UsersController extends Controller
      *
      * @Post()
      */
-    public function createUserAction(Request $request)
+    public function createUserAction()
     {
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->createUser();
         $user->setEnabled(true);
 
         $form = $this->createForm(new UserType, $user);
-        $form->handleRequest($request);
+        $form->handleRequest($this->request);
 
         if ($form->isValid()) {
             //Generate random password of 8 characters

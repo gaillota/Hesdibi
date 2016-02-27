@@ -30,7 +30,9 @@ class FoldersController extends Controller
      */
     public function getFoldersAction()
     {
-        $folders = $this->em->getRepository('AGVaultBundle:Folder')->findAll();
+        $folders = $this->em->getRepository('AGVaultBundle:Folder')->findBy(array(
+            'owner' => $this->getUser()
+        ));
 
         return $folders;
     }
