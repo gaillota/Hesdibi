@@ -9,9 +9,5 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class FilesController extends Controller
 {
-    /**
-     * @var EntityManager
-     */
-    private $em;
 
 }

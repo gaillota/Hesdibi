@@ -41,7 +41,7 @@ TODO List
 
 - [ ] Build RESTful API:
   - Files API
-  - [ ] Retrieve files from a folder
+  - [X] Retrieve files from a folder
   - [ ] Download file
   - [ ] Get file informations
   - [ ] Get file data
@@ -52,14 +52,14 @@ TODO List
   - [ ] Delete file
   - [ ] Upload file (leeeeel)
   - Folder API
-  - [ ] Get folder information
+  - [X] Get folder information
   - [ ] Change folder location
   - [ ] Rename folder
   - [ ] Delete folder
   - Users API
   - [X] Get user informations
-  - [ ] Change user password
+  - [ ] ~~Change user password~~
   - [ ] Change username/email
-  - [ ] Create user
+  - [X] Create user
   - Share Link API
   - [ ] Get shared links

@@ -21,40 +21,42 @@ class FoldersController extends Controller
     private $em;
 
     /**
-     * Récupére tous les fichiers contenus dans un dossier
+     * Récupérer la liste de tous les dossiers
+     *
+     * @ApiDoc(
+     *     section="Dossiers",
+     *     description="Récupérer tous les dossiers"
+     * )
+     */
+    public function getFoldersAction()
+    {
+        $folders = $this->em->getRepository('AGVaultBundle:Folder')->findAll();
+
+        return $folders;
+    }
+
+    /**
+     * Récupérer tous les fichiers contenus dans un dossier
      *
      * @ApiDoc(
      *      section="Dossiers",
+     *      description="Récupérer le contenu d'un dossier",
      *      requirements={
      *          {
-     *              "name"="api_key",
-     *              "dataType"="string",
-     *              "requirement"="api_\d+",
-     *              "description"="Votre clé d'API"
-     *          },
-     *          {
-     *              "name"="folder_id",
+     *              "name"="id",
      *              "dataType"="integer",
+     *              "requirement"="\d+",
      *              "description"="ID du dossier"
      *          }
-     *      },
-     *      description="Récupére tous les fichiers d'un dossier"
+     *      }
      * )
      * @Get()
      */
-    public function getFilesAction($api_key, $id)
+    public function getFolderAction($id)
     {
-        $user = $this->get('fos_user.user_manager')->findUserBy(array(
-            'apiKey' => $api_key
-        ));
-
-        if (null == $user) {
-            throw new AccessDeniedException('You are not allowed to access this page');
-        }
-
         $files = $this->em->getRepository('AGVaultBundle:File')->findBy(array(
             'folder' => $id,
-            'owner' => $user->getId()
+            'owner' => $this->getUser()->getId()
         ));
 
         return $files;
