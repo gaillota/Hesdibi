@@ -5,6 +5,7 @@ namespace AG\ApiBundle\Controller;
 
 
 use AG\ApiBundle\Form\EmailType;
+use AG\VaultBundle\Entity\ShareLink;
 use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\View\View;
 use Mailgun\Mailgun;
@@ -174,5 +175,44 @@ class FilesController extends Controller
         }
 
         return View::create($form, 400);
+    }
+
+
+
+    /**
+     * Générer un lien de partage pour le fichier correspondant à l'id $id
+     *
+     * @ApiDoc(
+     *     section="Fichiers",
+     *     description="Générer un lien de partage",
+     *     requirements={
+     *          {
+     *              "name"="id",
+     *              "dataType"="integer",
+     *              "requirement"="\d+",
+     *              "description"="ID du fichier"
+     *          }
+     *     }
+     * )
+     */
+    public function getFilesLinkAction($id)
+    {
+        $file = $this->em->getRepository('AGVaultBundle:File')->find($id);
+
+        if ($this->getUser() !== $file->getOwner())
+            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+
+        $shareLink = new ShareLink();
+        $file->addShareLink($shareLink);
+
+        $length = 20;
+        $token = bin2hex(openssl_random_pseudo_bytes($length));
+
+        $shareLink->setFile($file)->setToken($token);
+
+        $this->em->persist($shareLink);
+        $this->em->flush();
+
+        return $shareLink;
     }
 }

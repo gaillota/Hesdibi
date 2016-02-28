@@ -3,7 +3,7 @@ My Vault
 
 A Symfony project created on June 26, 2015, 8:25 pm.
 
-No need to write the README file, this is just for myself.
+No need to write the README file, this is just for I
 
 TODO List
 -----
@@ -46,7 +46,7 @@ TODO List
   - [X] Get file informations
   - [X] Get file data
   - [X] Send file via email
-  - [ ] Generate share link
+  - [X] Generate share link
   - [ ] Change file location
   - [ ] Rename file
   - [ ] Delete file
@@ -62,4 +62,4 @@ TODO List
   - [ ] Change username/email
   - [X] Create user
   - Share Link API
-  - [ ] Get shared links
+  - [X] Get shared links

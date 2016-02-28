@@ -20,42 +20,17 @@ class ShareLinksController extends Controller
     private $em;
 
     /**
-     * Générer un lien de partage pour la fichier correspondant à l'id $id
+     * Récupérer tous les liens de partage
      *
      * @ApiDoc(
      *     section="Liens de partage",
-     *     description="Générer lien de partage",
-     *     requirements={
-     *          {
-     *              "name"="id",
-     *              "dataType"="integer",
-     *              "requirement"="\d+",
-     *              "description"="ID du fichier"
-     *          }
-     *     }
+     *     description="Récupérer tous les liens de partage"
      * )
      */
-    public function postLinksAction($id)
+    public function getLinksAction()
     {
-        $file = $this->em->getRepository('AGVaultBundle:File')->find($id);
+        $links = $this->em->getRepository('AGVaultBundle:ShareLink')->findAll();
 
-        if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
-
-        $shareLink = new ShareLink();
-        $file->addShareLink($shareLink);
-
-        $length = 20;
-        $token = bin2hex(openssl_random_pseudo_bytes($length));
-
-        $shareLink->setFile($file)->setToken($token);
-
-        $this->em->persist($shareLink);
-        $this->em->flush();
-
-        return new JsonResponse(array(
-            'response' => 1,
-            'route' => $this->generateUrl('ag_vault_file_show', array('token' => $shareLink->getToken()), UrlGeneratorInterface::ABSOLUTE_URL),
-        ));
+        return $links;
     }
 }
