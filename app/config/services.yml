@@ -20,9 +20,15 @@ services:
             - { name: twig.extension }
 
     api_key_authenticator:
-            class:  AG\ApiBundle\Security\ApiKeyAuthenticator
-            public: false
+        class:  AG\ApiBundle\Security\ApiKeyAuthenticator
+        public: false
 
     api_key_user_provider:
         class: AG\ApiBundle\Security\ApiKeyUserProvider
         arguments: [@fos_user.user_manager]
+
+    email_wrapper:
+        class: AG\VaultBundle\Services\EmailWrapper
+        arguments:
+            - %mailgun_api_key%
+            - %domain_name%

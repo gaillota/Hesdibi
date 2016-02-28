@@ -152,32 +152,15 @@ class FileController extends Controller
             $form->handleRequest($this->request);
 
             if ($form->isValid()) {
-                $mg = new Mailgun($this->container->getParameter('mailgun_api_key'));
-                $domain = $this->container->getParameter('domain_name');
-
-                $message = array(
-                    'from'      => 'no-reply@antoine-gaillot.com',
-                    'to'        => $form->get('email')->getData(),
-                    'subject'   => $form->get('subject')->getData(),
-                    'html'      => $this->renderView(
-                        'AGVaultBundle:Mail:email.html.twig',
-                        array(
-                            'email' => $form->get('email')->getData(),
-                            'file' => $file,
-                        )
+                $recipient = $form->get('email')->getData();
+                $subject = $form->get('subject')->getData();
+                $body = $this->renderView('AGVaultBundle:Mail:email.html.twig', array(
+                        'email' => $form->get('email')->getData(),
+                        'file' => $file,
                     )
                 );
 
-                $mg->sendMessage($domain, $message, array(
-                    'attachment' => array($file->getPath())
-                ));
-
-                $result = $mg->get("$domain/log", array(
-                    'limit' => 1,
-                    'skip'  => 0)
-                );
-
-                if ($result->http_response_code == 200) {
+                if ($this->get('email_wrapper')->send($recipient, $subject, $body)) {
                     $sendToArray = $file->getSendTo();
 
                     $sendTo = $form->get('email')->getData();

@@ -30,7 +30,7 @@ class UsersController extends Controller
      *
      * @ApiDoc(
      *     section="Utilisateurs",
-     *     description="Récupére tous les utilisateurs"
+     *     description="Récupérer tous les utilisateurs"
      * )
      */
     public function getUsersAction()
@@ -110,44 +110,20 @@ class UsersController extends Controller
                 'Utilisateur crée avec succès'
             );
 
-            if (!$this->container->hasParameter('mailgun_api_key')) {
-                array_push($response, 'Mailgun API key manquante !');
-
-                return new Response($response);
-            }
-
             //Send confirmation mail to user
-            $mg = new Mailgun($this->container->getParameter('mailgun_api_key'));
-            $domain = $this->container->hasParameter('domain_name') ? $this->container->getParameter('domain_name') : 'hesdibi.co';
-
-            $message = array(
-                'from'      => 'no-reply@antoine-gaillot.com',
-                'to'        => $user->getEmail(),
-                'subject'   => 'Votre compte a bien été crée - My Vault',
-                'html'      => $this->renderView(
-                    'AGUserBundle:Mail:add.html.twig',
-                    array(
-                        'user' => $user,
-                        'password' => $password,
-                        'login' => $this->generateUrl('fos_user_security_login', array(), UrlGeneratorInterface::ABSOLUTE_URL),
-                        'changePassword' => $this->generateUrl('fos_user_change_password', array(), UrlGeneratorInterface::ABSOLUTE_URL),
-                    )
+            $recipient = $user->getEmail();
+            $subject = 'Votre compte a bien été crée - My Vault';
+            $body = $this->renderView('AGUserBundle:Mail:add.html.twig', array(
+                    'user' => $user,
+                    'password' => $password,
+                    'login' => $this->generateUrl('fos_user_security_login', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'changePassword' => $this->generateUrl('fos_user_change_password', array(), UrlGeneratorInterface::ABSOLUTE_URL),
                 )
             );
 
-            $mg->sendMessage($domain, $message);
+            $emailSent = $this->get('email_wrapper')->send($recipient, $subject, $body);
 
-            $result = $mg->get("$domain/log", array(
-                    'limit' => 1,
-                    'skip'  => 0)
-            );
-
-            if ($result->http_response_code == 200) {
-                array_push($response, 'E-mail envoyé avec succès !');
-            } else {
-                array_push($response, 'Erreur lors de l\'envoi de l\'email');
-            }
-
+            $response[] = $emailSent ? 'E-mail envoyé avec succès' : 'Erreur lors de l\'envoi du mail';
 
             return new Response($response);
         }
