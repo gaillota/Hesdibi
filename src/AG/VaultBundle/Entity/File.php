@@ -138,7 +138,7 @@ class File
      */
     public function setName($name)
     {
-        if(substr($name, -4) !== '.pdf') $name .= '.pdf';
+//        if(substr($name, -4) !== '.pdf') $name .= '.pdf';
         $this->name = $name;
 
         return $this;

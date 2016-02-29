@@ -1,9 +1,11 @@
 $(function() {
+    // Modal for new folder
     $('#newFolderModal').on('shown.bs.modal', function () {
         var modal = $(this);
         modal.find('input.form-control').focus();
     });
 
+    // Modal for new file
     $('#newFileModal').on('show.bs.modal', function () {
         var modal = $(this);
         modal.find('button[type="submit"]').attr("disabled", true);
@@ -14,7 +16,15 @@ $(function() {
             var $this = $(this);
             var file = $this[0].files[0];
 
-            var typeAccepted = ['application/pdf', 'application-x-pdf', 'application/x-download'];
+            var typeAccepted = [
+                'application/pdf',
+                'application/x-pdf',
+                'application/x-download',
+                'image/jpeg',
+                'image/pjpeg',
+                'image/png',
+                'image/x-png'
+            ];
 
             // Make sure we have a pdf, jpeg or pngZ
             if (typeAccepted.indexOf(file.type) <= -1) {
@@ -31,12 +41,13 @@ $(function() {
         });
     });
 
+    // Modal for renaming file or folder
     $('#renameModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var name = button.data('name').toString(); // Extract info from data-* attributes
         var modal = $(this);
 
-        if (name.indexOf(".pdf") >= 0) name = name.replace(".pdf", "");
+        //if (name.indexOf(".pdf") >= 0) name = name.replace(".pdf", "");
 
         modal.find('input.form-control').val(name).data('former-name', name).data('id', button.data('id'));
         modal.find('form').data('href', button.data('href'));
@@ -76,6 +87,7 @@ $(function() {
         }
     });
 
+    // Modal for retrieving file informations
     $('#fileDetailsModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var href = button.data('details'); // Extract info from data-* attributes
@@ -88,6 +100,7 @@ $(function() {
         });
     });
 
+    // Modal for generating a share link
     $('#shareLinkModal').on('show.bs.modal', function (event) {
         var modal = $(this);
         var button = $(event.relatedTarget); // Button that triggered the modal

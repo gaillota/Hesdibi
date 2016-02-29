@@ -82,7 +82,7 @@
 				<tr data-row="file" data-file-id="{{ file.id }}">
 					<td>
 						{{ fa('file-pdf-o') }}
-						<a class="pdf" href="{{ path('ag_vault_file_preview', { id:file.id }) }}" data-name>{{ file.name }}</a>
+						<a class="file" href="{{ path('ag_vault_file_preview', { id:file.id }) }}" data-name data-mime="{{ file.mimeType }}">{{ file.name }}</a>
 					</td>
 					<td>{{ file.lastModified|date_fr }}</td>
 					<td>{{ file.size|size }}</td>
