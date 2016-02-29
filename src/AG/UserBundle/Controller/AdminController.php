@@ -54,46 +54,31 @@ class AdminController extends Controller
         if ($this->request->isMethod('POST') && $form->handleRequest($this->request)->isValid()) {
             //Generate random password of 8 characters
             $password = bin2hex(openssl_random_pseudo_bytes(4));
-            //Set random password to the user
             $user->setPlainPassword($password);
 
             $userManager->updateUser($user);
 
             $this->addFlash('success', 'Utilisateur crée avec succès.');
 
-            if (!$this->container->hasParameter('mailgun_api_key')) {
-                $this->addFlash('danger', 'Mailgun API key missing !');
-
-                return $this->redirectToRoute('ag_user_admin_index');
-            }
-
-            //Send confirmation mail to user
-            $mg = new Mailgun($this->container->getParameter('mailgun_api_key'));
-            $domain = $this->container->hasParameter('domain_name') ? $this->container->getParameter('domain_name') : 'hesdibi.co';
-
-            $message = array(
-                'from'      => 'no-reply@antoine-gaillot.com',
-                'to'        => $user->getEmail(),
-                'subject'   => 'Votre compte a bien été crée - My Vault',
-                'html'      => $this->renderView(
-                    'AGUserBundle:Mail:add.html.twig',
-                    array(
-                        'user' => $user,
-                        'password' => $password,
-                        'login' => $this->generateUrl('fos_user_security_login', array(), UrlGeneratorInterface::ABSOLUTE_URL),
-                        'changePassword' => $this->generateUrl('fos_user_change_password', array(), UrlGeneratorInterface::ABSOLUTE_URL),
-                    )
+            $recipient = $user->getEmail();
+            $subject = 'Votre compte a bien été crée - My Vault';
+            $body = $this->renderView('AGUserBundle:Mail:add.html.twig', array(
+                    'user' => $user,
+                    'password' => $password,
+                    'login' => $this->generateUrl('fos_user_security_login', array(), UrlGeneratorInterface::ABSOLUTE_URL),
+                    'changePassword' => $this->generateUrl('fos_user_change_password', array(), UrlGeneratorInterface::ABSOLUTE_URL)
                 )
             );
 
-            $mg->sendMessage($domain, $message);
+            // Send confirmation email
+            $emailWrapper = $this->get('email_wrapper');
+            $emailWrapper
+                ->setRecipient($recipient)
+                ->setSubject($subject)
+                ->setBody($body)
+            ;
 
-            $result = $mg->get("$domain/log", array(
-                    'limit' => 1,
-                    'skip'  => 0)
-            );
-
-            if ($result->http_response_code == 200) {
+            if ($emailWrapper->send()) {
                 $this->addFlash('success', 'E-mail envoyé avec succès !');
             } else {
                 $this->addFlash('danger', 'Erreur lors de l\'envoi de l\'email');

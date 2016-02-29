@@ -121,46 +121,35 @@ class FilesController extends Controller
         if ($this->getUser() !== $file->getOwner())
             throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
 
-        if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
-
-        $form = $this->createForm(new EmailType());
+        $form = $this->createForm(new EmailType);
         $form->handleRequest($this->request);
 
         if ($form->isValid()) {
-            $mg = new Mailgun($this->container->getParameter('mailgun_api_key'));
-            $domain = $this->container->getParameter('domain_name');
-
-            $message = array(
-                'from'      => 'no-reply@antoine-gaillot.com',
-                'to'        => $form->get('email')->getData(),
-                'subject'   => $form->get('subject')->getData(),
-                'html'      => $this->renderView(
-                    'AGVaultBundle:Mail:email.html.twig',
-                    array(
-                        'email' => $form->get('email')->getData(),
-                        'file' => $file,
-                    )
+            $recipient = $form->get('email')->getData();
+            $subject = $form->get('subject')->getData();
+            $body = $this->renderView('AGVaultBundle:Mail:email.html.twig', array(
+                    'email' => $form->get('email')->getData(),
+                    'file' => $file,
+                )
+            );
+            $data = array(
+                'attachment' => array(
+                    $file->getPath()
                 )
             );
 
-            $mg->sendMessage($domain, $message, array(
-                'attachment' => array($file->getPath())
-            ));
+            $emailWrapper = $this->get('email_wrapper');
+            $emailWrapper
+                ->setRecipient($recipient)
+                ->setSubject($subject)
+                ->setBody($body)
+                ->setData($data)
+            ;
 
-            $result = $mg->get("$domain/log", array(
-                    'limit' => 1,
-                    'skip'  => 0)
-            );
-
-            $response = array();
-
-            if ($result->http_response_code == 200) {
+            if ($emailWrapper->send()) {
                 $sendToArray = $file->getSendTo();
-
-                $sendTo = $form->get('email')->getData();
                 $sendAt = new \DateTime();
-                $newSending = array($sendTo, $sendAt);
+                $newSending = array($recipient, $sendAt);
                 array_push($sendToArray, $newSending);
                 $file->setSendTo($sendToArray);
                 $this->em->persist($file);

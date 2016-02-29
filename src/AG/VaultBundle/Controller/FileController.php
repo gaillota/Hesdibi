@@ -145,7 +145,7 @@ class FileController extends Controller
         if ($this->getUser() !== $file->getOwner())
             throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
 
-        $form = $this->createForm(new EmailType());
+        $form = $this->createForm(new EmailType);
 
         if ($this->request->isMethod('POST')) {
 
@@ -159,8 +159,21 @@ class FileController extends Controller
                         'file' => $file,
                     )
                 );
+                $data = array(
+                    'attachment' => array(
+                        $file->getPath()
+                    )
+                );
 
-                if ($this->get('email_wrapper')->send($recipient, $subject, $body)) {
+                $emailWrapper = $this->get('email_wrapper');
+                $emailWrapper
+                    ->setRecipient($recipient)
+                    ->setSubject($subject)
+                    ->setBody($body)
+                    ->setData($data)
+                ;
+
+                if ($emailWrapper->send()) {
                     $sendToArray = $file->getSendTo();
 
                     $sendTo = $form->get('email')->getData();
