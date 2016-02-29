@@ -98,19 +98,11 @@ class FilesController extends Controller
      *              "description"="ID du fichier"
      *          }
      *     },
-     *     parameters={
-     *          {
-     *              "name"="email",
-     *              "dataType"="string",
-     *              "required"=true,
-     *              "description"="Adresse e-mail du destinataire"
-     *          },
-     *          {
-     *              "name"="subject",
-     *              "dataType"="string",
-     *              "required"=false,
-     *              "description"="Sujet de l'e-mail"
-     *          }
+     *     input="AG\ApiBundle\Form\EmailType",
+     *     statusCodes={
+     *          200="Returned when e-mail successfully sent",
+     *          405="Returned when request is not a POST type",
+     *          500="Returned when api key is not provided or not allowed"
      *     }
      * )
      */

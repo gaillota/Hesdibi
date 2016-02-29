@@ -24,14 +24,16 @@ class EmailType extends AbstractType
                 'label' => 'E-mail destinataire',
                 'attr' => array(
                     'autofocus' => true
-                )
+                ),
+                'description' => 'Adresse e-mail du destinataire'
             ))
             ->add('subject', 'text', array(
                 'label' => 'Sujet',
                 'attr' => array(
                     'pattern'     => '.{3,}',
                     'autocomplete' => 'off'
-                )
+                ),
+                'description' => 'Sujet de l\'e-mail'
             ))
             ->add('send', 'submit', array(
                 'label' => 'Envoyer'

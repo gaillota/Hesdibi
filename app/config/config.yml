@@ -136,7 +136,7 @@ mobile_detect:
 # API Doc Configuration
 nelmio_api_doc:
     name: "Documentation de l'API RESTful af de My Vault #Agile #Agilité."
-    default_sections_opened: false
+    default_sections_opened: true
     sandbox:
         accept_type: null
         body_format:
