@@ -7,12 +7,17 @@ It helps you stay organized with all of your digitizing paper-based documents on
 * Hesdibi uses [Mailgun](https://www.mailgun.com/) mail services in order to send mail (obviously).
 
 ## Installation
-1. `git clone https://github.com/gaillota/MyVault.git`
-2. `php composer install`
+1. Clone repository to your server
+  * `git clone https://github.com/gaillota/MyVault.git`
+2. Install dependencies
+  * `php composer install`
 3. Edit the `app/config/parameters.yml` file
-4. `php app/console doctrine:schema:update --force`
-5. `php app/console fos:user:create $USERNAME $YOUR@EMAIL $PASSWORD`
-6. `php app/console fos:user:promote $USERNAME ROLE_ADMIN`
+4. Create the database (default name is _hesdibi_)
+  * `php app/console doctrine:database:create`
+5. Create the database schema
+  * `php app/console doctrine:schema:update --force`
+6. Create the first user (use the `super-admin` flag to make him so)
+  * `php app/console fos:user:create $USERNAME $YOUR@EMAIL $PASSWORD --super-admin`
 
 ## Usage
 ### Login
