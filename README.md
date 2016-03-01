@@ -15,6 +15,12 @@ It helps you stay organized with all of your digitizing paper-based documents on
 6. `php app/console fos:user:promote $USERNAME ROLE_ADMIN`
 
 ## Usage
+### Login
+![Login page](https://cloud.githubusercontent.com/assets/6444106/13424933/f8179194-dfa3-11e5-8795-1f936cdb7ea8.PNG)
+
+In order to use Hesdibi, you must have an account. 
+
+Every page is hidden behind the Symfony firewall, except for the login page.
 
 TODO: Screenshots
 
