@@ -3,7 +3,7 @@ Hesdibi is a file storage platform, also known as DMS (Documents Management Syst
 It helps you stay organized with all of your digitizing paper-based documents on a daily basis.
 
 ## Requirements
-* Hesdibi uses Mailgun mail services in order to send mail (obviously).
+* Hesdibi uses [Mailgun](https://www.mailgun.com/) mail services in order to send mail (obviously).
 
 ## Installation
 1. `git clone https://github.com/gaillota/MyVault.git`
