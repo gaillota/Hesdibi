@@ -22,7 +22,22 @@ In order to use Hesdibi, you must have an account.
 
 Every page is hidden behind the Symfony firewall, except for the login page.
 
-TODO: Screenshots
+### Manage files
+//Screenshot
+
+The core feature of Hesdibi is to host and organize your paperless documents
+
+#### Folder options
+
+#### Files options
+
+### Other features
+
+#### Send file via e-mail
+
+#### Share file with other users
+
+#### Generate share link (Google Photo like)
 
 A Symfony project created on June 26, 2015, 8:25 pm.
 
