@@ -1,9 +1,23 @@
-My Vault
-=====
+# Hesdibi
+Hesdibi is a file storage platform, also known as DMS (Documents Management System).
+It helps you stay organized with all of your digitizing paper-based documents on a daily basis.
+
+## Requirements
+* Hesdibi uses Mailgun mail services in order to send mail (obviously).
+
+## Installation
+1. `git clone https://github.com/gaillota/MyVault.git`
+2. `php composer install`
+3. Edit the `app/config/parameters.yml` file
+4. `php app/console doctrine:schema:update --force`
+5. `php app/console fos:user:create $USERNAME $YOUR@EMAIL $PASSWORD`
+6. `php app/console fos:user:promote $USERNAME ROLE_ADMIN`
+
+## Usage
+
+TODO: Screenshots
 
 A Symfony project created on June 26, 2015, 8:25 pm.
-
-No need to write the README file, this is just for I
 
 TODO List
 -----
@@ -23,11 +37,11 @@ TODO List
 - [x] Go back button on share link removing
 - [x] Add fontawesome icon on alerts
 - [x] Take care of the mobile interface
-  - Display search key when there's one
-  - "Results for xxx"
+  1. Display search key when there's one
+  2. "Results for xxx"
 - [x] Check breadcrumb on all pages
-  - Folder deletion
-  - Share Link deletion
+  1. Folder deletion
+  2. Share Link deletion
 - [x] Resolve email / username login error (works on prod somehow)
 - [x] //Change js preview of PDF
 - [x] Use macro for dropdowns
