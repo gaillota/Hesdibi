@@ -3,12 +3,12 @@
 {% block body %}
 	<div class="row">
 		<div class="col-md-12">
-			<h1>Bienvenue sur Hesdibi</h1>
+			<h1>Welcome on Hesdibi</h1>
 		</div>
 	</div>
 	<div class="row text-justify">
 		<div class="col-md-6">
-			<h2>Se connecter</h2>
+			<h2>{{ fa('sign-in') }} Log in</h2>
 			<hr/>
 			{% if error %}
 				<div class="alert alert-danger">{{ error|trans({}, 'FOSUserBundle') }}</div>
@@ -17,7 +17,7 @@
 				<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 				<div class="form-group">
 					<label for="username">E-mail / {{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
-					<input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" autofocus="on" />
+					<input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" autofocus />
 				</div>
 				<div class="form-group">
 					<label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
@@ -36,11 +36,18 @@
 			<div class="clearfix"></div>
 		</div>
 		<div class="col-md-6">
-			<h2>Stocker vos documents personnels</h2>
+			<h2>{{ fa('cloud-upload') }} Store your personal documents</h2>
 			<hr>
-			<p>Ici vous pouvez stocker en toute sécurité tous vos documents personnels (CNI, Passport, RIB, etc.)</p>
-			<p>Vous pourrez ainsi y avoir accèder peu importe où vous vous trouvez, à condition bien sûr d'avoir accès à internet.</p>
-			<p>Vous pourrez notamment télécharger vos documents sur votre téléphone, votre tablette, ou votre ordinateur portable, mais également envoyer des documents par mail à un quiconque vous souhaitez.</p>
+			<p>Here you can safely upload and manage any of your personal paperless documents (ID, passeport, bank accounts details, etc.)</p>
+			<p>You can then access them from anywhere around the world.</p>
+			<p>Here are some of the features of Hesdibi :</p>
+			<ul>
+				<li>Upload files</li>
+				<li>Manage files by organizing into folders</li>
+				<li>Send files by e-mail</li>
+				<li>Generate sharing links to let other people access the file(s) you choose</li>
+				<li>Create viewer accounts and share them files</li>
+			</ul>
 		</div>
 	</div>
 {% endblock %}
