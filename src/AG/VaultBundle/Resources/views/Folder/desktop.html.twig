@@ -88,7 +88,7 @@
 					<td>{{ file.size|size }}</td>
 					<td>
 						{% if file.authorizedUsers|length > 0 or file.shareLinks|length > 0 %}
-							{% if file.authorizedUsers|length > 0 %}Partagé ({{ file.authorizedUsers|length }}){% endif %}{% if file.shareLinks|length %}{% if file.authorizedUsers|length > 0 and file.shareLinks|length > 0 %}, {% endif %}Liens ({{ file.shareLinks|length }}){% endif %}
+							{% if file.authorizedUsers|length > 0 %}Partagé ({{ file.authorizedUsers|length }}){% endif %}{% if file.shareLinks|length %}{% if file.authorizedUsers|length > 0 and file.shareLinks|length > 0 %}, {% endif %}Links ({{ file.shareLinks|length }}){% endif %}
 						{% else %}
 							Not shared
 						{% endif %}
