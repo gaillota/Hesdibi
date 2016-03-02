@@ -8,11 +8,11 @@ It helps you stay organized with all of your digitizing paper-based documents on
 
 ## Installation
 1. Clone repository to your server
-  * `git clone https://github.com/gaillota/MyVault.git`
+  * `git clone https://github.com/gaillota/Hesdibi.git`
 2. Install dependencies
   * `php composer install`
 3. Edit the `app/config/parameters.yml` file
-4. Create the database (default name is _hesdibi_)
+4. Create the database
   * `php app/console doctrine:database:create`
 5. Create the database schema
   * `php app/console doctrine:schema:update --force`
