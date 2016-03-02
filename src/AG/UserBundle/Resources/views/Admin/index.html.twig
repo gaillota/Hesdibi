@@ -44,7 +44,7 @@
                                 {% if user.lastLogin is not null %}
                                     {{ user.lastLogin|date_fr }} à {{ user.lastLogin|date('H:i') }}
                                 {% else %}
-                                    Jamais connecté.
+                                    Never logged in.
                                 {% endif %}
                             </td>
                             <td>{% for role in user.roles %}<span class="label label-info">{{ role }}</span> {% endfor %}</td>
