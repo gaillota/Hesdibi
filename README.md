@@ -1,5 +1,5 @@
 # Hesdibi
-Hesdibi is a file storage platform, also known as DMS (Document Management System).
+#### Hesdibi is a file storage platform, also known as DMS (Document Management System).
 
 It helps you stay organized with all of your digitizing paper-based documents on a daily basis.
 
