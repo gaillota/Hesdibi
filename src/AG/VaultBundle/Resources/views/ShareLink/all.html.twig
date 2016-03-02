@@ -42,7 +42,7 @@
 								</td>
 								<td>
 									<a href="{{ path('ag_vault_folder_show', { id:shareLink.file.folder.id, slug:shareLink.file.folder.slug }) }}">
-										{{ fa('folder') }} {{ shareLink.file.folder.name }}
+										{{ fa('folder') }} {{ shareLink.file.folder is not null ? shareLink.file.folder.name : 'Hesdibi' }}
 									</a>
 								</td>
 								<td>
