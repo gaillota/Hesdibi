@@ -46,7 +46,7 @@ class ShareLinkController extends Controller
     public function removeAction(ShareLink $shareLink)
     {
         if ($shareLink->getFile()->getOwner() !== $this->getUser())
-            throw new AccessDeniedException("Vous ne pouvez pas supprimer ce lien car le fichier correspondant ne vous appartient pas.");
+            throw new AccessDeniedException("You cannot remove this link, the file attached does not belong to you.");
 
         $form = $this->createFormBuilder()->getForm();
 
@@ -54,7 +54,7 @@ class ShareLinkController extends Controller
             $this->em->remove($shareLink);
             $this->em->flush();
 
-            $this->addFlash('danger', '<i class="fa fa-trash"></i> Lien supprimé avec succès !');
+            $this->addFlash('danger', '<i class="fa fa-trash"></i> Sharing link removed !');
 
             return $this->redirectToRoute('ag_vault_link_all');
         }

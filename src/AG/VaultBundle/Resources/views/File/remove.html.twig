@@ -4,7 +4,7 @@
 	{{ parent() }}
 	{{ render(controller('AGVaultBundle:Folder:getParents', { id:file.folder.id })) }}
 	<li><a href="{{ path('ag_vault_folder_show', { id:file.folder.id, slug:file.folder.slug}) }}">{{ file.folder.name }}</a></li>
-	<li class="active">Supprimer un fichier</li>
+	<li class="active">Remove file</li>
 {% endblock %}
 
 {% block ag_vault_content %}
@@ -15,7 +15,7 @@
 			</a>
 		</div>
 		<div class="col-sm-11">
-			<h2>{{ fa('trash') }} Supprimer un fichier <small>{{ file.name }}</small> ?</h2>
+			<h2>{{ fa('trash') }} Remove file <small>{{ file.name }}</small> ?</h2>
 		</div>
 	</div>
 	<hr/>
@@ -23,10 +23,10 @@
 		<div class="col-md-12 text-center">
 			<form action="" method="POST">
 				<a class="btn btn-default" href="{{ file.folder is null ? path('ag_vault_homepage') : path('ag_vault_folder_show', { id:file.folder.id, slug:file.folder.slug }) }}">
-					{{ fa('arrow-left') }} Retour
+					{{ fa('arrow-left') }} Go back
 				</a>
 				<button class="btn btn-danger" type="submit">
-					{{ fa('trash') }} Supprimer ce fichier
+					{{ fa('trash') }} Remove this bitch ass file
 				</button>
 				{{ form_rest(form) }}
 			</form>

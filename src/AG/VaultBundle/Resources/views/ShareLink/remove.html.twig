@@ -2,27 +2,27 @@
 
 {% block breadcrumbs %}
 	{{ parent() }}
-	<li><a href="{{ path('ag_vault_link_all') }}">Liens de partage</a></li>
-	<li class="active">Supprimer un lien</li>
+	<li><a href="{{ path('ag_vault_link_all') }}">Sharing links</a></li>
+	<li class="active">Remove link</li>
 {% endblock %}
 
 {% block ag_vault_content %}
 	<div class="row">
 		<div class="col-md-12 text-center">
-			<h2>{{ fa('trash') }} Supprimer le lien de partage  du fichier <em>{{ file.name }}</em> ?</h2>
+			<h2>{{ fa('trash') }} Remove the sharing link for this file : <em>{{ file.name }}</em> ?</h2>
 			<hr/>
 			<form action="" method="POST">
 				{% if file.folder is not null %}
 					<a class="btn btn-default" href="{{ path('ag_vault_folder_show', { id:file.folder.id }) }}">
-						{{ fa('arrow-left') }} Retour à mon dossier
+						{{ fa('arrow-left') }} Back to the folder
 					</a>
 				{% else %}
 					<a class="btn btn-default" href="{{ path('ag_vault_homepage') }}">
-						{{ fa('arrow-left') }} Retour à mon Vault
+						{{ fa('arrow-left') }} Back to my Hesdibi
 					</a>
 				{% endif %}
 				<button class="btn btn-danger" type="submit">
-					{{ fa('trash') }} Supprimer ce lien
+					{{ fa('trash') }} Remove this link
 				</button>
 				{{ form_rest(form) }}
 			</form>

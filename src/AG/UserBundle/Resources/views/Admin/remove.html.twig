@@ -2,8 +2,8 @@
 
 {% block breadcrumbs %}
     {{ parent() }}
-    <li><a href="{{ path('ag_user_admin_index') }}">Gestion des utilisateurs</a></li>
-    <li class="active">Supprimer</li>
+    <li><a href="{{ path('ag_user_admin_index') }}">User management</a></li>
+    <li class="active">Remove</li>
 {% endblock %}
 
 {% block ag_user_content %}
@@ -14,7 +14,7 @@
 		    </a>
 	    </div>
 	    <div class="col-sm-11">
-		    <h2>{{ fa('trash') }} Supprimer l'utilisateur <i>{{ user.username }}</i></h2>
+		    <h2>{{ fa('trash') }} Remove user <i>{{ user.username }}</i></h2>
 	    </div>
     </div>
     <hr/>
@@ -23,11 +23,11 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <p>
-                        Êtes-vous sûr de vouloir supprimer cet utilisateur ?
+                        Are you sure you want to remove this user ?
                     </p>
                     <form action="" method="POST">
                         <button class="btn btn-danger" type="submit">
-                            <i class="fa fa-trash"></i> Oui, supprimer le sa mère
+                            <i class="fa fa-trash"></i> Yes, remove his ass off !
                         </button>
                         {{ form_rest(form) }}
                     </form>

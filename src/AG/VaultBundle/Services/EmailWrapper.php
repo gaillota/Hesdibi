@@ -62,7 +62,7 @@ class EmailWrapper
     {
         $this->apiKey       = $mailgun_api_key;
         $this->domainName   = $domain_name;
-        $this->localpart       = 'no-reply';
+        $this->localpart    = 'no-reply';
         $this->data         = array();
     }
 

@@ -14,7 +14,7 @@ ol.breadcrumb {
 
 #vault .new .dropdown-toggle {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    padding: 6px 25px;
+    padding: 6px 45px;
 }
 
 #vault .new .dropdown-menu > li > a {
@@ -67,9 +67,9 @@ ol.breadcrumb {
     top: -2px;
 }
 
-#vault .table > tbody > tr > td:first-child > i.fa.fa-folder, #vault-mobile i.fa.fa-folder {
-    color: #bbb;
-}
+/*#vault .table > tbody > tr > td:first-child > i.fa.fa-folder, #vault-mobile i.fa.fa-folder {*/
+    /*color: #bbb;*/
+/*}*/
 
 #vault .table > tbody > tr > td:first-child > span.folder_length {
     background-color: #888;

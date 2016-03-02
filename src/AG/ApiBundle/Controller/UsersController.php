@@ -112,7 +112,7 @@ class UsersController extends Controller
 
             //Send confirmation mail to user
             $recipient = $user->getEmail();
-            $subject = 'Votre compte a bien été crée - My Vault';
+            $subject = 'Your account has been created - Hesdibi';
             $body = $this->renderView('AGUserBundle:Mail:add.html.twig', array(
                     'user' => $user,
                     'password' => $password,
@@ -121,9 +121,14 @@ class UsersController extends Controller
                 )
             );
 
-            $emailSent = $this->get('email_wrapper')->send($recipient, $subject, $body);
+            $emailWrapper = $this->get('email_wrapper');
+            $emailWrapper
+                ->setRecipient($recipient)
+                ->setSubject($subject)
+                ->setBody($body)
+            ;
 
-            $response[] = $emailSent ? 'E-mail envoyé avec succès' : 'Erreur lors de l\'envoi du mail';
+            $response[] = $emailWrapper->send() ? 'E-mail successfully sent' : 'Error while sending the e-mail';
 
             return new Response($response);
         }

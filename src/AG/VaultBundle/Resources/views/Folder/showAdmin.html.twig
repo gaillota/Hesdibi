@@ -6,7 +6,7 @@
 {% block breadcrumbs %}
 	{{ parent() }}
 	{% if search is defined and search is not null %}
-		<li class="active">Recherche</li>
+		<li class="active">Search</li>
 	{% else %}
 		{% if currentFolder is not null %}
 			{{ render(controller('AGVaultBundle:Folder:getParents', { id:currentFolder.id })) }}

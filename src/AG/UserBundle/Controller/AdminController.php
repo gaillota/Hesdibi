@@ -61,7 +61,7 @@ class AdminController extends Controller
             $this->addFlash('success', 'Utilisateur crée avec succès.');
 
             $recipient = $user->getEmail();
-            $subject = 'Votre compte a bien été crée - My Vault';
+            $subject = 'Your account has been created - Hesdibi';
             $body = $this->renderView('AGUserBundle:Mail:add.html.twig', array(
                     'user' => $user,
                     'password' => $password,
@@ -79,9 +79,9 @@ class AdminController extends Controller
             ;
 
             if ($emailWrapper->send()) {
-                $this->addFlash('success', 'E-mail envoyé avec succès !');
+                $this->addFlash('success', 'E-mail successfully sent !');
             } else {
-                $this->addFlash('danger', 'Erreur lors de l\'envoi de l\'email');
+                $this->addFlash('danger', 'Error while sending the e-mail.');
             }
 
             return $this->redirect($this->generateUrl('ag_user_admin_index'));
@@ -106,7 +106,7 @@ class AdminController extends Controller
             if ($form->handleRequest($this->request)->isValid()) {
                 $userManager = $this->get('fos_user.user_manager');
                 $userManager->updateUser($user);
-                $this->addFlash('warning', 'Utilisateur mis à jour.');
+                $this->addFlash('warning', 'User updated.');
 
                 return $this->redirect($this->generateUrl('ag_user_admin_index'));
             }
@@ -131,7 +131,7 @@ class AdminController extends Controller
             if ($form->handleRequest($this->request)->isValid()) {
                 $this->em->remove($user);
                 $this->em->flush();
-                $this->addFlash('danger', 'Utilisateur supprimé avec succès.');
+                $this->addFlash('danger', 'User successfully removed.');
 
                 return $this->redirectToRoute('ag_user_admin_index');
             }

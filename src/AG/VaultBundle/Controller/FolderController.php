@@ -64,7 +64,7 @@ class FolderController extends Controller
         if (!$this->getUser()->hasRole('ROLE_ADMIN')) {
             //If non-admin user is somehow not in the root directory, kick the fuck outta him.
             if (null !== $folder)
-                throw new AccessDeniedException('Vous ne pouvez pas accéder à ce dossier.');
+                throw new AccessDeniedException('You cannot access this folder.');
 
             return $this->render('AGVaultBundle:Folder:showUser.html.twig', array(
                 'listFiles' => $this->em->getRepository('AGVaultBundle:File')->findByAuthorizedUsers($this->getUser()),
@@ -73,7 +73,7 @@ class FolderController extends Controller
 
         //Check if folder is owned by user
         if (null !== $folder && $this->getUser() !== $folder->getOwner())
-            throw new AccessDeniedException("Vous ne pouvez pas accéder à ce dossier.");
+            throw new AccessDeniedException("You cannot access this folder.");
 
         //Check slug
         if (null !== $folder && $folder->getSlug() !== $slug)
@@ -102,7 +102,7 @@ class FolderController extends Controller
                 $this->em->persist($newFolder);
                 $this->em->flush();
 
-                $this->addFlash('success', '<i class="fa fa-thumbs-up"></i> Dossier crée avec succès');
+                $this->addFlash('success', '<i class="fa fa-thumbs-up"></i> Folder created.');
 
                 return $this->redirectToRoute('ag_vault_folder_show', array(
                     'id' => $newFolder->getId(),
@@ -122,12 +122,12 @@ class FolderController extends Controller
                 }
                 $this->em->flush();
 
-                $this->addFlash('success', '<i class="fa fa-file-pdf-o"></i> Fichier ajouté avec succès !');
+                $this->addFlash('success', '<i class="fa fa-file-o"></i> File successfully uploaded !');
 
                 return $this->redirectCorrectly($folder);
             }
 
-            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Une erreur est survenue.');
+            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> An error occured.');
         }
 
         //If a research has been made
@@ -173,7 +173,7 @@ class FolderController extends Controller
     public function removeAction(Folder $folder)
     {
         if ($this->getUser() !== $folder->getOwner())
-            throw new AccessDeniedException("Ce dossier ne vous appartient pas.");
+            throw new AccessDeniedException("This folder does not belong to you.");
 
         $form = $this->createFormBuilder()->getForm();
 
@@ -201,7 +201,7 @@ class FolderController extends Controller
             $this->em->remove($folder);
             $this->em->flush();
 
-            $this->addFlash('danger', '<i class="fa fa-trash"></i> Dossier supprimé avec succès !');
+            $this->addFlash('danger', '<i class="fa fa-trash"></i> Folder removed !');
 
             return $this->redirectToRoute('ag_vault_homepage');
         }
@@ -232,7 +232,7 @@ class FolderController extends Controller
     public function renameAction(Folder $folder)
     {
         if ($this->getUser() !== $folder->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This folder does not belong to you.");
 
         $name = $this->request->query->get('name', null);
 
@@ -267,7 +267,7 @@ class FolderController extends Controller
     public function moveAction(Folder $folder)
     {
         if ($this->getUser() !== $folder->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This folder does not belong to you.");
 
         $children = array();
         $nextChild = $this->em->getRepository('AGVaultBundle:Folder')->findOneBy(array(
@@ -290,12 +290,12 @@ class FolderController extends Controller
                 $this->em->persist($folder);
                 $this->em->flush();
 
-                $this->addFlash('success', '<i class="fa fa-arrows"></i> Emplacement du dossier modifé avec succès !');
+                $this->addFlash('success', '<i class="fa fa-arrows"></i> Folder moved !');
 
                 return $this->redirectCorrectly($formerFolder);
             }
 
-            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Une erreur est survenue. Veuillez contacter le big boss pour un petit service après-vente qui mets dans le bien.');
+            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> An error occured.');
         }
 
         return array(

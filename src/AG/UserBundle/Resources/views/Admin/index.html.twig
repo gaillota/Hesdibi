@@ -2,7 +2,7 @@
 
 {% block breadcrumbs %}
     {{ parent() }}
-    <li class="active">Gestion des utilisateurs</li>
+    <li class="active">User management</li>
 {% endblock %}
 
 {% block ag_user_content %}
@@ -14,9 +14,9 @@
 	    </div>
 	    <div class="col-sm-11">
 		    <h2 style="margin-bottom: 20px;">
-			    <i class="fa fa-users"></i> Liste des utilisateurs
+			    <i class="fa fa-users"></i> Users list
 			    <a class="btn btn-success pull-right" href="{{ path('ag_user_admin_add') }}">
-				    <i class="fa fa-user-plus"></i> Ajouter
+				    <i class="fa fa-user-plus"></i> Add
 			    </a>
 		    </h2>
 	    </div>
@@ -29,9 +29,9 @@
                         <th>#</th>
                         <th>Username</th>
                         <th>E-mail</th>
-                        <th>Dernière co.</th>
-                        <th>Droits</th>
-	                    <th class="text-center">Fichiers partagés</th>
+                        <th>Last login</th>
+                        <th>Credentials</th>
+	                    <th class="text-center">Shared files</th>
                         <th class="text-center">Status</th>
                         <th></th>
                     </tr>
@@ -56,15 +56,15 @@
                             <td class="text-center">
 	                            {% if user.locked %}
 		                            <span class="label label-danger">
-                                        {{ fa('times') }} Banni
+                                        {{ fa('times') }} Banned
                                     </span>
 	                            {% elseif user.enabled %}
 		                            <span class="label label-success">
-                                        {{ fa('check') }} Activé
+                                        {{ fa('check') }} Active
                                     </span>
 	                            {% else %}
 		                            <span class="label label-default">
-                                        {{ fa('clock-o') }} En attente
+                                        {{ fa('clock-o') }} Waiting
                                     </span>
 	                            {% endif %}
                             </td>
@@ -72,10 +72,10 @@
 	                            {% if not user.hasRole('role_admin') or app.user.hasRole('role_super_admin') %}
 		                            <div class="pull-right">
 			                            <a class="btn btn-warning btn-xs" href="{{ path('ag_user_admin_edit', { id: user.id }) }}">
-				                            {{ fa('edit') }} Editer
+				                            {{ fa('edit') }} Edit
 			                            </a>
 			                            <a class="btn btn-danger btn-xs" href="{{ path('ag_user_admin_remove', { id: user.id }) }}">
-				                            {{ fa('trash') }} Supprimer
+				                            {{ fa('trash') }} Remove
 			                            </a>
 		                            </div>
 	                            {% endif %}

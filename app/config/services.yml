@@ -19,6 +19,11 @@ services:
         tags:
             - { name: twig.extension }
 
+    icon_guesser:
+        class: AG\VaultBundle\Twig\IconGuesser
+        tags:
+            - { name: twig.extension }
+
     api_key_authenticator:
         class:  AG\ApiBundle\Security\ApiKeyAuthenticator
         public: false

@@ -4,13 +4,13 @@
 
 {% block breadcrumbs %}
 	{{ parent() }}
-	<li class="active">Mon compte</li>
+	<li class="active">My account</li>
 {% endblock %}
 
 {% block ag_user_content %}
     <div class="row">
 	    <div class="col-md-12 text-center">
-		    <h2>{{ fa('user') }} Mon Compte</h2>
+		    <h2>{{ fa('user') }} My account</h2>
 		    <hr/>
 	    </div>
         <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
@@ -23,7 +23,7 @@
             {% endfor %}
             <div class="panel panel-info">
                 <div class="panel-heading">
-	                {{ fa('list-alt') }} Informations personnelles
+	                {{ fa('list-alt') }} Informations
                 </div>
                 <ul class="list-group">
                     <li class="list-group-item">
@@ -34,11 +34,11 @@
                     </li>
 	                {% if is_granted('ROLE_SUPER_ADMIN') %}
 		                <li class="list-group-item">
-			                {{ fa('key') }} Clé d'API :
+			                {{ fa('key') }} Api key :
 			                {% if user.apiKey %}
-				                {{ user.apiKey }} <a href="{{ path('ag_user_admin_generateApiKey') }}" class="btn btn-warning btn-xs pull-right">Regénérer clé d'API</a>
+				                {{ user.apiKey }} <a href="{{ path('ag_user_admin_generateApiKey') }}" class="btn btn-warning btn-xs pull-right">Regenerate API key</a>
 			                {% else %}
-				                <a href="{{ path('ag_user_admin_generateApiKey') }}" class="btn btn-warning btn-xs">{{ fa('key') }} Générer clé d'API</a>
+				                <a href="{{ path('ag_user_admin_generateApiKey') }}" class="btn btn-warning btn-xs">{{ fa('key') }} Generate API key</a>
 			                {% endif %}
 		                </li>
 	                {% endif %}
@@ -47,10 +47,10 @@
             <div class="row">
                 <div class="col-xs-12">
                     <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-default">
-                        <i class="fa fa-edit"></i> Modifier mon compte
+                        <i class="fa fa-edit"></i> Edit my account
                     </a>
                     <a href="{{ path('fos_user_change_password') }}" class="btn btn-default">
-                        <i class="fa fa-lock"></i> Changer mot de passe
+                        <i class="fa fa-lock"></i> Change password
                     </a>
                 </div>
             </div>

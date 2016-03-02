@@ -10,14 +10,17 @@
 <body>
 <div class="container">
     <div class="jumbotron" style="margin-top: 50px;;">
-        <h1>Oops ! Il semblerait qu'il y ait une erreur...</h1>
-        <h2>Les internets mondiaux n'ont pas été en mesure de trouver la page que vous avez demandé... aka erreur 404</h2>
-        <p>
-            - Missa causé peut-être une ou deux little piccoli accidente, disons boum le gaz, et carabouillis limousine big boss... alors bannis !
-        </p>
-        <a class="btn btn-default" href="{{ path('ag_vault_homepage') }}"><i class="fa fa-arrow-left"></i> Revenir à l'accueil calmement</a>
-        <a class="btn btn-info" href="{{ path('ag_vault_homepage') }}">S'enjailler tous ensemble</a>
-        <a class="btn btn-danger" href="{{ path('ag_vault_homepage') }}">Désinstaller internet.exe</a>
+        <h1>Oops ! It looks like something is not working...</h1>
+        <h2>Patience you must have, my young padawan.</h2>
+	    <p>
+		    - Error {{ status_code }} : {{ status_text }}
+	    </p>
+	    <p>
+		    - Message : {{ exception.message }}
+	    </p>
+	    <a class="btn btn-default" href="{{ path('ag_vault_homepage') }}"><i class="fa fa-arrow-left"></i> Back to the homepage</a>
+	    <a class="btn btn-info" href="{{ path('ag_vault_homepage') }}">Have a fun altogether</a>
+	    <a class="btn btn-danger" href="{{ path('ag_vault_homepage') }}">Uninstall internet.exe</a>
     </div>
 </div>
 </body>

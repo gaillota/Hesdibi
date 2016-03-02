@@ -4,8 +4,8 @@
 
 {% block breadcrumbs %}
 	{{ parent() }}
-	<li><a href="{{ path('fos_user_profile_show') }}">Mon compte</a></li>
-	<li class="active">Modifier mon compte</li>
+	<li><a href="{{ path('fos_user_profile_show') }}">My account</a></li>
+	<li class="active">Edit my account</li>
 {% endblock %}
 
 {% block ag_user_content  %}
@@ -16,7 +16,7 @@
 			</a>
 		</div>
 		<div class="col-sm-11">
-			<h2>{{ fa('edit') }} Modifier mes informations</h2>
+			<h2>{{ fa('edit') }} Edit my informations</h2>
 		</div>
 	</div>
 	<hr/>
@@ -26,17 +26,17 @@
             {#{{ form(form) }}#}
 	        <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
 		        <div class="form-group">
-			        {{ form_label(form.username, "Nom d'utilisateur :") }} :
+			        {{ form_label(form.username) }} :
 			        {{ form_errors(form.username) }}
 			        {{ form_widget(form.username, {'attr' : {'class': 'form-control'}}) }}
 		        </div>
 		        <div class="form-group">
-			        {{ form_label(form.email, "Adresse e-mail :") }} :
+			        {{ form_label(form.email) }} :
 			        {{ form_errors(form.email) }}
 			        {{ form_widget(form.email, {'attr' : {'class': 'form-control'}}) }}
 		        </div>
 		        <div class="form-group">
-			        {{ form_label(form.current_password, "Mot de passe actuel") }} :
+			        {{ form_label(form.current_password) }} :
 			        {{ form_errors(form.current_password) }}
 			        {{ form_widget(form.current_password, {'attr' : {'class': 'form-control'}}) }}
 		        </div>

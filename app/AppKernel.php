@@ -42,7 +42,7 @@ class AppKernel extends Kernel
             // PHP Seclib
             new Sinner\Phpseclib\PhpseclibBundle(),
 
-            // Vault
+            // Hesdibi
             new AG\UserBundle\AGUserBundle(),
             new AG\VaultBundle\AGVaultBundle(),
             new AG\ApiBundle\AGApiBundle(),

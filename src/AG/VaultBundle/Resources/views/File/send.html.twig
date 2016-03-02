@@ -6,7 +6,7 @@
 	{{ parent() }}
 	{{ render(controller('AGVaultBundle:Folder:getParents', { id:file.folder.id })) }}
 	<li><a href="{{ path('ag_vault_folder_show', { id:file.folder.id, slug:file.folder.slug}) }}">{{ file.folder.name }}</a></li>
-	<li class="active">Envoyer un fichier</li>
+	<li class="active">Send a file</li>
 {% endblock %}
 
 {% block ag_vault_content %}
@@ -17,7 +17,7 @@
 			</a>
 		</div>
 		<div class="col-sm-11">
-			<h2>{{ fa('paper-plane') }} Envoyer un fichier par email</h2>
+			<h2>{{ fa('paper-plane') }} Send file by e-mail</h2>
 		</div>
 	</div>
 	<hr/>
@@ -28,7 +28,7 @@
 			{{ form_row(form.email) }}
 			{{ form_row(form.subject) }}
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Fichier</label>
+				<label class="col-sm-2 control-label">File</label>
 				<div class="col-sm-10">
 					<p class="form-control-static">{{ file.name }}</p>
 				</div>

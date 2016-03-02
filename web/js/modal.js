@@ -28,11 +28,11 @@ $(function() {
 
             // Make sure we have a pdf, jpeg or pngZ
             if (typeAccepted.indexOf(file.type) <= -1) {
-                modal.find('form').append('<div class="alert alert-danger">Ce fichier n\'est pas un fichier pdf, jpeg ou png.</div>');
+                modal.find('form').append('<div class="alert alert-danger">This file is no pdf, jpeg or png.</div>');
                 modal.find('button[type="submit"]').attr("disabled", true);
             // Make sure the file doesn't exceed the maximum size
             } else if (file.size > 64000000) {
-                modal.find('form').append('<div class="alert alert-danger">Ce fichier dépasse la taille maximum de 64Mo.</div>');
+                modal.find('form').append('<div class="alert alert-danger">This file exceeds maximum size allowed (64Mo).</div>');
                 modal.find('button[type="submit"]').attr("disabled", true);
             } else {
                 modal.find('input#ag_vaultbundle_file_name').val(file.name);
@@ -79,7 +79,7 @@ $(function() {
                         $text.prop('href', data.route);
                     }
                 } else {
-                    form.append('<div class="alert alert-danger">Une erreur est survenue. Veuillez contacter le big boss pour un petit service après-vente qui mets dans le bien.</div>');
+                    form.append('<div class="alert alert-danger">An error occured. Please contant the big boss for an after sales service.</div>');
                 }
             });
         } else {
@@ -117,7 +117,7 @@ $(function() {
                 loader.hide();
                 input.show().val(data.route).select().focus();
             } else {
-                alert('Une erreur est survenue lors de la génération du lien.');
+                alert('An error occured while generating sharing link.');
             }
         })
     });

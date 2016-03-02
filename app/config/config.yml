@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: fr
+    locale: en
 
 framework:
     #esi:             ~
@@ -135,7 +135,7 @@ mobile_detect:
 
 # API Doc Configuration
 nelmio_api_doc:
-    name: "Documentation de l'API RESTful af de My Vault #Agile #Agilité."
+    name: "RESTful af API Documentation of Hesdibi #Agile #Agility."
     default_sections_opened: true
     sandbox:
         accept_type: null

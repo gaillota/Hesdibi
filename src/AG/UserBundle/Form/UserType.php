@@ -16,13 +16,13 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username', 'text', array(
-                'label' => 'Nom d\'utilisateur'
+                'label' => 'Username'
             ))
             ->add('email', 'email', array(
-                'label' => 'Adresse mail'
+                'label' => 'E-mail address'
             ))
             ->add('roles', 'choice', array(
-                'label' => 'Droits',
+                'label' => 'Credentials',
                 'choices' => array(
                     'ROLE_ADMIN' => 'ROLE_ADMIN'
                 ),
@@ -31,7 +31,7 @@ class UserType extends AbstractType
                 'expanded' => true
             ))
             ->add('save', 'submit', array(
-                'label' => 'Sauvegarder'
+                'label' => 'Save'
             ))
         ;
     }

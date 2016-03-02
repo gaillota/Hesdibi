@@ -43,7 +43,7 @@ class FileController extends Controller
     public function renameAction(File $file)
     {
         if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This file does not belong to you.");
 
         $name = $this->request->query->get('name', null);
 
@@ -74,7 +74,7 @@ class FileController extends Controller
     public function removeAction(File $file)
     {
         if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This file does not belong to you.");
 
         $form = $this->createFormBuilder()->getForm();
 
@@ -83,7 +83,7 @@ class FileController extends Controller
             $this->em->remove($file);
             $this->em->flush();
 
-            $this->addFlash('danger', '<i class="fa fa-trash"></i> Fichier supprimé avec succès !');
+            $this->addFlash('danger', '<i class="fa fa-trash"></i> File successfully removed !');
 
             return null !== $file->getFolder() ? $this->redirectToRoute('ag_vault_folder_show', array('id' => $file->getFolder()->getId(), 'slug' => $file->getFolder()->getSlug())) : $this->redirectToRoute('ag_vault_homepage');
         }
@@ -101,7 +101,7 @@ class FileController extends Controller
     public function downloadAction(File $file)
     {
         if ($this->getUser() !== $file->getOwner() && !$file->getAuthorizedUsers()->contains($this->getUser()))
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This file does not belong to you.");
 
         $content = file_get_contents($file->getPath());
 
@@ -124,7 +124,7 @@ class FileController extends Controller
     public function previewAction(File $file)
     {
         if ($this->getUser() !== $file->getOwner() && !$file->getAuthorizedUsers()->contains($this->getUser()))
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This file does not belong to you.");
 
         $response = new Response();
         $response->headers->set('Content-Type', $file->getMimeType());
@@ -143,7 +143,7 @@ class FileController extends Controller
     public function sendAction(File $file)
     {
         if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This file does not belong to you.");
 
         $form = $this->createForm(new EmailType);
 
@@ -184,15 +184,15 @@ class FileController extends Controller
                     $this->em->persist($file);
                     $this->em->flush();
 
-                    $this->addFlash('success', '<i class="fa fa-send-o"></i> E-mail envoyé avec succès !');
+                    $this->addFlash('success', '<i class="fa fa-send-o"></i> E-mail successfully sent !');
                 } else {
-                    $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Erreur lors de l\'envoi de l\'email');
+                    $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Error while sending the e-mail');
                 }
 
                 return $this->redirectCorrectly($file);
             }
 
-            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Une erreur est survenue. Veuillez contacter le big boss pour un petit service après-vente qui mets dans le bien.');
+            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> An error occured.');
         }
 
         return array(
@@ -210,7 +210,7 @@ class FileController extends Controller
     public function moveAction(File $file)
     {
         if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This file does not belong to you.");
 
         $form = $this->createForm(new FileEditType, $file);
         $formerFolder = $file->getFolder();
@@ -222,12 +222,12 @@ class FileController extends Controller
                 $this->em->persist($file);
                 $this->em->flush();
 
-                $this->addFlash('success', '<i class="fa fa-arrows"></i> Emplacement du fichier modifé avec succès !');
+                $this->addFlash('success', '<i class="fa fa-arrows"></i> File location successfully changed !');
 
                 return null !== $formerFolder ? $this->redirectToRoute('ag_vault_folder_show', array('id' => $formerFolder->getId(), 'slug' => $formerFolder->getSlug())) : $this->redirectToRoute('ag_vault_homepage');
             }
 
-            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Une erreur est survenue. Veuillez contacter le big boss pour un petit service après-vente qui mets dans le bien.');
+            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> An error occured.');
         }
 
         return array(
@@ -245,7 +245,7 @@ class FileController extends Controller
     public function detailsAction(File $file)
     {
         if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This file does not belong to you.");
 
         return array(
             'file' => $file
@@ -261,12 +261,12 @@ class FileController extends Controller
     public function shareWithAction(File $file)
     {
         if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This file does not belong to you.");
 
         $regularUsers = $this->em->getRepository('AGUserBundle:User')->findRegularUsers();
 
         if (count($regularUsers) <= 0) {
-            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Veuillez d\'abord ajouter un utilisateur avant de pouvoir partager un fichier');
+            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Please add a user before you can share files with anyone.');
             return $this->redirectCorrectly($file);
         }
 
@@ -279,12 +279,12 @@ class FileController extends Controller
                 $this->em->persist($file);
                 $this->em->flush();
 
-                $this->addFlash('info', '<i class="fa fa-users"></i> Fichier partagé avec succès !');
+                $this->addFlash('info', '<i class="fa fa-users"></i> File is now shared !');
 
                 return $this->redirectCorrectly($file);
             }
 
-            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Une erreur est survenue. Veuillez contacter le big boss pour un petit service après-vente qui mets dans le bien.');
+            $this->addFlash('danger', '<i class="fa fa-times-circle"></i> An error occured.');
         }
 
         return array(
@@ -301,7 +301,7 @@ class FileController extends Controller
     public function generateLinkAction(File $file)
     {
         if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This file does not belong to you.");
 
         $shareLink = new ShareLink();
         $file->addShareLink($shareLink);
@@ -329,7 +329,7 @@ class FileController extends Controller
     public function getLinksAction(File $file)
     {
         if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This file does not belong to you.");
 
         return array(
             'file' => $file,
@@ -345,7 +345,7 @@ class FileController extends Controller
         $file = $this->em->getRepository('AGVaultBundle:File')->findOneByToken($token);
 
         if (null === $file) {
-            throw $this->createNotFoundException('Le lien que vous recherchez n\'existe pas.');
+            throw $this->createNotFoundException('This link is either expired or does not exist anymore.');
         }
 
         $response = new Response();

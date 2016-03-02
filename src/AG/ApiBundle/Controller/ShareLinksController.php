@@ -29,7 +29,7 @@ class ShareLinksController extends Controller
      */
     public function getLinksAction()
     {
-        $links = $this->em->getRepository('AGVaultBundle:ShareLink')->findAll();
+        $links = $this->em->getRepository('AGVaultBundle:ShareLink')->findShareFiles($this->getUser());
 
         return $links;
     }

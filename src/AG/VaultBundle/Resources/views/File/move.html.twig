@@ -6,7 +6,7 @@
 	{{ parent() }}
 	{{ render(controller('AGVaultBundle:Folder:getParents', { id:file.folder.id })) }}
 	<li><a href="{{ path('ag_vault_folder_show', { id:file.folder.id, slug:file.folder.slug}) }}">{{ file.folder.name }}</a></li>
-	<li class="active">Déplacer un fichier</li>
+	<li class="active">Move file location</li>
 {% endblock %}
 
 {% block ag_vault_content %}
@@ -17,7 +17,7 @@
 			</a>
 		</div>
 		<div class="col-sm-11">
-			<h2>{{ fa('arrows') }} Déplacer un fichier <small>{{ file.name }}</small></h2>
+			<h2>{{ fa('arrows') }} Move file <small>{{ file.name }}</small></h2>
 		</div>
 	</div>
 	<hr/>

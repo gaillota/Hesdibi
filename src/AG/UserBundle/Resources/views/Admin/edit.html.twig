@@ -2,8 +2,8 @@
 
 {% block breadcrumbs %}
     {{ parent() }}
-    <li><a href="{{ path('ag_user_admin_index') }}">Gestion des utilisateurs</a></li>
-    <li class="active">Modifier</li>
+    <li><a href="{{ path('ag_user_admin_index') }}">User management</a></li>
+    <li class="active">Edit</li>
 {% endblock %}
 
 {% block ag_user_content %}
@@ -14,7 +14,7 @@
 		    </a>
 	    </div>
         <div class="col-sm-11">
-            <h2>{{ fa('edit') }} Editer l'utilisateur <em>{{ user.username }}</em></h2>
+            <h2>{{ fa('edit') }} Edit user <em>{{ user.username }}</em></h2>
         </div>
     </div>
 	<hr/>

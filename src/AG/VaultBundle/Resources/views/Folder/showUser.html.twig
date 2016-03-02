@@ -5,7 +5,7 @@
 		<div class="col-md-2 text-center">
 			<div class="btn-group dropdown new">
 				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
-					Nouveau <span class="caret"></span>
+					New <span class="caret"></span>
 				</button>
 			</div>
 		</div>
@@ -14,28 +14,28 @@
 				<form action="" method="GET">
 					<div class="input-group">
 						<span class="input-group-addon" id="addon1">{{ fa('search') }}</span>
-						<input type="text" class="form-control" placeholder="Recherche" name="s" aria-describedby="addon1" {% if search is defined and search is not null %}value="{{ search }}"{% endif %}>
+						<input type="text" class="form-control" placeholder="Search" name="s" aria-describedby="addon1" {% if search is defined and search is not null %}value="{{ search }}"{% endif %}>
 					</div>
 				</form>
 			</div>
 			<h2 style="margin-top: 0;">
 				{% if search is defined and search is not null %}
-					Résultat de la recherche : <em>{{ search }}</em>
+					Results for : <em>{{ search }}</em>
 				{% else %}
-					{{ fa('lock') }} Mon Vault
+					{{ fa('home') }} Hesdibi
 				{% endif %}
 			</h2>
 			<table class="table table-hover table-striped">
 				<tr>
-					<th>Nom</th>
-					<th>Dernière modification</th>
-					<th>Taille</th>
+					<th>Name</th>
+					<th>Last update</th>
+					<th>Size</th>
 					<th></th>
 				</tr>
 				{% for file in listFiles %}
 					<tr data-row="file" data-file-id="{{ file.id }}">
 						<td>
-							{{ fa('file-pdf-o') }}
+							{{ fa(icon_guesser(file.mimeType)) }}
 							<a class="file" href="{{ path('ag_vault_file_preview', { id:file.id }) }}" data-name data-mime="{{ file.mimeType }}">{{ file.name }}</a>
 						</td>
 						<td>{{ file.lastModified|date_fr }}</td>
@@ -48,7 +48,7 @@
 								<ul class="dropdown-menu">
 									<li>
 										<a href="{{ path('ag_vault_file_download', { id:file.id }) }}">
-											{{ fa('download') }} Télécharger
+											{{ fa('download') }} Download
 										</a>
 									</li>
 								</ul>
@@ -59,9 +59,9 @@
 					<tr>
 						<td class="text-center" colspan="5">
 						{% if search is defined and search is not null %}
-							Aucun résultat pour la recherche <em>{{ search }}</em>.
+							No result for <em>{{ search }}</em>.
 						{% else %}
-							Antoine n'a partagé aucun fichier avec vous.
+							No one shared a file with you yet.
 						{% endif %}
 						</td>
 					</tr>

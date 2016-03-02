@@ -5,17 +5,17 @@
 	<div class="col-md-2 text-center">
 		<div class="btn-group dropdown new">
 			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				Nouveau <span class="caret"></span>
+				New <span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu">
 				<li>
 					<a href="#" type="button" data-toggle="modal" data-target="#newFileModal">
-						{{ fa('file-pdf-o') }} Fichier
+						{{ fa('file-o') }} File
 					</a>
 				</li>
 				<li>
 					<a href="#" type="button" data-toggle="modal" data-target="#newFolderModal">
-						{{ fa('folder') }} Dossier
+						{{ fa('folder') }} Folder
 					</a>
 				</li>
 			</ul>
@@ -28,13 +28,13 @@
 			<form action="" method="GET">
 				<div class="input-group">
 					<span class="input-group-addon" id="addon1">{{ fa('search') }}</span>
-					<input type="text" class="form-control" placeholder="Recherche" name="s" aria-describedby="addon1"{% if search is defined and search is not null %} value="{{ search }}"{% endif %}>
+					<input type="text" class="form-control" placeholder="Search" name="s" aria-describedby="addon1"{% if search is defined and search is not null %} value="{{ search }}"{% endif %}>
 				</div>
 			</form>
 		</div>
 		<h2 style="margin-top: 0;">
 			{% if search is defined and search is not null %}
-				<small>Résultat de la recherche : <em>{{ search }}</em></small>
+				<small>Results for : <em>{{ search }}</em></small>
 			{% else %}
 				{% if currentFolder is not null %}
 					<a href="{{ currentFolder.parent is null ? path('ag_vault_homepage') : path('ag_vault_folder_show', {id:currentFolder.parent.id, slug:currentFolder.parent.slug}) }}">
@@ -42,7 +42,7 @@
 					</a>
 					{{ fa('folder-open') }} <span class="foldername">{{ currentFolder.name }}</span>
 				{% else %}
-					{{ fa('home') }} My Vault
+					{{ fa('home') }} Hesdibi
 				{% endif %}
 				<small>{{ size|size }}</small>
 				{% if currentFolder is not null %}
@@ -60,10 +60,10 @@
 		</h2>
 		<table class="table table-hover table-striped">
 			<tr>
-				<th>Nom</th>
-				<th>Dernière modification</th>
-				<th>Taille</th>
-				<th>Partage</th>
+				<th>Name</th>
+				<th>Last update</th>
+				<th>Size</th>
+				<th>Sharing</th>
 				<th></th>
 			</tr>
 			{% for folder in listFolders %}
@@ -81,7 +81,7 @@
 			{% for file in listFiles %}
 				<tr data-row="file" data-file-id="{{ file.id }}">
 					<td>
-						{{ fa('file-pdf-o') }}
+						{{ fa(icon_guesser(file.mimeType)) }}
 						<a class="file" href="{{ path('ag_vault_file_preview', { id:file.id }) }}" data-name data-mime="{{ file.mimeType }}">{{ file.name }}</a>
 					</td>
 					<td>{{ file.lastModified|date_fr }}</td>
@@ -90,7 +90,7 @@
 						{% if file.authorizedUsers|length > 0 or file.shareLinks|length > 0 %}
 							{% if file.authorizedUsers|length > 0 %}Partagé ({{ file.authorizedUsers|length }}){% endif %}{% if file.shareLinks|length %}{% if file.authorizedUsers|length > 0 and file.shareLinks|length > 0 %}, {% endif %}Liens ({{ file.shareLinks|length }}){% endif %}
 						{% else %}
-							Non partagé
+							Not shared
 						{% endif %}
 					</td>
 					<td>{{ macros.file_dropdown(file) }}</td>
@@ -99,14 +99,14 @@
 				{% if search is defined and search is not null and listFolders is empty %}
 					<tr>
 						<td class="text-center" colspan="5">
-							Aucun résultat pour la recherche <em>{{ search }}</em>.
+							No result for <em>{{ search }}</em>.
 						</td>
 					</tr>
 				{% else %}
 					{% if listFolders is empty %}
 						<tr>
 							<td class="text-center" colspan="5">
-								Aucun contenu dans {% if currentFolder is not null %}ce dossier.{% else %}votre Vault.{% endif %}
+								No content in {% if currentFolder is not null %}this folder.{% else %}your Hesdibi.{% endif %}
 							</td>
 						</tr>
 					{% endif %}

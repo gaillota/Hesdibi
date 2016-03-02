@@ -48,7 +48,7 @@ class FilesController extends Controller
         $file = $this->em->getRepository('AGVaultBundle:File')->find($id);
 
         if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This file does not belong to you.");
 
         return $file;
     }
@@ -74,7 +74,7 @@ class FilesController extends Controller
         $file = $this->em->getRepository('AGVaultBundle:File')->find($id);
 
         if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This file does not belong to you.");
 
         $response = new Response();
         $response->headers->set('Content-Type', $file->getMimeType());
@@ -111,7 +111,7 @@ class FilesController extends Controller
         $file = $this->em->getRepository('AGVaultBundle:File')->find($id);
 
         if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This file does not belong to you.");
 
         $form = $this->createForm(new EmailType);
         $form->handleRequest($this->request);
@@ -147,9 +147,9 @@ class FilesController extends Controller
                 $this->em->persist($file);
                 $this->em->flush();
 
-                array_push($response, 'E-mail envoyé avec succès !');
+                array_push($response, 'E-mail successfully sent !');
             } else {
-                array_push($response, 'Erreur lors de l\'envoi de l\'email');
+                array_push($response, 'Error while sending the e-mail');
             }
 
             return new Response($response);
@@ -181,7 +181,7 @@ class FilesController extends Controller
         $file = $this->em->getRepository('AGVaultBundle:File')->find($id);
 
         if ($this->getUser() !== $file->getOwner())
-            throw new AccessDeniedException("Ce fichier ne vous appartient pas.");
+            throw new AccessDeniedException("This file does not belong to you.");
 
         $shareLink = new ShareLink();
         $file->addShareLink($shareLink);

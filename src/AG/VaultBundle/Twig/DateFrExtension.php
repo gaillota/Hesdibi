@@ -17,8 +17,8 @@ class DateFrExtension extends \Twig_Extension
 
     public function dateFrGenerator(\DateTime $dateTime)
     {
-        $days = array('Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi');
-        $months = array('N/C', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
+        $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        $months = array('N/C', 'january', 'february', 'march', 'april', 'mai', 'june', 'july', 'august', 'september', 'october', 'november', 'décember');
         return $days[$dateTime->format("w")] . " " . $dateTime->format("j") . " " . $months[$dateTime->format("n")] . " " . $dateTime->format("Y");
     }
 
