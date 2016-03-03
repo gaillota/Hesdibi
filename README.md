@@ -1,13 +1,13 @@
 # Hesdibi
 #### File storage platform, also known as DMS (Document Management System)
-##### It helps you stay organized with all of your digitized paper-based documents on a daily basis.
+It helps you stay organized with all of your digitized paper-based documents on a daily basis.
 
 ## Features
 The core feature of Hesdibi is to host and organize your paperless documents. You can :
 * Host files (PDF and Images for now)
 * Organize your files into folders
 * Send files by e-mail
-* Generate sharing links to let other people access the file(s) you choose
+* Generate sharing links to let other people from outside access the file(s) you choose
 * Create viewer user accounts and share them files
 
 ## Technologies
