@@ -33,20 +33,20 @@ The core feature of Hesdibi is to host and organize your paperless documents. Yo
 
 ## Usage
 ### Login
-![Login page](https://cloud.githubusercontent.com/assets/6444106/13490707/4f4e16d2-e12e-11e5-9e9a-3fe472c395ff.PNG)
+In order to use Hesdibi, you __must__ have an account.
 
-In order to use Hesdibi, you __must__ have an account. 
+![Login page](https://cloud.githubusercontent.com/assets/6444106/13490707/4f4e16d2-e12e-11e5-9e9a-3fe472c395ff.PNG)
 
 Every page is hidden behind the Symfony firewall, except for the login page.
 
 ### Manage files
-![Logged in](https://cloud.githubusercontent.com/assets/6444106/13490759/90313972-e12e-11e5-9ee8-9c98b8b0acc0.PNG)
-
 Once you have logged in, you can access your files.
 
-![New](https://cloud.githubusercontent.com/assets/6444106/13490804/d51e390e-e12e-11e5-9317-c74818ae2dea.PNG)
+![Logged in](https://cloud.githubusercontent.com/assets/6444106/13490759/90313972-e12e-11e5-9ee8-9c98b8b0acc0.PNG)
 
 You can now upload your files or create folder to organize your Hesdibi
+
+![New](https://cloud.githubusercontent.com/assets/6444106/13490804/d51e390e-e12e-11e5-9317-c74818ae2dea.PNG)
 
 #### Folder options
 ![Folder options](https://cloud.githubusercontent.com/assets/6444106/13491199/61294b12-e131-11e5-8c12-72658934fe49.PNG)
@@ -57,30 +57,31 @@ You can now upload your files or create folder to organize your Hesdibi
 ### Other features
 
 #### Send file via e-mail
+You can send files by e-mail (once at a time)
 
 ![email](https://cloud.githubusercontent.com/assets/6444106/13491528/18d3fafe-e133-11e5-93d9-4c44cf28a958.PNG)
 
 #### Share file with other users
+You can create viewer accounts and share them file.
 ![users](https://cloud.githubusercontent.com/assets/6444106/13491316/153b2792-e132-11e5-89d8-1ba0509b8bc3.PNG)
-You can create viewer accounts.
 
-![adduserform](https://cloud.githubusercontent.com/assets/6444106/13491335/2e1f035a-e132-11e5-9c62-a047d992e6b9.PNG)
 You just need to specify their e-mail address and a username.
+![adduserform](https://cloud.githubusercontent.com/assets/6444106/13491335/2e1f035a-e132-11e5-9c62-a047d992e6b9.PNG)
 
-They will then receive a confirmation e-mail with a random generated password and the link to log in to Hesdibi.
+They will then receive a confirmation e-mail with a __random generated password__ and the link to log in to Hesdibi.
 
-#### Generate share link (Google Photo like)
-![sharinglinks](https://cloud.githubusercontent.com/assets/6444106/13491306/0b77f514-e132-11e5-8809-106b7eee5fb7.PNG)
-
+#### Generate share link
 You can also generate sharing links and send them to the people you want to have access to the files you choose.
 
-#### Account management
-![account](https://cloud.githubusercontent.com/assets/6444106/13491342/3669e7f0-e132-11e5-8953-559044b7338d.PNG)
+![sharinglinks](https://cloud.githubusercontent.com/assets/6444106/13491306/0b77f514-e132-11e5-8809-106b7eee5fb7.PNG)
 
+#### Account management
 You can also manage your account :
 * Change your username
 * Change your e-mail
 * Change your password
+
+![account](https://cloud.githubusercontent.com/assets/6444106/13491342/3669e7f0-e132-11e5-8953-559044b7338d.PNG)
 
 A Symfony project created on June 26, 2015, 8:25 pm.
 
