@@ -86,9 +86,6 @@ You can also manage your account :
 
 A Symfony project created on June 26, 2015, 8:25 pm.
 
-
-![adduser](https://cloud.githubusercontent.com/assets/6444106/13491328/22a00a74-e132-11e5-905f-eed42a77b2d3.PNG)
-
 TODO List
 -----
 - [x] Remove table header on sharedLinks and expend table on all width (12)
