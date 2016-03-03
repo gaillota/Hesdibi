@@ -12,6 +12,7 @@ The core feature of Hesdibi is to host and organize your paperless documents. Yo
 
 ## Technologies
 * Symfony 2
+* Bootstrap 3
 * Composer
 * Mailgun
 
