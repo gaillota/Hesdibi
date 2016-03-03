@@ -2,8 +2,13 @@
 #### File storage platform, also known as DMS (Document Management System)
 ##### It helps you stay organized with all of your digitized paper-based documents on a daily basis.
 
+## Technologies
+* Symfony 2
+* Composer
+* Mailgun
+
 ## Requirements
-* Hesdibi uses [Mailgun](https://www.mailgun.com/) mail services in order to send mail (obviously).
+* [Mailgun](https://www.mailgun.com/) API key for e-mails.
 
 ## Installation
 1. Clone repository to your server
