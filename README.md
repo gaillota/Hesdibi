@@ -2,6 +2,14 @@
 #### File storage platform, also known as DMS (Document Management System)
 ##### It helps you stay organized with all of your digitized paper-based documents on a daily basis.
 
+## Features
+The core feature of Hesdibi is to host and organize your paperless documents. You can :
+* Host files (PDF and Images for now)
+* Organize your files into folders
+* Send files by e-mail
+* Generate sharing links to let other people access the file(s) you choose
+* Create viewer user accounts and share them files
+
 ## Technologies
 * Symfony 2
 * Composer
@@ -25,30 +33,59 @@
 
 ## Usage
 ### Login
-![Login page](https://cloud.githubusercontent.com/assets/6444106/13424933/f8179194-dfa3-11e5-8795-1f936cdb7ea8.PNG)
+![Login page](https://cloud.githubusercontent.com/assets/6444106/13490707/4f4e16d2-e12e-11e5-9e9a-3fe472c395ff.PNG)
 
-In order to use Hesdibi, you must have an account. 
+In order to use Hesdibi, you __must__ have an account. 
 
 Every page is hidden behind the Symfony firewall, except for the login page.
 
 ### Manage files
-//Screenshot
+![Logged in](https://cloud.githubusercontent.com/assets/6444106/13490759/90313972-e12e-11e5-9ee8-9c98b8b0acc0.PNG)
 
-The core feature of Hesdibi is to host and organize your paperless documents
+Once you have logged in, you can access your files.
+
+![New](https://cloud.githubusercontent.com/assets/6444106/13490804/d51e390e-e12e-11e5-9317-c74818ae2dea.PNG)
+
+You can now upload your files or create folder to organize your Hesdibi
 
 #### Folder options
+![Folder options](https://cloud.githubusercontent.com/assets/6444106/13491199/61294b12-e131-11e5-8c12-72658934fe49.PNG)
 
 #### Files options
+![File options](https://cloud.githubusercontent.com/assets/6444106/13491197/5ee99456-e131-11e5-91e0-3d3a31ff9fa5.PNG)
 
 ### Other features
 
 #### Send file via e-mail
 
+![email](https://cloud.githubusercontent.com/assets/6444106/13491528/18d3fafe-e133-11e5-93d9-4c44cf28a958.PNG)
+
 #### Share file with other users
+![users](https://cloud.githubusercontent.com/assets/6444106/13491316/153b2792-e132-11e5-89d8-1ba0509b8bc3.PNG)
+You can create viewer accounts.
+
+![adduserform](https://cloud.githubusercontent.com/assets/6444106/13491335/2e1f035a-e132-11e5-9c62-a047d992e6b9.PNG)
+You just need to specify their e-mail address and a username.
+
+They will then receive a confirmation e-mail with a random generated password and the link to log in to Hesdibi.
 
 #### Generate share link (Google Photo like)
+![sharinglinks](https://cloud.githubusercontent.com/assets/6444106/13491306/0b77f514-e132-11e5-8809-106b7eee5fb7.PNG)
+
+You can also generate sharing links and send them to the people you want to have access to the files you choose.
+
+#### Account management
+![account](https://cloud.githubusercontent.com/assets/6444106/13491342/3669e7f0-e132-11e5-8953-559044b7338d.PNG)
+
+You can also manage your account :
+* Change your username
+* Change your e-mail
+* Change your password
 
 A Symfony project created on June 26, 2015, 8:25 pm.
+
+
+![adduser](https://cloud.githubusercontent.com/assets/6444106/13491328/22a00a74-e132-11e5-905f-eed42a77b2d3.PNG)
 
 TODO List
 -----
