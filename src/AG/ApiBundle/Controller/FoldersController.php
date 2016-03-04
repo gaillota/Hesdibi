@@ -87,6 +87,8 @@ class FoldersController extends FOSRestController
 //            ));
 //        }
 
+        var_dump($files);
+
         return array(
             'folders' => $folders,
             'files' => $files
