@@ -7,6 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * File
@@ -14,6 +18,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AG\VaultBundle\Repository\FileRepository")
  * @Gedmo\Uploadable(allowOverwrite=true, appendNumber=true, filenameGenerator="SHA1")
+ * @ExclusionPolicy("all")
  */
 class File
 {
@@ -23,6 +28,8 @@ class File
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Expose
      */
     private $id;
 
@@ -31,12 +38,16 @@ class File
      *
      * @ORM\Column(name="name", type="string", length=100)
      * @Assert\NotBlank()
+     *
+     * @Expose
      */
     private $name;
 
     /**
      * @ORM\Column(name="mime_type", type="string")
      * @Gedmo\UploadableFileMimeType
+     *
+     * @Expose
      */
     private $mimeType;
 
@@ -45,6 +56,8 @@ class File
      *
      * @ORM\Column(name="size", type="decimal")
      * @Gedmo\UploadableFileSize
+     *
+     * @Expose
      */
     private $size;
 
@@ -53,6 +66,8 @@ class File
      *
      * @ORM\Column(name="path", type="string", length=255)
      * @Gedmo\UploadableFilePath
+     *
+     * @Expose
      */
     private $path;
 
@@ -61,6 +76,8 @@ class File
      *
      * @ORM\Column(name="last_modified", type="datetime")
      * @Assert\DateTime()
+     *
+     * @Expose
      */
     private $lastModified;
 
@@ -85,6 +102,8 @@ class File
      * @var array
      *
      * @ORM\Column(name="send_to", type="array")
+     *
+     * @Expose
      */
     private $sendTo = array();
 
@@ -92,6 +111,8 @@ class File
      * @var Folder
      *
      * @ORM\ManyToOne(targetEntity="Folder", inversedBy="files")
+     *
+     * @Expose
      */
     private $folder;
 
@@ -100,16 +121,22 @@ class File
      *
      * @ORM\ManyToOne(targetEntity="AG\UserBundle\Entity\User", inversedBy="files")
      * @Gedmo\Blameable(on="create")
+     *
+     * @Exclude
      */
     private $owner;
 
     /**
      * @ORM\ManyToMany(targetEntity="AG\UserBundle\Entity\User", inversedBy="sharedFiles")
+     *
+     * @Expose
      */
     private $authorizedUsers;
 
     /**
      * @ORM\OneToMany(targetEntity="ShareLink", mappedBy="file", cascade={"persist", "remove"})
+     *
+     * @Expose
      */
     private $shareLinks;
 

@@ -3,6 +3,8 @@
 namespace AG\VaultBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use AG\UserBundle\Entity\User;
 
 /**
  * ShareLink
@@ -39,6 +41,11 @@ class ShareLink
      * @ORM\ManyToOne(targetEntity="File", inversedBy="shareLinks")
      */
     private $file;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     */
+    private $owner;
 
 
     public function __construct()
@@ -100,5 +107,28 @@ class ShareLink
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set file
+     *
+     * @param File $file
+     * @return ShareLink
+     */
+    public function setFile(File $file)
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * Get file
+     *
+     * @return File
+     */
+    public function getFile()
+    {
+        return $this->file;
     }
 }

@@ -16,12 +16,12 @@ class ShareLinkRepository extends EntityRepository
     public function findShareFiles(User $user)
     {
         $qb = $this->createQueryBuilder('s')
+            ->addSelect('f')
             ->join('s.file', 'f')
-            ->join('f.owner', 'u')
-            ->where('u.id = :id')
+            ->where('f.owner = :id')
             ->setParameter('id', $user->getId())
             ->getQuery()
-            ->getResult()
+            ->getArrayResult()
         ;
 
         return $qb;

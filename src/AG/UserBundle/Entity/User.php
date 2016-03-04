@@ -7,6 +7,8 @@ use AG\VaultBundle\Entity\Folder;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Entity\User as BaseUser;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * User
@@ -30,21 +32,29 @@ class User extends BaseUser
      * @var String
      *
      * @ORM\Column(name="api_key", type="string", length=255, nullable=true)
+     *
+     * @Exclude
      */
     private $apiKey;
 
     /**
      * @ORM\OneToMany(targetEntity="AG\VaultBundle\Entity\File", mappedBy="owner")
+     *
+     * @Exclude
      */
     private $files;
 
     /**
      * @ORM\OneToMany(targetEntity="AG\VaultBundle\Entity\Folder", mappedBy="owner")
+     *
+     * @Exclude
      */
     private $folders;
 
     /**
      * @ORM\ManyToMany(targetEntity="AG\VaultBundle\Entity\File", mappedBy="authorizedUsers")
+     *
+     * @Exclude
      */
     private $sharedFiles;
 

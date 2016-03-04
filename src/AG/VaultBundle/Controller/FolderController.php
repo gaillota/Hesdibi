@@ -155,12 +155,12 @@ class FolderController extends Controller
 
         return $this->render('AGVaultBundle:Folder:showAdmin.html.twig', array(
             'currentFolder' => $folder,
-            'formFolder' => $formFolder->createView(),
-            'formFile' => $formFile->createView(),
-            'listFolders' => $listFolders,
-            'listFiles' => $listFiles,
-            'search' => $search,
-            'size' => $size,
+            'formFolder'    => $formFolder->createView(),
+            'formFile'      => $formFile->createView(),
+            'listFolders'   => $listFolders,
+            'listFiles'     => $listFiles,
+            'search'        => $search,
+            'size'          => $size,
         ));
     }
 

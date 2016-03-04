@@ -69,7 +69,7 @@ class FilesController extends Controller
      *     }
      * )
      */
-    public function getFilesDataAction($id)
+    public function getFilesPreviewAction($id)
     {
         $file = $this->em->getRepository('AGVaultBundle:File')->find($id);
 
@@ -161,7 +161,7 @@ class FilesController extends Controller
 
 
     /**
-     * Générer un lien de partage pour le fichier correspondant à l'id $id
+     * Générer un lien de partage pour le fichier correspondant à l'id {id}
      *
      * @ApiDoc(
      *     section="Fichiers",
@@ -176,7 +176,7 @@ class FilesController extends Controller
      *     }
      * )
      */
-    public function getFilesLinkAction($id)
+    public function postFilesLinkAction($id)
     {
         $file = $this->em->getRepository('AGVaultBundle:File')->find($id);
 

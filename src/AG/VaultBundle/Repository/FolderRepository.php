@@ -3,7 +3,9 @@
 namespace AG\VaultBundle\Repository;
 
 use AG\UserBundle\Entity\User;
+use AG\VaultBundle\Entity\Folder;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * FolderRepository
@@ -35,5 +37,41 @@ class FolderRepository extends EntityRepository
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     *
+     * API custom functions
+     *
+     */
+
+    public function apiFindAll($user)
+    {
+        $qb = $this
+            ->createQueryBuilder('f')
+            ->where('f.owner = :user')
+            ->setParameter('user', $user)
+            ->orderBy('f.name', 'ASC')
+        ;
+
+        return $qb->getQuery()->getArrayResult();
+    }
+
+    public function apiFindBy($folder, $user)
+    {
+        $qb = $this
+            ->createQueryBuilder('f')
+//            ->innerJoin('f.children', 'c', Join::WITH, 'c.parent = f.id')
+//            ->addSelect('COUNT(c.id)')
+            ->where('f.parent = :folder')
+            ->andWhere('f.owner = :user')
+            ->setParameters(array(
+                'folder' => $folder,
+                'user' => $user
+            ))
+            ->orderBy('f.name', 'ASC')
+        ;
+
+        return $qb->getQuery()->getArrayResult();
     }
 }

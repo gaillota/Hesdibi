@@ -80,4 +80,41 @@ class FileRepository extends EntityRepository
             return null;
         }
     }
+
+    /**
+     *
+     * API custom functions
+     *
+     */
+
+    public function apiFindBy($folder, $user)
+    {
+        $qb = $this
+            ->createQueryBuilder('f')
+            ->where('f.folder = :folder')
+            ->andWhere('f.owner = :user')
+            ->setParameters(array(
+                'folder' => $folder,
+                'user' => $user
+            ))
+            ->orderBy('f.name', 'ASC')
+        ;
+
+        return $qb->getQuery()->getArrayResult();
+    }
+
+    /**
+     *
+     * API custom functions
+     *
+     */
+
+    public function apiFind($id)
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getArrayResult();
+    }
 }
