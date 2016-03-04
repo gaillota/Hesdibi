@@ -50,7 +50,9 @@ class FilesController extends Controller
         if ($this->getUser() !== $file->getOwner())
             throw new AccessDeniedException("This file does not belong to you.");
 
-        return $file;
+        return array(
+            'file' => $file
+        );
     }
 
     /**
@@ -194,6 +196,8 @@ class FilesController extends Controller
         $this->em->persist($shareLink);
         $this->em->flush();
 
-        return $shareLink;
+        return array(
+            'shareLink' => $shareLink
+        );
     }
 }

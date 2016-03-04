@@ -57,6 +57,12 @@ class FoldersController extends FOSRestController
      */
     public function getFolderAction($id)
     {
+        if ($id < 0) {
+            return $this->createNotFoundException('ID cannot be negative.');
+        }
+
+        $id = $id > 0 ? $id : null;
+
         $folders = $this->em->getRepository('AGVaultBundle:Folder')->apiFindBy($id, $this->getUser()->getId());
 //        $folders = $this->em->getRepository('AGVaultBundle:Folder')->findBy(array(
 //            'parent' => $id,
@@ -64,23 +70,25 @@ class FoldersController extends FOSRestController
 //        ));
         $files = $this->em->getRepository('AGVaultBundle:File')->apiFindBy($id, $this->getUser()->getId());
 
-        $foldersAndCounts = array();
+//        var_dump($folders);
 
-        foreach ($folders as $folder) {
-            $countFoldersDQL = "SELECT COUNT(f.id) FROM AGVaultBundle:Folder f WHERE f.parent = " . $folder["id"];
-            $countFolders = $this->em->createQuery($countFoldersDQL)->getSingleScalarResult();
-
-            $countFilesDQL = "SELECT COUNT(f.id) FROM AGVaultBundle:File f WHERE f.folder = " . $folder["id"];
-            $countFiles = $this->em->createQuery($countFilesDQL)->getSingleScalarResult();
-
-            $foldersAndCounts[] = array_merge($folder, array(
-                'countFolders' => $countFolders,
-                'countFiles' => $countFiles
-            ));
-        }
+//        $foldersAndCounts = array();
+//
+//        foreach ($folders as $folder) {
+//            $countFoldersDQL = "SELECT COUNT(f.id) FROM AGVaultBundle:Folder f WHERE f.parent = " . $folder["id"];
+//            $countFolders = $this->em->createQuery($countFoldersDQL)->getSingleScalarResult();
+//
+//            $countFilesDQL = "SELECT COUNT(f.id) FROM AGVaultBundle:File f WHERE f.folder = " . $folder["id"];
+//            $countFiles = $this->em->createQuery($countFilesDQL)->getSingleScalarResult();
+//
+//            $foldersAndCounts[] = array_merge($folder, array(
+//                'countFolders' => $countFolders,
+//                'countFiles' => $countFiles
+//            ));
+//        }
 
         return array(
-            'folders' => $foldersAndCounts,
+            'folders' => $folders,
             'files' => $files
         );
     }
