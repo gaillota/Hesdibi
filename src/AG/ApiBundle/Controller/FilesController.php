@@ -28,17 +28,17 @@ class FilesController extends Controller
     private $request;
 
     /**
-     * Récupérer les informations du fichier correspondant à l'id $id
+     * Get the details for the file {id}
      *
      * @ApiDoc(
-     *     section="Fichiers",
-     *     description="Récupérer un fichier",
+     *     section="Files",
+     *     description="Get a file",
      *     requirements={
      *          {
      *              "name"="id",
      *              "dataType"="integer",
      *              "requirement"="\d+",
-     *              "description"="ID du fichier"
+     *              "description"="File ID"
      *          }
      *     }
      * )
@@ -56,17 +56,17 @@ class FilesController extends Controller
     }
 
     /**
-     * Récupérer les données du fichier correspondant à l'id $id
+     * Get the data for file {id}
      *
      * @ApiDoc(
-     *     section="Fichiers",
-     *     description="Récupérer les données d'un fichier",
+     *     section="Files",
+     *     description="Get a file's data",
      *     requirements={
      *          {
      *              "name"="id",
      *              "dataType"="integer",
      *              "requirement"="\d+",
-     *              "description"="ID du fichier"
+     *              "description"="File ID"
      *          }
      *     }
      * )
@@ -87,17 +87,17 @@ class FilesController extends Controller
     }
 
     /**
-     * Envoyer par e-mail le fichier correspondant à l'id $id
+     * Send the file {id} by e-mail
      *
      * @ApiDoc(
-     *     section="Fichiers",
-     *     description="Envoyer un fichier par e-mail",
+     *     section="Files",
+     *     description="Send a file by e-mail",
      *     requirements={
      *          {
      *              "name"="id",
      *              "dataType"="integer",
      *              "requirement"="\d+",
-     *              "description"="ID du fichier"
+     *              "description"="File ID"
      *          }
      *     },
      *     input="AG\ApiBundle\Form\EmailType",
@@ -163,17 +163,17 @@ class FilesController extends Controller
 
 
     /**
-     * Générer un lien de partage pour le fichier correspondant à l'id {id}
+     * Generate a sharing link for file {id}
      *
      * @ApiDoc(
-     *     section="Fichiers",
-     *     description="Générer un lien de partage",
+     *     section="Files",
+     *     description="Generate a sharing link",
      *     requirements={
      *          {
      *              "name"="id",
      *              "dataType"="integer",
      *              "requirement"="\d+",
-     *              "description"="ID du fichier"
+     *              "description"="File ID"
      *          }
      *     }
      * )

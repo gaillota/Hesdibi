@@ -26,32 +26,34 @@ class UsersController extends Controller
     private $request;
 
     /**
-     * Récupérer tous les utilisateurs
+     * Get a list of all the users
      *
      * @ApiDoc(
-     *     section="Utilisateurs",
-     *     description="Récupérer tous les utilisateurs"
+     *     section="Users",
+     *     description="Get all the users"
      * )
      */
     public function getUsersAction()
     {
         $users = $this->get('fos_user.user_manager')->findUsers();
 
-        return $users;
+        return array(
+            'users' => $users
+        );
     }
 
     /**
-     * Récupérer l'utilisateur correspondant à l'id $id
+     * Get the user {id}
      *
      * @ApiDoc(
-     *     section="Utilisateurs",
-     *     description="Récupèrer un utilisateur",
+     *     section="Users",
+     *     description="Get a user",
      *     requirements={
      *          {
      *              "name"="id",
      *              "dataType"="integer",
      *              "requirement"="\d+",
-     *              "description"="ID de l'utilisateur"
+     *              "description"="User ID"
      *          }
      *     }
      * )
@@ -66,23 +68,23 @@ class UsersController extends Controller
     }
 
     /**
-     * Créer un nouvel utilisateur
+     * Create a new user
      *
      * @ApiDoc(
-     *     section="Utilisateurs",
-     *     description="Créer un nouvel utilisateur",
+     *     section="Users",
+     *     description="Create a new user",
      *     parameters={
      *          {
      *              "name"="username",
      *              "dataType"="String",
      *              "required"=true,
-     *              "description"="Le pseudo de l'utilisateur"
+     *              "description"="Username"
      *          },
      *          {
      *              "name"="email",
      *              "dataType"="String",
      *              "required"=true,
-     *              "description"="L'adresse mail de l'utilisateur"
+     *              "description"="E-mail address"
      *          }
      *     }
      * )

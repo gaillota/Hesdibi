@@ -22,11 +22,13 @@ class FoldersController extends FOSRestController
     private $em;
 
     /**
-     * Récupérer la liste de tous les dossiers
+     * Get the list of every folders
+     *
+     * @return array
      *
      * @ApiDoc(
-     *     section="Dossiers",
-     *     description="Récupérer tous les dossiers"
+     *     section="Folders",
+     *     description="Get every folders"
      * )
      */
     public function getFoldersAction()
@@ -39,17 +41,17 @@ class FoldersController extends FOSRestController
     }
 
     /**
-     * Récupérer tous les fichiers contenus dans un dossier
+     * Get the content the folder {id} (folders and files)
      *
      * @ApiDoc(
-     *      section="Dossiers",
-     *      description="Récupérer le contenu d'un dossier",
+     *      section="Folders",
+     *      description="Get a folder's content",
      *      requirements={
      *          {
      *              "name"="id",
      *              "dataType"="integer",
      *              "requirement"="\d+",
-     *              "description"="ID du dossier"
+     *              "description"="Folder ID (0 for root)"
      *          }
      *      }
      * )
@@ -61,7 +63,7 @@ class FoldersController extends FOSRestController
             return $this->createNotFoundException('ID cannot be negative.');
         }
 
-        $id = $id > 0 ? $id : null;
+//        $id = $id > 0 ? $id : null;
 
         $folders = $this->em->getRepository('AGVaultBundle:Folder')->apiFindBy($id, $this->getUser()->getId());
 //        $folders = $this->em->getRepository('AGVaultBundle:Folder')->findBy(array(

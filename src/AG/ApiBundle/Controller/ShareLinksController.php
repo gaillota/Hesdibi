@@ -20,11 +20,11 @@ class ShareLinksController extends Controller
     private $em;
 
     /**
-     * Récupérer tous les liens de partage
+     * Get every sharing links
      *
      * @ApiDoc(
-     *     section="Liens de partage",
-     *     description="Récupérer tous les liens de partage"
+     *     section="Sharing Links",
+     *     description="Get all the sharing links"
      * )
      */
     public function getLinksAction()

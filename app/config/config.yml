@@ -135,7 +135,7 @@ mobile_detect:
 
 # API Doc Configuration
 nelmio_api_doc:
-    name: "RESTful af API Documentation of Hesdibi #Agile #Agility."
+    name: "API Documentation for Hesdibi #RESTfulAF #Agile #Agility."
     default_sections_opened: true
     sandbox:
         accept_type: null
