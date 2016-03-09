@@ -60,19 +60,18 @@ class FolderRepository extends EntityRepository
     public function apiFindBy($folder, $user)
     {
         $qb = $this
-            ->createQueryBuilder('f0')
-            ->addSelect('f1.name')
+            ->createQueryBuilder('f1')
             ->addSelect('COUNT(f2.id) nbr_folders')
             ->addSelect('COUNT(f3.id) nbr_files')
-            ->innerJoin('f0.children', 'f1', Join::WITH, 'f1.parent = f0.id')
             ->innerJoin('f1.children', 'f2', Join::WITH, 'f2.parent = f1.id')
             ->leftJoin('f1.files', 'f3', Join::WITH, 'f3.folder = f1.id')
-            ->where('f1.parent = :folder')
-            ->andWhere('f0.owner = :user')
-            ->setParameters(array(
-                'folder' => $folder,
-                'user' => $user
-            ))
+        ;
+
+        $qb = $folder == 0 ? $qb->where($qb->expr()->isNull('f1.parent')) : $qb->where('f1.parent = :folder')->setParameter('folder', $folder);
+
+        $qb
+            ->andWhere('f1.owner = :user')
+            ->setParameter('user', $user)
             ->groupBy('f1.id')
             ->orderBy('f1.name', 'ASC')
         ;

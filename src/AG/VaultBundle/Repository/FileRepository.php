@@ -91,12 +91,13 @@ class FileRepository extends EntityRepository
     {
         $qb = $this
             ->createQueryBuilder('f')
-            ->where('f.folder = :folder')
+        ;
+
+        $qb = $folder == 0 ? $qb->where($qb->expr()->isNull('f.folder')) : $qb->where('f.folder = :folder')->setParameter('folder', $folder);
+
+        $qb
             ->andWhere('f.owner = :user')
-            ->setParameters(array(
-                'folder' => $folder,
-                'user' => $user
-            ))
+            ->setParameter('user', $user)
             ->orderBy('f.name', 'ASC')
         ;
 
