@@ -23,15 +23,7 @@ class ShareWithType extends AbstractType
                 'property' => 'username',
                 'multiple' => true,
                 'expanded' => true,
-                'label' => 'Partager avec : ',
-                'query_builder' => function(EntityRepository $er) {
-                    $qb = $er->createQueryBuilder('u')
-                        ->where('u.roles NOT LIKE :role')
-                        ->setParameter('role', '%"ROLE_ADMIN"%')
-                    ;
-
-                    return $qb;
-                }
+                'label' => 'Partager avec : '
             ))
             ->add('save', 'submit', array(
                 'label' => 'Partager',
