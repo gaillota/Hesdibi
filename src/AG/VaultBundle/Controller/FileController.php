@@ -263,9 +263,9 @@ class FileController extends Controller
         if ($this->getUser() !== $file->getOwner())
             throw new AccessDeniedException("This file does not belong to you.");
 
-        $regularUsers = $this->em->getRepository('AGUserBundle:User')->findRegularUsers();
+        $users = $this->get('fos_user.user_manager')->findUsers();
 
-        if (count($regularUsers) <= 0) {
+        if (count($users) <= 0) {
             $this->addFlash('danger', '<i class="fa fa-times-circle"></i> Please add a user before you can share files with anyone.');
             return $this->redirectCorrectly($file);
         }
