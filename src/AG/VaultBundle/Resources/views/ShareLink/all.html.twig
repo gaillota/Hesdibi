@@ -41,8 +41,8 @@
 									{{ fa(icon_guesser(shareLink.file.mimeType)) }} {{ shareLink.file.name }} - <span class="small"><i>{{ shareLink.createdAt|date_fr }} à {{ shareLink.createdAt|date('H:i') }}</i></span>
 								</td>
 								<td>
-									<a href="{{ shareLink.file.folder is not null ? path('ag_vault_folder_show', { id:shareLink.file.folder.id, slug:shareLink.file.folder.slug }) : path('ag_vault_homepage') }}">
-										{{ fa('folder') }} {{ shareLink.file.folder is not null ? shareLink.file.folder.name : 'Hesdibi' }}
+									<a href="{{ shareLink.file.folder is defined ? path('ag_vault_folder_show', { id:shareLink.file.folder.id, slug:shareLink.file.folder.slug }) : path('ag_vault_homepage') }}">
+										{{ fa('folder') }} {{ shareLink.file.folder is defined ? shareLink.file.folder.name : 'Hesdibi' }}
 									</a>
 								</td>
 								<td>
